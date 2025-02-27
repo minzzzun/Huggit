@@ -2,6 +2,8 @@ import SwiftUI
 import AuthenticationServices
 
 struct AppleLoginButton: View {
+    @EnvironmentObject  var router : NavigationRouter
+    
     var body: some View {
         SignInWithAppleButton(
             onRequest: { request in
@@ -16,7 +18,6 @@ struct AppleLoginButton: View {
                         // 계정 정보 가져오기
                         let UserIdentifier = appleIDCredential.user
                         let fullName = appleIDCredential.fullName
-                        let name =  (fullName?.familyName ?? "") + (fullName?.givenName ?? "")
                         let email = appleIDCredential.email
                         let IdentityToken = String(data: appleIDCredential.identityToken!, encoding: .utf8)
                         let AuthorizationCode = String(data: appleIDCredential.authorizationCode!, encoding: .utf8)
@@ -27,6 +28,8 @@ struct AppleLoginButton: View {
                         print("IdentityToken : \(IdentityToken)")
                         print("AuthorizationCode : \(AuthorizationCode)")
                         
+                        //애플 로그인 성공시 깃헙로그인 페이지로 이동
+                        router.toNamed("/githublogin")
                     default:
                         break
                     }
