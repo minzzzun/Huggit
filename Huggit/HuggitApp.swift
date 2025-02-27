@@ -11,7 +11,10 @@ import SwiftUI
 struct HuggitApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+//            ContentView()
+            
+            AppleLoginView()
+                .preferredColorScheme(.light)
         }
     }
 }

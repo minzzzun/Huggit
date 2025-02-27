@@ -18,6 +18,8 @@ struct ContentView: View {
                 switch route.name {
                 case "/":
                     HomeView()
+                case "/applelogin":
+                    AppleLoginView()
                 default:
                     Text("알 수 없는 경로 : \(route.name) ")
                 }
