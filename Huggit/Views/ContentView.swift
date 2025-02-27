@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var router = NavigationRouter()
-
     
     var body: some View {
         NavigationStack(path: $router.path) {
