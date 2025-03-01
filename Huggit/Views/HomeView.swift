@@ -3,7 +3,22 @@ import SwiftUI
 
 
 struct HomeView : View {
+    @StateObject var viewModel = HomeViewViewModel()
+    @EnvironmentObject var router : NavigationRouter
+    
     var body: some View {
-        Text("홈 뷰")
+        VStack {
+            Text("홈 뷰")
+            Button(action: {
+                viewModel.deleteAppleLogin()
+                router.toNamed("/applelogin")
+            }){
+                Text("apple로그인삭제")
+            }
+        }
+        .navigationBarHidden(true)
+        
+            
     }
+    
 }

@@ -9,12 +9,16 @@ import SwiftUI
 
 @main
 struct HuggitApp: App {
+    
+    @StateObject private var viewModel = GithubLoginViewModel()
     var body: some Scene {
         WindowGroup {
-//            ContentView()
-            
-            AppleLoginView()
+            ContentView()
                 .preferredColorScheme(.light)
+                                .environmentObject(viewModel)
+                               
+            
+                
         }
     }
 }

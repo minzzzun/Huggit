@@ -9,23 +9,34 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var router = NavigationRouter()
-
+    @StateObject private var viewModel = ContentViewModel()
     
     var body: some View {
         NavigationStack(path: $router.path) {
-            HomeView()
-            .navigationDestination(for: Route.self) { route in
-                switch route.name {
-                case "/":
-                    HomeView()
-                case "/applelogin":
-                    AppleLoginView()
-                default:
-                    Text("알 수 없는 경로 : \(route.name) ")
+            Color.clear
+                .navigationDestination(for: Route.self) { route in
+                    switch route.name {
+                    case "/":
+                        HomeView()
+                    case "/applelogin":
+                        AppleLoginView()
+                    case "/githublogin":
+                        GithubLoginView()
+                    default:
+                        Text("알 수 없는 경로 : \(route.name) ")
+                    }
+                    
                 }
-                
+        }
+        .environmentObject(router)
+        .onAppear {
+            viewModel.checkAppleLogin()
+            if viewModel.isAppleLogined {
+                router.toNamed("/")
+            } else {
+                router.toNamed("/applelogin")
             }
-        }.environmentObject(router)
+        }
     }
 }
 
