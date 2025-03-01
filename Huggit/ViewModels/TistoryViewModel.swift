@@ -1,8 +1,9 @@
-//
-//  TistoryViewModel.swift
-//  Huggit
-//
-//  Created by 김민준 on 3/2/25.
-//
+import SwiftUI
 
-import Foundation
+class TistoryViewModel: ObservableObject {
+    @Published var tistoryName: String = ""
+    
+    func saveTistoryName(){
+        UserDefaults.standard.set(tistoryName, forKey: "tistoryName")
+    }
+}

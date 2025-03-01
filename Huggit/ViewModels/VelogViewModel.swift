@@ -1,8 +1,10 @@
-//
-//  VelogViewModel.swift
-//  Huggit
-//
-//  Created by 김민준 on 3/2/25.
-//
+import SwiftUI
 
-import Foundation
+
+class VelogViewModel: ObservableObject {
+    @Published var velogName: String = ""
+    
+    func saveVelog(){
+        UserDefaults.standard.set(velogName, forKey: "velogName")
+    }
+}
