@@ -12,9 +12,15 @@ struct HomeHeaderView: View {
     var commitsInMonth: Int = 20
     var body: some View {
         HStack {
-            VStack {
+            VStack (alignment: .leading) {
                 Text("오늘도 1일 1커밋을 향해 달려볼까요?")
+                    .foregroundStyle(.blue)
+                    .font(.system(size: 12))
+                    .padding(.top, 18)
                 Text("\(month)월에는 \(commitsInMonth)개의 커밋이\n업로드 되었어요!")
+                    .foregroundStyle(.white)
+                    .font(.system(size: 21))
+                    .padding(.top, 5)
             }
             Spacer()
             StampView()

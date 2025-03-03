@@ -24,7 +24,7 @@ struct StampView: View {
                     .padding(.top, 7)
             }
             
-            HStack(spacing: 0) {
+            HStack() {
                 Image(stampName(for: 1))
                     .resizable()
                     .scaledToFit()
@@ -46,7 +46,7 @@ struct StampView: View {
                     .padding(.trailing, 0)
                     .shadow(color: Color.white.opacity(0.8), radius: 12.6)
             }
-
+            .padding(.top, 6.85)
         }
     }
     
