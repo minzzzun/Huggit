@@ -12,19 +12,14 @@ struct StampView: View {
     
     var body: some View {
         VStack (alignment: .trailing){
-            ZStack (alignment: .top){
-                Image("tooltip_long")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 121, height: 30.15)
-                
+            Tooltip {
                 Text("\(daysIn3Days)일 연속 commit 실천중!")
                     .foregroundStyle(.white)
                     .font(.system(size: 9))
                     .padding(.top, 7)
             }
             
-            HStack(spacing: 0) {
+            HStack() {
                 Image(stampName(for: 1))
                     .resizable()
                     .scaledToFit()
@@ -46,7 +41,7 @@ struct StampView: View {
                     .padding(.trailing, 0)
                     .shadow(color: Color.white.opacity(0.8), radius: 12.6)
             }
-
+            .padding(.top, 6.85)
         }
     }
     
