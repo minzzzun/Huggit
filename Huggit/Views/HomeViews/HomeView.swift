@@ -10,14 +10,16 @@ struct HomeView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                VStack {
-                    HomeHeaderView()
-                    CalendarView()
+                Color.black.ignoresSafeArea()
+                
+                ScrollView(.vertical) {
+                    VStack {
+                        HomeHeaderView()
+                        CalendarView()
+                    }
+                    .environmentObject(homeViewModel)
+                    .padding(.horizontal, horizontalPadding)
                 }
-                .environmentObject(homeViewModel)
-                .environmentObject(commitDetailViewModel)
-                .background(Color.black)
-                .padding(.horizontal, horizontalPadding)
                 
                 if let cellFrame = commitDetailViewModel.selectedCellFrame {
                     let containerFrame = geometry.frame(in: .global)
@@ -53,6 +55,7 @@ struct HomeView: View {
                     )
                 }
             }
+            .environmentObject(commitDetailViewModel)
         }
     }
 }

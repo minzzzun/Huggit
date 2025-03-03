@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CommitDetailView: View {
+    @EnvironmentObject private var commitDetailViewModel: CommitDetailViewModel
+    
     var arrowPosition: CGFloat = 0.5
     var arrowHeight: CGFloat = 11
     var tooltipWidth: CGFloat = .infinity
@@ -15,7 +17,33 @@ struct CommitDetailView: View {
     
     var body: some View {
         Tooltip(width: tooltipWidth, height: tooltipHeight, cornerRadius: 5, arrowHeight: arrowHeight, arrowPosition: arrowPosition, arrowTipRadius: 2, color: Color(hex: "1F2125"), arrowDirection: .up) {
-            Text("CommitDetailView")
+            VStack {
+                HStack (alignment: .top) {
+                    Text("2025년 2월 8일에는 \n총 5개의 커밋을 했어요!")
+                        .font(.system(size: 15))
+                        .foregroundStyle(.white)
+                    Spacer()
+                    Button(action: {
+                        commitDetailViewModel.clearSelection()
+                    }) {
+                        ZStack {
+                            Image(systemName: "x.circle.fill")
+                                .frame(width: 20, height: 20)
+                                .foregroundStyle(.white)
+                        }
+                    }
+                }
+                .padding(.bottom, 10)
+                ScrollView(.vertical) {
+                    // TODO: ForEach로 repo 값 보내기
+                    VStack (spacing: 20) {
+                        CommitDetailSectionView()
+                        CommitDetailSectionView()
+                    }
+                    .padding(.top, 10)
+                }
+            }
+            .padding(20)
         }
     }
 }
