@@ -12,12 +12,7 @@ struct StampView: View {
     
     var body: some View {
         VStack (alignment: .trailing){
-            ZStack (alignment: .top){
-                Image("tooltip_long")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 121, height: 30.15)
-                
+            Tooltip {
                 Text("\(daysIn3Days)일 연속 commit 실천중!")
                     .foregroundStyle(.white)
                     .font(.system(size: 9))

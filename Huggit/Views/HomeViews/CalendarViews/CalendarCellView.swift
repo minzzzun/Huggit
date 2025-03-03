@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CalendarCellView: View {
     @EnvironmentObject var calendarViewModel: CalendarViewModel
+    @EnvironmentObject var commitDetailViewModel: CommitDetailViewModel
     
     let day: Int?
     let size: CGFloat?
@@ -16,30 +17,36 @@ struct CalendarCellView: View {
     let blogCommitCount: Int?
     
     var body: some View {
-        VStack(spacing: 4) {
-            if let day = day,
-               let _ = codeCommitCount,
-               let _ = blogCommitCount {
-                Button(action: {
-                    // 날짜 클릭 액션 구현
-                }) {
+        GeometryReader { geometry in
+            VStack(spacing: 4) {
+                if let day = day,
+                   let _ = codeCommitCount,
+                   let _ = blogCommitCount {
+                    Button(action: {
+                        let frame = geometry.frame(in: .global)
+                        commitDetailViewModel.selectedCellFrame = frame
+                    }) {
+                        Rectangle()
+                            .frame(width: size, height: size)
+                            .foregroundColor(.clear)
+                            .background(cellBackground)
+                            .clipShape(RoundedRectangle(cornerRadius: 4.55))
+                    }
+                    Text("\(day)")
+                        .font(.caption)
+                        .foregroundColor(.white)
+                        .frame(height: 8)
+                } else {
+                    // 빈 칸 처리
                     Rectangle()
-                        .frame(width: 29, height: 29)
+                        .frame(width: size, height: size)
                         .foregroundColor(.clear)
-                        .background(cellBackground)
-                        .clipShape(RoundedRectangle(cornerRadius: 4.55))
+                    Text("")
+                        .frame(height: 8)
                 }
-                Text("\(day)")
-                    .font(.caption)
-                    .foregroundColor(.white)
-            } else {
-                // 빈 칸 처리
-                Rectangle()
-                    .frame(width: size, height: size)
-                    .foregroundColor(.clear)
-                Text("")
             }
         }
+        .frame(width: size, height: 41)
     }
     
     // 상대적 계산을 위한 함수: 색상을 반환
