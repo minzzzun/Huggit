@@ -11,11 +11,15 @@ struct AppleLoginView: View {
             Rectangle()
                 .foregroundLinearGradient(
                     colors: [
-                        Color(hex: "121317"),
-                        Color(hex: "3E4046")
+                        Color.blackBackground,
+                        Color.blackBackground,
+                        Color.gradientBackground
                     ],
                     startPoint: .topTrailing,
-                    endPoint: .bottomLeading
+                    endPoint: .bottomLeading,
+                    stops: [0.0, 0.3, 1.0]
+                    
+                    
                 )
                 .ignoresSafeArea()
             
