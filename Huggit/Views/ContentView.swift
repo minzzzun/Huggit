@@ -35,6 +35,7 @@ struct ContentView: View {
                 }
         }
         .environmentObject(router)
+        // 애플 로그인 한적 있는지 확인 
         .onAppear {
             viewModel.checkAppleLogin()
             if viewModel.isAppleLogined {
