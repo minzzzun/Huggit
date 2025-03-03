@@ -12,13 +12,11 @@ struct CalendarView: View {
     
     let cellWidth = 29.0
     let numberOfColumns = 7
-    
     let rowsPadding = 12.0
-    let horizontalPadding = 21.0
     
     var body: some View {
         GeometryReader { geometry in
-            let availableWidth = geometry.size.width - (horizontalPadding * 2)
+            let availableWidth = geometry.size.width
             let computedSpacing = (availableWidth - (cellWidth * Double(numberOfColumns))) / Double(numberOfColumns - 1)
             
             let columns: [GridItem] = Array(
@@ -67,7 +65,6 @@ struct CalendarView: View {
                     
                     Spacer()
                 }
-                .padding(.horizontal, 21)
                 if calendarViewModel.selectMonth {
                     Color.black.opacity(0.3)
                         .ignoresSafeArea()

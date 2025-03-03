@@ -6,10 +6,11 @@ struct HomeView: View {
 
     var body: some View {
         VStack {
-            ProgressView()
-            CalendarView() 
+            HomeHeaderView()
+            CalendarView()
         }
         .environmentObject(homeViewModel)
         .background(Color.black)
+        .padding(.horizontal, 21)
     }
 }
