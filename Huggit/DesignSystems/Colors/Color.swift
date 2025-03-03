@@ -52,5 +52,6 @@ extension Color {
     static let blueMedium = Color(hex: "2F52A9")
     static let blueHigh = Color(hex: "0038FF")
     static let blueMore = Color(hex: "0048FF")
+    static let blueButton = Color(hex: "3182F7")
 }
 
