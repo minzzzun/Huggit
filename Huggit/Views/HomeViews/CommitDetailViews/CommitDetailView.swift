@@ -19,9 +19,15 @@ struct CommitDetailView: View {
         Tooltip(width: tooltipWidth, height: tooltipHeight, cornerRadius: 5, arrowHeight: arrowHeight, arrowPosition: arrowPosition, arrowTipRadius: 2, color: Color(hex: "1F2125"), arrowDirection: .up) {
             VStack {
                 HStack (alignment: .top) {
-                    Text("2025년 2월 8일에는 \n총 5개의 커밋을 했어요!")
-                        .font(.system(size: 15))
-                        .foregroundStyle(.white)
+                    (
+                        Text("2025년 2월 8일에는 \n총 ")
+                            .foregroundStyle(.white)
+                        + Text("5개")
+                            .foregroundStyle(.green)
+                        + Text("의 커밋을 했어요!")
+                            .foregroundStyle(.white)
+                    )
+                    .font(.system(size: 15))
                     Spacer()
                     Button(action: {
                         commitDetailViewModel.clearSelection()

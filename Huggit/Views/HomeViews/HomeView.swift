@@ -16,6 +16,7 @@ struct HomeView: View {
                     VStack {
                         HomeHeaderView()
                         CalendarView()
+                            .padding(.top, 49)
                     }
                     .environmentObject(homeViewModel)
                     .padding(.horizontal, horizontalPadding)
