@@ -18,10 +18,16 @@ struct ContentView: View {
                     switch route.name {
                     case "/":
                         HomeView()
-                    case "/applelogin":
+                    case "/appleLogin":
                         AppleLoginView()
-                    case "/githublogin":
+                    case "/githubLogin":
                         GithubLoginView()
+                    case "/tistoryView":
+                        TistoryView()
+                    case "/velogView":
+                        VelogView()
+                        
+                        
                     default:
                         Text("알 수 없는 경로 : \(route.name) ")
                     }
@@ -34,7 +40,7 @@ struct ContentView: View {
             if viewModel.isAppleLogined {
                 router.toNamed("/")
             } else {
-                router.toNamed("/applelogin")
+                router.toNamed("/appleLogin")
             }
         }
     }

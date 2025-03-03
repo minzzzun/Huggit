@@ -7,6 +7,7 @@ struct AppleLoginButton: View {
     @StateObject private var viewModel = AppleLoginViewModel()
     
     var body: some View {
+
         SignInWithAppleButton(
             onRequest: { request in
                 request.requestedScopes = [.fullName, .email]
@@ -15,11 +16,12 @@ struct AppleLoginButton: View {
                 viewModel.handleAppleSignIn(result: result)
             }
         )
-        .frame(width: UIScreen.main.bounds.width * 0.9, height: 50)
-        .cornerRadius(5)
+        .frame(width: UIScreen.main.bounds.width - 40)
+        .frame(height: 50)
+        .cornerRadius(8)
         .onChange(of: viewModel.isAuthenticated) { newValue in
             if newValue {
-                router.toNamed("/githublogin")
+                router.toNamed("/githubLogin")
             }
         }
     }

@@ -4,7 +4,7 @@ class GithubLoginViewModel: ObservableObject {
     @Published var accessToken : String? = nil
     let clientId = GitHubConfig.client_id
     let clientSecret = GitHubConfig.client_secret
-    
+    let defaults = UserDefaults.standard
     // 1. 깃허브에서 code 받아오기
     func requestCode() {
         print(#fileID,#function,#line, "")
@@ -70,6 +70,7 @@ class GithubLoginViewModel: ObservableObject {
                 if let token = json["access_token"] as? String {
                     DispatchQueue.main.async {
                         self.accessToken = token
+                        self.defaults.set(self.accessToken, forKey: "githubAccessToken")
                         print("✅ GitHub Access Token:", token)
                         self.getUser() // 토큰을 받은 후 사용자 정보 요청
                         self.getRepos()

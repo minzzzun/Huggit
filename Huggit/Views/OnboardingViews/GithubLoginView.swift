@@ -11,7 +11,7 @@ struct GithubLoginView : View {
             Button(action: {
                 print("깃허브 로그인")
                 viewModel.requestCode()
-                router.toNamed("/")
+                router.toNamed("/tistoryView")
             }){
                 Text("깃허브 로그인")
                     .padding()

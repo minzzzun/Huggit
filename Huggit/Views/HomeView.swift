@@ -11,7 +11,7 @@ struct HomeView : View {
             Text("홈 뷰")
             Button(action: {
                 viewModel.deleteAppleLogin()
-                router.toNamed("/applelogin")
+                router.toNamed("/appleLogin")
             }){
                 Text("apple로그인삭제")
             }
