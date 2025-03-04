@@ -19,13 +19,20 @@ struct CommitDetailView: View {
     let tooltipHeight: CGFloat
     
     var body: some View {
-        Tooltip(width: tooltipWidth, height: tooltipHeight, cornerRadius: 5, arrowHeight: arrowHeight, arrowPosition: arrowPosition, arrowTipRadius: 2, color: Color(hex: "1F2125"), arrowDirection: .up) {
+        Tooltip(width: tooltipWidth,
+                height: tooltipHeight,
+                cornerRadius: 5,
+                arrowHeight: arrowHeight,
+                arrowPosition: arrowPosition,
+                arrowTipRadius: 2,
+                color: Color(hex: "1F2125"),
+                arrowDirection: .up) {
             VStack {
-                HStack (alignment: .top) {
+                HStack(alignment: .top) {
                     (
-                        Text("2025년 2월 8일에는 \n총 ")
+                        Text("\(String(commitDetailViewModel.selectedYear))년 \(commitDetailViewModel.selectedMonth)월 \(commitDetailViewModel.selectedDay)일에는 \n총 ")
                             .foregroundStyle(.white)
-                        + Text("5개")
+                        + Text("\(commitDetailViewModel.selectedCommitCount)개")
                             .foregroundStyle(.green)
                         + Text("의 커밋을 했어요!")
                             .foregroundStyle(.white)
@@ -43,16 +50,50 @@ struct CommitDetailView: View {
                     }
                 }
                 .padding(.bottom, 10)
+                
                 ScrollView(.vertical) {
-                    // TODO: ForEach로 repo 값 보내기
-                    VStack (spacing: 20) {
-                        CommitDetailSectionView()
-                        CommitDetailSectionView()
+                    VStack(spacing: 20) {
+                        ForEach(commitDetailViewModel.commitDetails, id: \.repositoryName) { detail in
+                            CommitDetailSectionView(repoName: detail.repositoryName,
+                                                    commitMessages: detail.commitMessages)
+                        }
                     }
                     .padding(.top, 10)
                 }
             }
             .padding(20)
+        }
+        .onAppear {
+            let components = DateComponents(year: commitDetailViewModel.selectedYear,
+                                            month: commitDetailViewModel.selectedMonth,
+                                            day: commitDetailViewModel.selectedDay)
+            guard let selectedDate = Calendar.current.date(from: components) else {
+                print("날짜 변환에 실패했습니다.")
+                return
+            }
+            
+            if let username = commitDetailViewModel.username {
+                print("onAppear: Fetching commit details for \(username) on \(selectedDate)")
+                commitDetailViewModel.fetchCommitDetails(for: username, on: selectedDate)
+            } else {
+                print("onAppear: username이 없습니다.")
+            }
+        }
+        .onChange(of: commitDetailViewModel.username) {
+            let components = DateComponents(year: commitDetailViewModel.selectedYear,
+                                            month: commitDetailViewModel.selectedMonth,
+                                            day: commitDetailViewModel.selectedDay)
+            guard let selectedDate = Calendar.current.date(from: components) else {
+                print("onChange: 날짜 변환에 실패했습니다.")
+                return
+            }
+            
+            if let username = commitDetailViewModel.username {
+                print("onChange: Fetching commit details for \(username) on \(selectedDate)")
+                commitDetailViewModel.fetchCommitDetails(for: username, on: selectedDate)
+            } else {
+                print("onChange: username이 없습니다.")
+            }
         }
     }
 }

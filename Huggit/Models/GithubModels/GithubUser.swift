@@ -9,7 +9,7 @@ import Foundation
 
 struct GithubUser: Decodable, Equatable {
     let login: String
-    let id: Int
+    let id: Int?
     let name: String?
     let avatar_url: String?
 }

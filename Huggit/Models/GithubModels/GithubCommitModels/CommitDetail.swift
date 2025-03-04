@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct CommitDetail {
+struct CommitDetail: Identifiable, Decodable {
+    var id = UUID()  
     let repositoryName: String
     let commitMessages: [String]
 }

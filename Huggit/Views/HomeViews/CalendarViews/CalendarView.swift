@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+struct CellInfo {
+    let frame: CGRect
+    let day: Int?
+    let commitCount: Int
+}
+
 struct CalendarView: View {
     @EnvironmentObject var homeViewModel: HomeViewModel
     var calendarViewModel: CalendarViewModel {
@@ -17,7 +23,7 @@ struct CalendarView: View {
     let numberOfColumns = 7
     let rowsPadding = 12.0
     
-    let onCellSelect: (CGRect) -> Void
+    let onCellSelect: (CellInfo) -> Void
     
     var body: some View {
         GeometryReader { geometry in
@@ -52,12 +58,17 @@ struct CalendarView: View {
                                     if commitIndex >= 0 &&
                                         commitIndex < calendarViewModel.dayAllCommitCount.count &&
                                         commitIndex < calendarViewModel.dayBlogCommitCount.count {
+                                        let allCommitCount = calendarViewModel.dayAllCommitCount[commitIndex]
+                                        let blogCommitCount = calendarViewModel.dayBlogCommitCount[commitIndex]
                                         CalendarCellView(
                                             day: day,
                                             size: cellWidth,
-                                            codeCommitCount: calendarViewModel.dayAllCommitCount[commitIndex] - calendarViewModel.dayBlogCommitCount[commitIndex],
-                                            blogCommitCount: calendarViewModel.dayBlogCommitCount[commitIndex],
-                                            onSelect: onCellSelect
+                                            codeCommitCount: allCommitCount - blogCommitCount,
+                                            blogCommitCount: blogCommitCount,
+                                            onSelect: { cellFrame in
+                                                let cellInfo = CellInfo(frame: cellFrame, day: day, commitCount: allCommitCount)
+                                                onCellSelect(cellInfo)
+                                            }
                                         )
                                     } else {
                                         CalendarCellView(
@@ -65,7 +76,10 @@ struct CalendarView: View {
                                             size: cellWidth,
                                             codeCommitCount: 0,
                                             blogCommitCount: 0,
-                                            onSelect: onCellSelect
+                                            onSelect: { cellFrame in
+                                                let cellInfo = CellInfo(frame: cellFrame, day: day, commitCount: 0)
+                                                onCellSelect(cellInfo)
+                                            }
                                         )
                                     }
                                 } else {
@@ -79,7 +93,6 @@ struct CalendarView: View {
                                 }
                             }
                         }
-                        
                     }
                     .padding(.top, 27)
                     if calendarViewModel.selectMonth {

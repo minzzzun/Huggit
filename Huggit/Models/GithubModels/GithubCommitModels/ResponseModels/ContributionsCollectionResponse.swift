@@ -7,6 +7,7 @@
 
 import Foundation
 
+// 일별 커밋 수를 가져오기 위한 모델
 struct ContributionsCollectionResponse: Decodable {
     struct Data: Decodable {
         struct User: Decodable {

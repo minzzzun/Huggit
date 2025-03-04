@@ -33,6 +33,9 @@ final class HomeViewModel: ObservableObject {
             self?.objectWillChange.send()
             self?.homeHeaderViewModel.dayAllCommitCount = self?.calendarViewModel.dayAllCommitCount ?? []
             self?.homeHeaderViewModel.historicalDayAllCommitCounts = self?.calendarViewModel.historicalDayAllCommitCounts ?? []
+            
+            self?.commitDetailViewModel.selectedYear = self?.calendarViewModel.currentYear ?? 2025
+            self?.commitDetailViewModel.selectedMonth = self?.calendarViewModel.currentMonth ?? 3
         }.store(in: &cancellables)
         
         commitDetailViewModel.objectWillChange.sink { [weak self] _ in
@@ -50,6 +53,7 @@ final class HomeViewModel: ObservableObject {
                 case .success(let user):
                     self?.githubUser = user
                     self?.calendarViewModel.username = user.login
+                    self?.commitDetailViewModel.username = user.login
                 case .failure(let error):
                     print("Error fetching GitHub user: \(error)")
                 }

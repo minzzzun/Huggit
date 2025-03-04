@@ -3,7 +3,6 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject private var homeViewModel = HomeViewModel()
-    
     let horizontalPadding: CGFloat = 21
     
     var body: some View {
@@ -14,14 +13,17 @@ struct HomeView: View {
                 ScrollView(.vertical) {
                     VStack {
                         HomeHeaderView()
-                        CalendarView(onCellSelect: { cellFrame in
+                        // CalendarView에 onCellSelect 클로저를 전달합니다.
+                        CalendarView { cellInfo in
                             let containerFrame = geometry.frame(in: .global)
                             homeViewModel.commitDetailViewModel.updateSelection(
-                                cellFrame: cellFrame,
+                                cellFrame: cellInfo.frame,
                                 containerFrame: containerFrame,
+                                commitCount: cellInfo.commitCount,
+                                day: cellInfo.day ?? 1,
                                 horizontalPadding: horizontalPadding
                             )
-                        })
+                        }
                         .padding(.top, 49)
                     }
                     .padding(.horizontal, horizontalPadding)
@@ -52,10 +54,10 @@ struct HomeView: View {
                                      arrowHeight: 11,
                                      tooltipWidth: tooltipWidth,
                                      tooltipHeight: tooltipHeight)
-                    .position(
-                        x: containerFrame.midX,
-                        y: localCellFrame.maxY + 9 + tooltipHeight / 2
-                    )
+                        .position(
+                            x: containerFrame.midX,
+                            y: localCellFrame.maxY + 9 + tooltipHeight / 2
+                        )
                 }
             }
             .environmentObject(homeViewModel)
@@ -63,4 +65,3 @@ struct HomeView: View {
         }
     }
 }
-
