@@ -24,4 +24,9 @@ final class CommitDetailViewModel: ObservableObject {
     func clearSelection() {
         selectedCellFrame = nil
     }
+    
+    /// 특정 날짜에 대한 Commit 이력을 불러오는 함수 
+        func fetchCommitHistory(for username: String, on date: Date, completion: @escaping (Result<DayCommitHistory, GithubAPIError>) -> Void) {
+            GithubCommitManager.shared.fetchCommitHistory(for: username, on: date, completion: completion)
+        }
 }

@@ -59,6 +59,7 @@ struct HomeView: View {
                 }
             }
             .environmentObject(homeViewModel)
+            .navigationBarHidden(true)
         }
     }
 }

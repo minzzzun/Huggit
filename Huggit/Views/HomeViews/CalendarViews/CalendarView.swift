@@ -49,13 +49,25 @@ struct CalendarView: View {
                                 if let day = calendarViewModel.daysInMonthWithPadding[index] {
                                     let offset = calendarViewModel.firstWeekday - 1
                                     let commitIndex = index - offset
-                                    CalendarCellView(
-                                        day: day,
-                                        size: cellWidth,
-                                        codeCommitCount: calendarViewModel.dayAllCommitCount[commitIndex] - calendarViewModel.dayBlogCommitCount[commitIndex],
-                                        blogCommitCount: calendarViewModel.dayBlogCommitCount[commitIndex],
-                                        onSelect: onCellSelect
-                                    )
+                                    if commitIndex >= 0 &&
+                                        commitIndex < calendarViewModel.dayAllCommitCount.count &&
+                                        commitIndex < calendarViewModel.dayBlogCommitCount.count {
+                                        CalendarCellView(
+                                            day: day,
+                                            size: cellWidth,
+                                            codeCommitCount: calendarViewModel.dayAllCommitCount[commitIndex] - calendarViewModel.dayBlogCommitCount[commitIndex],
+                                            blogCommitCount: calendarViewModel.dayBlogCommitCount[commitIndex],
+                                            onSelect: onCellSelect
+                                        )
+                                    } else {
+                                        CalendarCellView(
+                                            day: day,
+                                            size: cellWidth,
+                                            codeCommitCount: 0,
+                                            blogCommitCount: 0,
+                                            onSelect: onCellSelect
+                                        )
+                                    }
                                 } else {
                                     CalendarCellView(
                                         day: nil,
@@ -67,6 +79,7 @@ struct CalendarView: View {
                                 }
                             }
                         }
+                        
                     }
                     .padding(.top, 27)
                     if calendarViewModel.selectMonth {
@@ -84,6 +97,18 @@ struct CalendarView: View {
                     }
                 }
                 Spacer()
+            }
+            .onAppear {
+                if let username = calendarViewModel.username {
+                    calendarViewModel.fetchContributions(for: username)
+                } else {
+                    print("GitHub 사용자 정보가 아직 로드되지 않음")
+                }
+            }
+            .onChange(of: calendarViewModel.username) {
+                if let username = calendarViewModel.username {
+                    calendarViewModel.fetchContributions(for: username)
+                }
             }
         }
     }

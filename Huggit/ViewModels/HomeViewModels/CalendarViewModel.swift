@@ -8,12 +8,15 @@ enum CurrentGrass {
 }
 
 final class CalendarViewModel: ObservableObject {
+    // Github User 이름
+    @Published var username: String? = nil
+    
     // 현재 년/월
     @Published var currentYear: Int = Calendar.current.component(.year, from: Date())
     @Published var currentMonth: Int = Calendar.current.component(.month, from: Date())
     
     // 년/월 변경 모달 여부
-    @Published var selectMonth = false
+    @Published var selectMonth = false 
     
     // 잔디 타입
     @Published var currentGrass: CurrentGrass = .allGrass
@@ -54,7 +57,7 @@ final class CalendarViewModel: ObservableObject {
         return Array(repeating: nil, count: offset) + daysInMonth.map { Optional($0) }
     }
     
-    // commit 개수 계산 헬퍼들 
+    // commit 개수 계산 헬퍼들
     var maxCodeCommitCount: Int {
         let codeCommits = zip(dayAllCommitCount, dayBlogCommitCount).map { $0 - $1 }
         return codeCommits.max() ?? 0
@@ -66,17 +69,80 @@ final class CalendarViewModel: ObservableObject {
     
     // 테스트용 MockData 생성
     init() {
-        generateMockData()
-        // 예시로 과거 2달의 데이터를 생성
+        // 현재 달의 일자 수 만큼 0으로 초기화
+        let totalDays = daysInMonth.count
+        self.dayAllCommitCount = Array(repeating: 0, count: totalDays)
+        self.dayBlogCommitCount = Array(repeating: 0, count: totalDays)
+        
+        // 테스트용 MockData 생성
         historicalDayAllCommitCounts = [
             (0..<28).map { _ in Int.random(in: 0...1) },
             (0..<31).map { _ in Int.random(in: 0...1) }
         ]
     }
     
-    func generateMockData() {
-        let days = daysInMonth.count
-        dayAllCommitCount = (0..<days).map { _ in Int.random(in: 0...10) }
-        dayBlogCommitCount = dayAllCommitCount.map { total in Int.random(in: 0...total) }
+    func fetchContributions(for username: String) {
+        let calendar = Calendar.current
+        var comps = DateComponents(year: currentYear, month: currentMonth, day: 1)
+        guard let startDate = calendar.date(from: comps),
+              let range = calendar.range(of: .day, in: .month, for: startDate) else { return }
+        let totalDays = range.count
+        comps.day = totalDays
+        guard let endDate = calendar.date(from: comps) else { return }
+        
+        print("Fetching contributions for \(username)")
+        print("Start date: \(startDate) / End date: \(endDate)")
+        
+        GithubCommitManager.shared.fetchContributions(username: username,
+                                                        from: startDate,
+                                                        to: endDate) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let countsByDate):
+                    print("API Response countsByDate:")
+                    for (key, value) in countsByDate {
+                        print("  \(key): \(value)")
+                    }
+                    self?.updateCommitCounts(with: countsByDate)
+                case .failure(let error):
+                    print("Failed to fetch contributions: \(error)")
+                }
+            }
+        }
+    }
+
+    private func updateCommitCounts(with countsByDate: [String: Int]) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        // (타임존이 문제가 될 경우 아래와 같이 설정할 수 있음)
+        // dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        
+        var newCounts: [Int] = []
+        let calendar = Calendar.current
+        var comps = DateComponents(year: currentYear, month: currentMonth, day: 1)
+        
+        // 오늘 날짜 관련 계산
+        let todayComps = calendar.dateComponents([.day, .month, .year], from: Date())
+        let totalDays = daysInMonth.count
+        let dayLimit: Int = (currentYear == todayComps.year && currentMonth == todayComps.month)
+            ? (todayComps.day ?? totalDays)
+            : totalDays
+        
+        print("Updating commit counts for currentMonth: \(currentMonth), totalDays: \(totalDays), dayLimit: \(dayLimit)")
+        
+        for day in 1...totalDays {
+            comps.day = day
+            if let date = calendar.date(from: comps) {
+                let key = dateFormatter.string(from: date)
+                let count = (day <= dayLimit) ? (countsByDate[key] ?? 0) : 0
+                newCounts.append(count)
+                print("Day \(day): key=\(key), count=\(count)")
+            }
+        }
+        self.dayAllCommitCount = newCounts
+        // dayBlogCommitCount도 동일한 길이로 초기화 (혹은 실제 데이터로 업데이트)
+        self.dayBlogCommitCount = Array(repeating: 0, count: totalDays)
+        
+        print("Updated dayAllCommitCount: \(self.dayAllCommitCount)")
     }
 }
