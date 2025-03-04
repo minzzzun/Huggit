@@ -1,0 +1,28 @@
+import SwiftUI
+import AuthenticationServices
+
+
+struct AppleLoginButton: View {
+    @EnvironmentObject var router: NavigationRouter
+    @StateObject private var viewModel = AppleLoginViewModel()
+    
+    var body: some View {
+
+        SignInWithAppleButton(
+            onRequest: { request in
+                request.requestedScopes = [.fullName, .email]
+            },
+            onCompletion: { result in
+                viewModel.handleAppleSignIn(result: result)
+            }
+        )
+        .frame(width: UIScreen.main.bounds.width - 40)
+        .frame(height: 50)
+        .cornerRadius(8)
+        .onChange(of: viewModel.isAuthenticated) { newValue in
+            if newValue {
+                router.toNamed("/githubLogin")
+            }
+        }
+    }
+}

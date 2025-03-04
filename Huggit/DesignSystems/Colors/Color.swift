@@ -41,6 +41,9 @@ extension Color {
         )
     }
     
+    static let blackBackground = Color(hex: "121317")
+    static let gradientBackground = Color(hex: "3E4046")
+    
     static let greenLess = Color(hex: "181B21")
     static let greenLow = Color(hex: "1F432B")
     static let greenMedium = Color(hex: "2E6B38")
@@ -52,5 +55,6 @@ extension Color {
     static let blueMedium = Color(hex: "2F52A9")
     static let blueHigh = Color(hex: "0038FF")
     static let blueMore = Color(hex: "0048FF")
+    static let blueButton = Color(hex: "3182F7")
 }
 

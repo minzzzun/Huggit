@@ -86,6 +86,8 @@ fastlane/test_output
 iOSInjectionProject/
 
 
+Huggit/Utils/GitHubConfig.swift
+
 
 
 # End of https://www.toptal.com/developers/gitignore/api/swift,swiftpackagemanager
