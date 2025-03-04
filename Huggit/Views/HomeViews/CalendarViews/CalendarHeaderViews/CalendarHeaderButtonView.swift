@@ -8,22 +8,21 @@
 import SwiftUI
 
 struct CalendarHeaderButtonView: View {
-    // 파라미터들
-    let title: String
-    let grassType: CurrentGrass
-    let startColor: Color
-    let endColor: Color
-    
     @EnvironmentObject var homeViewModel: HomeViewModel
     var calendarViewModel: CalendarViewModel {
         homeViewModel.calendarViewModel
     }
     @State private var textWidth: CGFloat = 0
     
+    // 파라미터들
+    let title: String
+    let grassType: CurrentGrass
+    let startColor: Color
+    let endColor: Color
+    
     var isActive: Bool {
         calendarViewModel.currentGrass == grassType
     }
-    
     
     var body: some View {
         VStack(spacing: 0) {
