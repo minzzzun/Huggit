@@ -16,7 +16,6 @@ struct HuggitApp: App {
             ContentView()
                 .preferredColorScheme(.light)
                                 .environmentObject(viewModel)
-                               
             
                 
         }

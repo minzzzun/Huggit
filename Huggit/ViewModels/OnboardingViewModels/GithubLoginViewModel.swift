@@ -4,6 +4,7 @@ class GithubLoginViewModel: ObservableObject {
     @Published var accessToken : String? = nil
     let clientId = GitHubConfig.client_id
     let clientSecret = GitHubConfig.client_secret
+    
     let defaults = UserDefaults.standard
     // 1. 깃허브에서 code 받아오기
     func requestCode() {
@@ -72,8 +73,13 @@ class GithubLoginViewModel: ObservableObject {
                         self.accessToken = token
                         self.defaults.set(self.accessToken, forKey: "githubAccessToken")
                         print("✅ GitHub Access Token:", token)
-                        self.getUser() // 토큰을 받은 후 사용자 정보 요청
-                        self.getRepos()
+                        
+                        let gitToken = UserDefaults.standard.string(forKey: "githubAccessToken")
+                        let appleId = self.defaults.string(forKey: "appleId")
+                        print("appleId 저장됨: \(appleId)")
+                        print("gitToken 저장됨: \(gitToken)")
+//                        self.getUser() // 토큰을 받은 후 사용자 정보 요청
+//                        self.getRepos()
                     }
                 } else {
                     print("❌ access_token이 응답에 없음")

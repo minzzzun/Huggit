@@ -35,11 +35,12 @@ struct ContentView: View {
                 }
         }
         .environmentObject(router)
-        // 애플 로그인 한적 있는지 확인 
+        // 애플 로그인 한적 있는지 확인
         .onAppear {
             viewModel.checkAppleLogin()
             if viewModel.isAppleLogined {
-                router.toNamed("/")
+//                router.toNamed("/") // 테스트 끝나면 원상복구
+                router.toNamed("/appleLogin")
             } else {
                 router.toNamed("/appleLogin")
             }
