@@ -8,11 +8,16 @@
 import SwiftUI
 
 struct CalendarView: View {
-    @StateObject private var calendarViewModel = CalendarViewModel()
+    @EnvironmentObject var homeViewModel: HomeViewModel
+    var calendarViewModel: CalendarViewModel {
+        homeViewModel.calendarViewModel
+    }
     
     let cellWidth = 29.0
     let numberOfColumns = 7
     let rowsPadding = 12.0
+    
+    let onCellSelect: (CGRect) -> Void
     
     var body: some View {
         GeometryReader { geometry in
@@ -47,23 +52,23 @@ struct CalendarView: View {
                                     CalendarCellView(
                                         day: day,
                                         size: cellWidth,
-                                        // 코드 커밋 수는 전체 커밋에서 블로그 커밋 수를 뺀 값
                                         codeCommitCount: calendarViewModel.dayAllCommitCount[commitIndex] - calendarViewModel.dayBlogCommitCount[commitIndex],
-                                        blogCommitCount: calendarViewModel.dayBlogCommitCount[commitIndex]
+                                        blogCommitCount: calendarViewModel.dayBlogCommitCount[commitIndex],
+                                        onSelect: onCellSelect
                                     )
-                                    .environmentObject(calendarViewModel)
                                 } else {
                                     CalendarCellView(
                                         day: nil,
                                         size: cellWidth,
                                         codeCommitCount: nil,
-                                        blogCommitCount: nil
+                                        blogCommitCount: nil,
+                                        onSelect: { _ in }
                                     )
                                 }
                             }
                         }
                     }
-                        .padding(.top, 27)
+                    .padding(.top, 27)
                     if calendarViewModel.selectMonth {
                         // 배경 터치시 모달 닫힘
                         Color.black.opacity(0.3)
@@ -74,14 +79,12 @@ struct CalendarView: View {
                         
                         // 월 선택 모달 (기본 4개 항목 보임, 총 30개 항목 스크롤 가능)
                         MonthSelectionModalView()
-                            .environmentObject(calendarViewModel)
                             .frame(width: 150, height: 4 * 44)
                             .padding(.top, 1)
                     }
                 }
                 Spacer()
             }
-            .environmentObject(calendarViewModel)
         }
     }
 }

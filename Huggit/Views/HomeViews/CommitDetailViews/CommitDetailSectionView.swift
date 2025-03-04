@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CommitDetailSectionView: View {
-    
+    @State private var isExpanded = false
     
     var body: some View {
         HStack {
@@ -33,21 +33,29 @@ struct CommitDetailSectionView: View {
                             .foregroundStyle(.blue)
                             .padding(.leading, 5)
                     }
-                    HStack {
-                        Image(systemName: "circle.fill")
-                            .resizable()
-                            .frame(width: 5, height: 5)
-                            .foregroundStyle(.blue)
-                        Text("머먹 온보딩")
-                            .font(.system(size: 12))
-                            .foregroundStyle(.blue)
-                            .padding(.leading, 5)
+                    if isExpanded {
+                        HStack {
+                            Image(systemName: "circle.fill")
+                                .resizable()
+                                .frame(width: 5, height: 5)
+                                .foregroundStyle(.blue)
+                            Text("머먹 온보딩")
+                                .font(.system(size: 12))
+                                .foregroundStyle(.blue)
+                                .padding(.leading, 5)
+                        }
                     }
                 }
             }
             .padding(.leading, 20)
             .padding(.vertical, 1)
             Spacer()
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            withAnimation {
+                isExpanded.toggle()
+            }
         }
     }
 }

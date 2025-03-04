@@ -14,7 +14,10 @@ struct CalendarHeaderButtonView: View {
     let startColor: Color
     let endColor: Color
     
-    @EnvironmentObject var calendarViewModel: CalendarViewModel
+    @EnvironmentObject var homeViewModel: HomeViewModel
+    var calendarViewModel: CalendarViewModel {
+        homeViewModel.calendarViewModel
+    }
     @State private var textWidth: CGFloat = 0
     
     var isActive: Bool {

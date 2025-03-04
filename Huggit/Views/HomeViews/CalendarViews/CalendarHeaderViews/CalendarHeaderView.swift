@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct CalendarHeaderView: View {
-    @EnvironmentObject var calendarViewModel: CalendarViewModel
+    @EnvironmentObject var homeViewModel: HomeViewModel
+    var calendarViewModel: CalendarViewModel {
+        homeViewModel.calendarViewModel
+    }
     
     var body: some View {
         HStack(spacing: 19) {

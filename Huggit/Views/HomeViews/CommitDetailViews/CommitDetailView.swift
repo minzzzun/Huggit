@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct CommitDetailView: View {
-    @EnvironmentObject private var commitDetailViewModel: CommitDetailViewModel
+    @EnvironmentObject var homeViewModel: HomeViewModel
+    var commitDetailViewModel: CommitDetailViewModel {
+        homeViewModel.commitDetailViewModel
+    }
     
-    var arrowPosition: CGFloat = 0.5
-    var arrowHeight: CGFloat = 11
-    var tooltipWidth: CGFloat = .infinity
-    var tooltipHeight: CGFloat = 255
+    let arrowPosition: CGFloat
+    let arrowHeight: CGFloat
+    let tooltipWidth: CGFloat
+    let tooltipHeight: CGFloat
     
     var body: some View {
         Tooltip(width: tooltipWidth, height: tooltipHeight, cornerRadius: 5, arrowHeight: arrowHeight, arrowPosition: arrowPosition, arrowTipRadius: 2, color: Color(hex: "1F2125"), arrowDirection: .up) {

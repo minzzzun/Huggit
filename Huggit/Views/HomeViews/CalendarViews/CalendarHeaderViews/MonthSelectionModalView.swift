@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct MonthSelectionModalView: View {
-    @EnvironmentObject var calendarViewModel: CalendarViewModel
+    @EnvironmentObject var homeViewModel: HomeViewModel
+    var calendarViewModel: CalendarViewModel {
+        homeViewModel.calendarViewModel
+    }
     
     // 현재 선택된 (연, 월)부터 30개월 분 데이터를 생성합니다.
     var months: [(year: Int, month: Int, date: Date)] {

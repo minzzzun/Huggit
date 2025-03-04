@@ -8,13 +8,17 @@
 import SwiftUI
 
 struct CalendarCellView: View {
-    @EnvironmentObject var calendarViewModel: CalendarViewModel
-    @EnvironmentObject var commitDetailViewModel: CommitDetailViewModel
+    @EnvironmentObject var homeViewModel: HomeViewModel
+    var calendarViewModel: CalendarViewModel {
+        homeViewModel.calendarViewModel
+    }
     
     let day: Int?
     let size: CGFloat?
     let codeCommitCount: Int?
     let blogCommitCount: Int?
+    
+    let onSelect: (CGRect) -> Void
     
     var body: some View {
         GeometryReader { geometry in
@@ -24,7 +28,7 @@ struct CalendarCellView: View {
                    let _ = blogCommitCount {
                     Button(action: {
                         let frame = geometry.frame(in: .global)
-                        commitDetailViewModel.selectedCellFrame = frame
+                        onSelect(frame)
                     }) {
                         Rectangle()
                             .frame(width: size, height: size)

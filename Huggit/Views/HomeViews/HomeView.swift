@@ -3,7 +3,6 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject private var homeViewModel = HomeViewModel()
-    @StateObject private var commitDetailViewModel = CommitDetailViewModel()
     
     let horizontalPadding: CGFloat = 21
     
@@ -15,14 +14,20 @@ struct HomeView: View {
                 ScrollView(.vertical) {
                     VStack {
                         HomeHeaderView()
-                        CalendarView()
-                            .padding(.top, 49)
+                        CalendarView(onCellSelect: { cellFrame in
+                            let containerFrame = geometry.frame(in: .global)
+                            homeViewModel.commitDetailViewModel.updateSelection(
+                                cellFrame: cellFrame,
+                                containerFrame: containerFrame,
+                                horizontalPadding: horizontalPadding
+                            )
+                        })
+                        .padding(.top, 49)
                     }
-                    .environmentObject(homeViewModel)
                     .padding(.horizontal, horizontalPadding)
                 }
                 
-                if let cellFrame = commitDetailViewModel.selectedCellFrame {
+                if let cellFrame = homeViewModel.commitDetailViewModel.selectedCellFrame {
                     let containerFrame = geometry.frame(in: .global)
                     let tooltipWidth = geometry.size.width - horizontalPadding * 2
                     let tooltipHeight = 255.0
@@ -41,7 +46,7 @@ struct HomeView: View {
                         .fill(Color.black.opacity(0.7), style: FillStyle(eoFill: true))
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            commitDetailViewModel.clearSelection()
+                            homeViewModel.commitDetailViewModel.clearSelection()
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     
@@ -56,7 +61,7 @@ struct HomeView: View {
                     )
                 }
             }
-            .environmentObject(commitDetailViewModel)
+            .environmentObject(homeViewModel)
         }
     }
 }
