@@ -11,11 +11,15 @@ extension View {
     public func foregroundLinearGradient(
         colors: [Color],
         startPoint: UnitPoint,
-        endPoint: UnitPoint) -> some View
-    {
+        endPoint: UnitPoint,
+        stops: [Double]? = nil
+    ) -> some View {
         self.overlay(
             LinearGradient(
-                colors: colors,
+                stops: zip(
+                    stops ?? Array(stride(from: 0, through: 1, by: 1.0 / Double(colors.count - 1))),
+                    colors
+                ).map { Gradient.Stop(color: $1, location: $0) },
                 startPoint: startPoint,
                 endPoint: endPoint
             )
