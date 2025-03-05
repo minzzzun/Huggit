@@ -73,12 +73,6 @@ final class CalendarViewModel: ObservableObject {
         let totalDays = daysInMonth.count
         self.dayAllCommitCount = Array(repeating: 0, count: totalDays)
         self.dayBlogCommitCount = Array(repeating: 0, count: totalDays)
-        
-        // 테스트용 MockData 생성
-        historicalDayAllCommitCounts = [
-            (0..<28).map { _ in Int.random(in: 0...1) },
-            (0..<31).map { _ in Int.random(in: 0...1) }
-        ]
     }
     
     func fetchContributions(for username: String) {

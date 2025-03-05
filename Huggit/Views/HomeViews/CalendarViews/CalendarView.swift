@@ -10,7 +10,6 @@ import SwiftUI
 struct CellInfo {
     let frame: CGRect
     let day: Int?
-    let commitCount: Int
 }
 
 struct CalendarView: View {
@@ -66,7 +65,7 @@ struct CalendarView: View {
                                             codeCommitCount: allCommitCount - blogCommitCount,
                                             blogCommitCount: blogCommitCount,
                                             onSelect: { cellFrame in
-                                                let cellInfo = CellInfo(frame: cellFrame, day: day, commitCount: allCommitCount)
+                                                let cellInfo = CellInfo(frame: cellFrame, day: day)
                                                 onCellSelect(cellInfo)
                                             }
                                         )
@@ -77,7 +76,7 @@ struct CalendarView: View {
                                             codeCommitCount: 0,
                                             blogCommitCount: 0,
                                             onSelect: { cellFrame in
-                                                let cellInfo = CellInfo(frame: cellFrame, day: day, commitCount: 0)
+                                                let cellInfo = CellInfo(frame: cellFrame, day: day)
                                                 onCellSelect(cellInfo)
                                             }
                                         )
@@ -110,18 +109,6 @@ struct CalendarView: View {
                     }
                 }
                 Spacer()
-            }
-            .onAppear {
-                if let username = calendarViewModel.username {
-                    calendarViewModel.fetchContributions(for: username)
-                } else {
-                    print("GitHub 사용자 정보가 아직 로드되지 않음")
-                }
-            }
-            .onChange(of: calendarViewModel.username) {
-                if let username = calendarViewModel.username {
-                    calendarViewModel.fetchContributions(for: username)
-                }
             }
         }
     }

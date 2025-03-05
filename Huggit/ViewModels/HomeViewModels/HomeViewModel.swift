@@ -54,10 +54,32 @@ final class HomeViewModel: ObservableObject {
                     self?.githubUser = user
                     self?.calendarViewModel.username = user.login
                     self?.commitDetailViewModel.username = user.login
+                    // 사용자 정보가 로드되면 HomeViewModel에서 모든 데이터를 한 번에 불러옵니다.
+                    self?.loadAllData()
                 case .failure(let error):
                     print("Error fetching GitHub user: \(error)")
                 }
             }
         }
+    }
+    
+    func loadAllData() {
+        self.loadContributionDataInCurrentMonth()
+    }
+    
+    func loadContributionDataInCurrentMonth() {
+        guard let username = githubUser?.login else {
+            print("GitHub 사용자 정보가 아직 로드되지 않음")
+            return
+        }
+        
+        // 현재 달의 contributions
+        calendarViewModel.fetchContributions(for: username)
+        
+        homeHeaderViewModel.dayAllCommitCount = calendarViewModel.dayAllCommitCount
+        homeHeaderViewModel.historicalDayAllCommitCounts = calendarViewModel.historicalDayAllCommitCounts ?? []
+        homeHeaderViewModel.calculateCommitStreak()
+        
+        commitDetailViewModel.fetchAllContributionDetails(for: username)
     }
 }

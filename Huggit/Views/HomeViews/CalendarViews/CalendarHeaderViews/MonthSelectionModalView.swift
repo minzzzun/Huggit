@@ -36,7 +36,7 @@ struct MonthSelectionModalView: View {
                         calendarViewModel.currentYear = item.year
                         calendarViewModel.currentMonth = item.month
                         calendarViewModel.selectMonth = false
-                        calendarViewModel.fetchContributions(for: calendarViewModel.username ?? "")
+                        homeViewModel.loadContributionDataInCurrentMonth()
                     }) {
                         Text("\(item.year)년 \(item.month)월")
                             .frame(maxWidth: .infinity, alignment: .trailing)

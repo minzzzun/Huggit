@@ -19,7 +19,6 @@ struct HomeView: View {
                             homeViewModel.commitDetailViewModel.updateSelection(
                                 cellFrame: cellInfo.frame,
                                 containerFrame: containerFrame,
-                                commitCount: cellInfo.commitCount,
                                 day: cellInfo.day ?? 1,
                                 horizontalPadding: horizontalPadding
                             )
@@ -27,6 +26,9 @@ struct HomeView: View {
                         .padding(.top, 49)
                     }
                     .padding(.horizontal, horizontalPadding)
+                }
+                .refreshable {
+                    homeViewModel.loadAllData()
                 }
                 
                 if let cellFrame = homeViewModel.commitDetailViewModel.selectedCellFrame {
