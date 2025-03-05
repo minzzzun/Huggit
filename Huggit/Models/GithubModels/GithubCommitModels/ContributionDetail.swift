@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct CommitDetail: Identifiable, Decodable {
+struct ContributionDetail: Identifiable, Decodable {
     var id = UUID()  
     let repositoryName: String
-    let commitMessages: [String]
+    let messages: [String]
 }

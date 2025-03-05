@@ -55,7 +55,7 @@ struct CommitDetailView: View {
                     VStack(spacing: 20) {
                         ForEach(commitDetailViewModel.commitDetails, id: \.repositoryName) { detail in
                             CommitDetailSectionView(repoName: detail.repositoryName,
-                                                    commitMessages: detail.commitMessages)
+                                                    commitMessages: detail.messages)
                         }
                     }
                     .padding(.top, 10)

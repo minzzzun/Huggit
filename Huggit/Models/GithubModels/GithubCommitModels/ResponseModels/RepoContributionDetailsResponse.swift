@@ -1,12 +1,12 @@
 //
-// RepoCommitHistoryResponse.swift
+// RepoContributionDetailsResponse.swift
 // Huggit
 //
 // Created by Minhyeok Kim on 3/4/25.
 
 import Foundation
 
-struct RepoCommitHistoryResponse: Decodable {
+struct RepoContributionDetailsResponse: Decodable {
     let data: DataClass?
     let errors: [GraphQLError]?
     
@@ -23,7 +23,6 @@ struct RepoCommitHistoryResponse: Decodable {
                         struct CommitNode: Decodable {
                             let message: String
                             let author: Author?
-                            
                             struct Author: Decodable {
                                 let user: GithubUser?
                             }

@@ -1,5 +1,5 @@
 //
-//  ContributionsCollectionResponse.swift
+//  ContributionCountsInPeriodResponse.swift
 //  Huggit
 //
 //  Created by Minhyeok Kim on 3/4/25.
@@ -8,7 +8,7 @@
 import Foundation
 
 // 일별 커밋 수를 가져오기 위한 모델
-struct ContributionsCollectionResponse: Decodable {
+struct ContributionCountsInPeriodResponse: Decodable {
     struct Data: Decodable {
         struct User: Decodable {
             struct ContributionsCollection: Decodable {

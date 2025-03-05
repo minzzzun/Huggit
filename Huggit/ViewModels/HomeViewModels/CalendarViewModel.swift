@@ -93,7 +93,7 @@ final class CalendarViewModel: ObservableObject {
         print("Fetching contributions for \(username)")
         print("Start date: \(startDate) / End date: \(endDate)")
         
-        GithubCommitFetchManager.shared.fetchContributions(username: username,
+        GithubCommitFetchManager.shared.fetchContributionCountsInPeriod(username: username,
                                                         from: startDate,
                                                         to: endDate) { [weak self] result in
             DispatchQueue.main.async {

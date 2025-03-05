@@ -19,7 +19,7 @@ final class CommitDetailViewModel: ObservableObject {
     @Published var selectedMonth: Int = 3
     @Published var selectedDay: Int = 1
     
-    @Published var commitDetails: [CommitDetail] = [] // Repo 이름, 커밋 메시지들
+    @Published var commitDetails: [ContributionDetail] = [] // Repo 이름, 커밋 메시지들
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -39,7 +39,7 @@ final class CommitDetailViewModel: ObservableObject {
     // 커밋 내역 가져오는 함수
     func fetchCommitDetails(for username: String, on date: Date) {
         print("fetchCommitDetails: 시작 - \(username), 날짜: \(date)")
-        GithubCommitFetchManager.shared.fetchCommitHistory(for: username, on: date) { result in
+        GithubCommitFetchManager.shared.fetchContributionDetails(for: username, on: date) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let details):
