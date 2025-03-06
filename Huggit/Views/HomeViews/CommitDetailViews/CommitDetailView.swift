@@ -8,21 +8,32 @@
 import SwiftUI
 
 struct CommitDetailView: View {
-    @EnvironmentObject private var commitDetailViewModel: CommitDetailViewModel
+    @EnvironmentObject var homeViewModel: HomeViewModel
+    var commitDetailViewModel: CommitDetailViewModel {
+        homeViewModel.commitDetailViewModel
+    }
     
-    var arrowPosition: CGFloat = 0.5
-    var arrowHeight: CGFloat = 11
-    var tooltipWidth: CGFloat = .infinity
-    var tooltipHeight: CGFloat = 255
+    let arrowPosition: CGFloat
+    let arrowHeight: CGFloat
+    let tooltipWidth: CGFloat
+    let tooltipHeight: CGFloat
     
     var body: some View {
-        Tooltip(width: tooltipWidth, height: tooltipHeight, cornerRadius: 5, arrowHeight: arrowHeight, arrowPosition: arrowPosition, arrowTipRadius: 2, color: Color(hex: "1F2125"), arrowDirection: .up) {
+        Tooltip(width: tooltipWidth,
+                height: tooltipHeight,
+                cornerRadius: 5,
+                arrowHeight: arrowHeight,
+                arrowPosition: arrowPosition,
+                arrowTipRadius: 2,
+                color: Color(hex: "1F2125"),
+                arrowDirection: .up) {
             VStack {
-                HStack (alignment: .top) {
+                HStack(alignment: .top) {
                     (
-                        Text("2025년 2월 8일에는 \n총 ")
+                        Text("\(String(commitDetailViewModel.selectedYear))년 \(commitDetailViewModel.selectedMonth)월 \(commitDetailViewModel.selectedDay)일에는 \n총 ")
                             .foregroundStyle(.white)
-                        + Text("5개")
+                        + Text("\(commitDetailViewModel.totalContributionCount)개")
+                            .foregroundStyle(.green)
                             .foregroundStyle(.green)
                         + Text("의 커밋을 했어요!")
                             .foregroundStyle(.white)
@@ -40,16 +51,23 @@ struct CommitDetailView: View {
                     }
                 }
                 .padding(.bottom, 10)
+                
                 ScrollView(.vertical) {
-                    // TODO: ForEach로 repo 값 보내기
-                    VStack (spacing: 20) {
-                        CommitDetailSectionView()
-                        CommitDetailSectionView()
+                    VStack(spacing: 20) {
+                        ForEach(commitDetailViewModel.contributionDetails, id: \.repositoryName) { detail in
+                            CommitDetailSectionView(repoName: detail.repositoryName,
+                                                    commitMessages: detail.messages)
+                        }
                     }
                     .padding(.top, 10)
                 }
             }
             .padding(20)
         }
+                .onAppear {
+                    if let details = commitDetailViewModel.contributionDetailsByDay[commitDetailViewModel.selectedDay] {
+                        commitDetailViewModel.contributionDetails = details
+                    }
+                }
     }
 }
