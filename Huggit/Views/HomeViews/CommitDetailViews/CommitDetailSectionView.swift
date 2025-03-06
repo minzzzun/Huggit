@@ -8,40 +8,34 @@
 import SwiftUI
 
 struct CommitDetailSectionView: View {
-    
+    var repoName: String
+    var commitMessages: [String]
     
     var body: some View {
         HStack {
             Rectangle()
                 .frame(width: 3)
                 .background(Color(hex:"313138"))
+            
             VStack(alignment: .leading) {
                 // Repo
-                Text("Mumuk")
+                Text(repoName)
                     .font(.system(size: 14))
                     .foregroundStyle(.white)
                 
-                // Commit Message -> 나중에 ForEach로 바꿀 것
-                VStack(spacing: 3) {
+                // Commit Message
+                ForEach(Array(commitMessages.enumerated()), id: \.offset) { index, message in
                     HStack {
                         Image(systemName: "circle.fill")
                             .resizable()
                             .frame(width: 5, height: 5)
                             .foregroundStyle(.blue)
-                        Text("머먹 온보딩")
+                        Text(message)
                             .font(.system(size: 12))
                             .foregroundStyle(.blue)
                             .padding(.leading, 5)
-                    }
-                    HStack {
-                        Image(systemName: "circle.fill")
-                            .resizable()
-                            .frame(width: 5, height: 5)
-                            .foregroundStyle(.blue)
-                        Text("머먹 온보딩")
-                            .font(.system(size: 12))
-                            .foregroundStyle(.blue)
-                            .padding(.leading, 5)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
                     }
                 }
             }
@@ -50,8 +44,4 @@ struct CommitDetailSectionView: View {
             Spacer()
         }
     }
-}
-
-#Preview {
-    CommitDetailSectionView()
 }

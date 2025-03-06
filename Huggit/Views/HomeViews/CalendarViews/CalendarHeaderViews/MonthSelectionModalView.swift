@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct MonthSelectionModalView: View {
-    @EnvironmentObject var calendarViewModel: CalendarViewModel
+    @EnvironmentObject var homeViewModel: HomeViewModel
+    var calendarViewModel: CalendarViewModel {
+        homeViewModel.calendarViewModel
+    }
     
     // 현재 선택된 (연, 월)부터 30개월 분 데이터를 생성합니다.
     var months: [(year: Int, month: Int, date: Date)] {
         let calendar = Calendar.current
-        let currentComponents = DateComponents(year: calendarViewModel.currentYear, month: calendarViewModel.currentMonth)
-        guard let currentDate = calendar.date(from: currentComponents) else { return [] }
+        let currentDate = Date()  // 오늘 날짜
         return (0..<30).compactMap { offset in
             if let date = calendar.date(byAdding: .month, value: -offset, to: currentDate) {
                 let comps = calendar.dateComponents([.year, .month], from: date)
@@ -34,6 +36,7 @@ struct MonthSelectionModalView: View {
                         calendarViewModel.currentYear = item.year
                         calendarViewModel.currentMonth = item.month
                         calendarViewModel.selectMonth = false
+                        homeViewModel.loadContributionDataInCurrentMonth()
                     }) {
                         Text("\(item.year)년 \(item.month)월")
                             .frame(maxWidth: .infinity, alignment: .trailing)
