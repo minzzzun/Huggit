@@ -13,8 +13,8 @@ struct HuggitApp: App {
     @StateObject private var viewModel = GithubLoginViewModel()
     var body: some Scene {
         WindowGroup {
-            VelogView()
-//            ContentView()
+            
+            ContentView()
                 .preferredColorScheme(.light)
                                 .environmentObject(viewModel)
             

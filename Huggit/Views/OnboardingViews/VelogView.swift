@@ -63,9 +63,9 @@ struct VelogView: View {
                 
                 Button(action:{
                     viewModel.saveVelog()
-                    router.toNamed("tistoryView")
+                    router.toNamed("/tistoryView")
                 }){
-                    Text((viewModel.velogName ?? "").isEmpty ? "건너뛰기" : "다음")
+                    Text(viewModel.velogName.isEmpty ? "건너뛰기" : "다음")
                         .frame(maxWidth: .infinity)
                         .frame(height: 64)
                         .background(Color.blueButton)
