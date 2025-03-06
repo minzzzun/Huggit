@@ -13,12 +13,12 @@ struct GithubLoginView : View {
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
-                // 상단 네비게이션 영역
-                GithubLoginHeaderView()
-                
+                // HeaderView
+                OnboardingHeaderView(activeIndex: 0)
                 Spacer()
                     .frame(height: 50)
-                
+
+                // BodyView
                 HStack {
                     // GitHub 로고와 텍스트
                     VStack(alignment: .leading ,spacing: 16) {
@@ -49,7 +49,7 @@ struct GithubLoginView : View {
                 Button(action: {
                     print("깃허브 로그인")
                     viewModel.requestCode()
-                    router.toNamed("/tistoryView")
+                    router.toNamed("/velogView")
                 }) {
                     Text("깃허브 로그인")
                         .font(.system(size: 16, weight: .semibold))

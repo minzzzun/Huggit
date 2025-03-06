@@ -7,6 +7,7 @@ struct TistoryView: View {
     @EnvironmentObject var router : NavigationRouter
     
     var body: some View {
+        
         VStack{
             Spacer()
             Text("티스토리 닉네임을 입력하세요")
@@ -18,7 +19,7 @@ struct TistoryView: View {
             Spacer()
             Button(action:{
                 viewModel.saveTistoryName()
-                router.toNamed("/velogView")
+                router.toNamed("/")
             }){
                 Text("다음")
                     .frame(width: 200,height: 50)
