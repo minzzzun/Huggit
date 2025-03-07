@@ -108,7 +108,6 @@ struct CalendarView: View {
                             .padding(.top, 1)
                     }
                 }
-                Spacer()
             }
         }
     }

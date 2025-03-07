@@ -13,6 +13,8 @@ final class HomeViewModel: ObservableObject {
     @Published var calendarViewModel: CalendarViewModel
     @Published var commitDetailViewModel: CommitDetailViewModel
     @Published var homeHeaderViewModel: HomeHeaderViewModel
+    @Published var commitListViewModel: CommitListViewModel
+    @Published var commitCreateViewModel: CommitCreateViewModel
     
     // HomeView Publishers
     @Published var githubUser: GithubUser?
@@ -25,9 +27,15 @@ final class HomeViewModel: ObservableObject {
         let commitDetailVM = CommitDetailViewModel()
         let homeHeaderVM = HomeHeaderViewModel(dayAllCommitCount: calendarVM.dayAllCommitCount,
                                                historicalDayAllCommitCounts: calendarVM.historicalDayAllCommitCounts ?? [])
+        let commitListVM = CommitListViewModel()
+        let commitCreateVM = CommitCreateViewModel()
+        
         self.calendarViewModel = calendarVM
         self.commitDetailViewModel = commitDetailVM
         self.homeHeaderViewModel = homeHeaderVM
+        self.commitListViewModel = commitListVM
+        self.commitCreateViewModel = commitCreateVM
+        
         
         calendarViewModel.objectWillChange.sink { [weak self] _ in
             self?.objectWillChange.send()
@@ -41,6 +49,12 @@ final class HomeViewModel: ObservableObject {
         commitDetailViewModel.objectWillChange.sink { [weak self] _ in
             self?.objectWillChange.send()
         }.store(in: &cancellables)
+        
+        commitCreateViewModel.objectWillChange
+            .sink { [weak self] _ in
+                self?.objectWillChange.send()
+            }
+            .store(in: &cancellables)
         
         fetchGithubUser()
     }
@@ -81,5 +95,7 @@ final class HomeViewModel: ObservableObject {
         homeHeaderViewModel.calculateCommitStreak()
         
         commitDetailViewModel.fetchAllContributionDetails(for: username)
+        
+        // TODO: CommitListViewModel을 통해 Tistory, Velog 정보 불러오기
     }
 }
