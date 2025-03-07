@@ -4,6 +4,18 @@ import SwiftUI
 struct HomeView: View {
     @StateObject private var homeViewModel = HomeViewModel()
     let horizontalPadding: CGFloat = 21
+    var calendarHeight: CGFloat {
+        let totalCells = homeViewModel.calendarViewModel.daysInMonthWithPadding.count
+        let numberOfRows = ceil(Double(totalCells) / 7.0)
+        let rowHeight = 41.0
+        let rowPadding = 12.0
+        let dateGridHeight = (rowHeight * numberOfRows) + (rowPadding * (numberOfRows - 1))
+        let calendarHeaderHeight = 25.0
+        let vStackPadding = 27.0
+        let dayHeaderHeight = 11.0
+        let dayHeaderPadding = 15.0
+        return calendarHeaderHeight + vStackPadding + dayHeaderHeight + dayHeaderPadding + dateGridHeight
+    }
     
     var body: some View {
         GeometryReader { geometry in
@@ -13,7 +25,6 @@ struct HomeView: View {
                 ScrollView(.vertical) {
                     VStack {
                         HomeHeaderView()
-                        // CalendarView에 onCellSelect 클로저를 전달합니다.
                         CalendarView { cellInfo in
                             let containerFrame = geometry.frame(in: .global)
                             homeViewModel.commitDetailViewModel.updateSelection(
@@ -23,7 +34,11 @@ struct HomeView: View {
                                 horizontalPadding: horizontalPadding
                             )
                         }
+                        .frame(height: calendarHeight)
                         .padding(.top, 49)
+                        
+                        CommitListView()
+                            .padding(.top, 53)
                     }
                     .padding(.horizontal, horizontalPadding)
                 }
@@ -31,6 +46,7 @@ struct HomeView: View {
                     homeViewModel.loadAllData()
                 }
                 
+                // CommitDetailView
                 if let cellFrame = homeViewModel.commitDetailViewModel.selectedCellFrame {
                     let containerFrame = geometry.frame(in: .global)
                     let tooltipWidth = geometry.size.width - horizontalPadding * 2
@@ -56,10 +72,25 @@ struct HomeView: View {
                                      arrowHeight: 11,
                                      tooltipWidth: tooltipWidth,
                                      tooltipHeight: tooltipHeight)
-                        .position(
-                            x: containerFrame.midX,
-                            y: localCellFrame.maxY + 9 + tooltipHeight / 2
-                        )
+                    .position(
+                        x: containerFrame.midX,
+                        y: localCellFrame.maxY + 9 + tooltipHeight / 2
+                    )
+                }
+                // CommitCreateView
+                if homeViewModel.commitCreateViewModel.selectedCommit != nil {
+                        // 배경 터치 시 CommitCreateView 닫힘
+                        Color.black.opacity(0.3)
+                            .ignoresSafeArea()
+                            .onTapGesture {
+                                homeViewModel.commitCreateViewModel.cancelCommit()
+                            }
+                        
+                        CommitCreateView()
+                            .frame(width: geometry.size.width * 0.9, height: 300)
+                            .background(Color.white)
+                            .cornerRadius(12)
+                    
                 }
             }
             .environmentObject(homeViewModel)
