@@ -1,8 +1,8 @@
 import SwiftUI
 
-
-struct GithubLoginHeaderView: View {
-    @EnvironmentObject var router : NavigationRouter
+struct OnboardingHeaderView: View {
+    @EnvironmentObject var router: NavigationRouter
+    let activeIndex : Int
     
     var body: some View {
         HStack {
@@ -17,22 +17,19 @@ struct GithubLoginHeaderView: View {
             
             // 페이지 인디케이터
             HStack(spacing: 4) {
-                Circle()
-                    .fill(Color.blueButton)
-                    .frame(width: 6, height: 6)
-                Circle()
-                    .fill(Color.gray.opacity(0.5))
-                    .frame(width: 6, height: 6)
-                Circle()
-                    .fill(Color.gray.opacity(0.5))
-                    .frame(width: 6, height: 6)
+                ForEach(0..<3) { index in
+                    Circle()
+                        .fill(index <= activeIndex ? Color.blueButton : Color.gray.opacity(0.5))
+                        .frame(width: 6, height: 6)
+                }
             }
             
             Spacer()
         }
         .padding(.horizontal, 20)
         .padding(.top, 25)
+        
+        
+        
     }
 }
-
-

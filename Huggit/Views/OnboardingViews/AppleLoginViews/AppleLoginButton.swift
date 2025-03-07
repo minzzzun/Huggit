@@ -17,7 +17,7 @@ struct AppleLoginButton: View {
             }
         )
         .frame(width: UIScreen.main.bounds.width - 40)
-        .frame(height: 50)
+        .frame(height: 64)
         .cornerRadius(8)
         .onChange(of: viewModel.isAuthenticated) { newValue in
             if newValue {

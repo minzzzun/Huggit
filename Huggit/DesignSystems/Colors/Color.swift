@@ -41,6 +41,9 @@ extension Color {
         )
     }
     
+    
+    static let grayMessage = Color(hex: "484E5A")
+    
     static let blackBackground = Color(hex: "121317")
     static let gradientBackground = Color(hex: "3E4046")
     
