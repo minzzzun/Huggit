@@ -6,7 +6,8 @@ class GithubLoginViewModel: ObservableObject {
     let clientSecret = GitHubConfig.client_secret
     
     let defaults = UserDefaults.standard
-    // 1. 깃허브에서 code 받아오기
+    
+    //MARK: - 1. 깃허브에서 code 받아오기
     func requestCode() {
         print(#fileID,#function,#line, "")
         let scope = "repo,user"
@@ -20,7 +21,7 @@ class GithubLoginViewModel: ObservableObject {
     }
     
     
-    // 2. 받아온 code로 Token 받기
+    //MARK: - 2. 받아온 code로 Token 받기
     func requestAccessToken(code: String) {
         print(#fileID, #function, #line, "")
        
@@ -80,6 +81,8 @@ class GithubLoginViewModel: ObservableObject {
                         print("gitToken 저장됨: \(gitToken)")
 //                        self.getUser() // 토큰을 받은 후 사용자 정보 요청
 //                        self.getRepos()
+                        self.createRepository()
+
                     }
                 } else {
                     print("❌ access_token이 응답에 없음")
@@ -90,107 +93,27 @@ class GithubLoginViewModel: ObservableObject {
         }.resume()
     }
     
-    
-    func getUser() {
-        print(#fileID,#function,#line, "")
+  
+    //MARK: - 레포 생성하기
+    func createRepository() {
         guard let accessToken = self.accessToken else {
-            print("❌ 액세스 토큰이 없습니다.")
+            print("🚨토큰 없음 ")
             return
         }
-        
-        let url = URL(string: "https://api.github.com/user")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.addValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
-        request.addValue("token \(accessToken)", forHTTPHeaderField: "Authorization")
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("❌ 네트워크 에러: \(error.localizedDescription)")
-                return
+    
+        GithubRepoManager.shared.createRepository(accessToken: accessToken, name: "NewRepo1", description: "Test repository", isPrivate: false) { result in
+            switch result {
+            case .success(let repository):
+                print("리포지토리 생성 성공: \(repository.name)")
+            case .failure(let error):
+                print("리포지토리 생성 실패: \(error.localizedDescription)")
             }
-            
-            guard let httpResponse = response as? HTTPURLResponse,
-                  (200...299).contains(httpResponse.statusCode) else {
-                print("❌ 서버 응답 에러: \(response.debugDescription)")
-                return
-            }
-            
-            guard let data = data else {
-                print("❌ 데이터 없음")
-                return
-            }
-            
-            do {
-                if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] {
-                    print("✅ 사용자 정보:")
-                    print("이름: \(json["name"] as? String ?? "이름 없음")")
-                    print("로그인: \(json["login"] as? String ?? "로그인 정보 없음")")
-                    print("이메일: \(json["email"] as? String ?? "이메일 없음")")
-                    print("프로필 URL: \(json["html_url"] as? String ?? "URL 없음")")
-                    print("전체 정보: \(json)")
-                }
-            } catch {
-                print("❌ JSON 파싱 에러: \(error.localizedDescription)")
-            }
-        }.resume()
+        }
+
     }
     
     
     
-    //MARK: - repo 가져오기
-    
-    func getRepos() {
-        print(#fileID, #function, #line, "")
-        guard let accessToken = self.accessToken else {
-            print("❌ 액세스 토큰이 없습니다.")
-            return
-        }
-        
-        let url = URL(string: "https://api.github.com/user/repos?per_page=100")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.addValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
-        request.addValue("token \(accessToken)", forHTTPHeaderField: "Authorization")
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("❌ 네트워크 에러: \(error.localizedDescription)")
-                return
-            }
-            
-            guard let httpResponse = response as? HTTPURLResponse,
-                  (200...299).contains(httpResponse.statusCode) else {
-                print("❌ 서버 응답 에러: \(response?.description ?? "알 수 없는 오류")")
-                return
-            }
-            
-            guard let data = data else {
-                print("❌ 데이터 없음")
-                return
-            }
-            
-            do {
-                if let repositories = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] {
-                    print("✅ 저장소 목록:")
-                    for (index, repo) in repositories.enumerated() {
-                        let name = repo["name"] as? String ?? "이름 없음"
-                        let fullName = repo["full_name"] as? String ?? "전체 이름 없음"
-                        let htmlURL = repo["html_url"] as? String ?? "URL 없음"
-                        
-                        print("\(index + 1). \(name) (\(fullName))")
-                        print("   URL: \(htmlURL)")
-                        print("   -----------------------------")
-                    }
-                    print("총 \(repositories.count)개의 저장소가 있습니다.")
-                } else {
-                    print("❌ 저장소 목록을 파싱할 수 없습니다.")
-                }
-            } catch {
-                print("❌ JSON 파싱 에러: \(error.localizedDescription)")
-            }
-        }.resume()
-    }
     
     
 }

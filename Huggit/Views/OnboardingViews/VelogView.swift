@@ -19,7 +19,7 @@ struct VelogView: View {
                 //bodyView
                 
                 VStack(alignment: .leading,spacing: 15) {
-                    Image("velogLogo")
+                    Image("VelogLogo")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 35, height: 35)
