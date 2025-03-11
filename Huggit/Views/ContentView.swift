@@ -26,6 +26,8 @@ struct ContentView: View {
                         TistoryView()
                     case "/velogView":
                         VelogView()
+                    case "/mypageView":
+                        MyPageView()
                         
                         
                     default:
@@ -46,8 +48,4 @@ struct ContentView: View {
             }
         }
     }
-}
-
-#Preview {
-    ContentView()
 }

@@ -24,6 +24,7 @@ struct HomeView: View {
                 
                 ScrollView(.vertical) {
                     VStack {
+                        AppBarView(isHomeView: true)
                         HomeHeaderView()
                         CalendarView { cellInfo in
                             let containerFrame = geometry.frame(in: .global)
