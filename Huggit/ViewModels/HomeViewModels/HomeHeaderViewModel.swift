@@ -14,7 +14,7 @@ final class HomeHeaderViewModel: ObservableObject {
     @Published var dayAllCommitCount: [Int] {
         didSet {
             updateCommitsInMonth()
-            calculateCommitStreak() // ✅ 자동으로 연속 커밋 일수 업데이트
+            calculateCommitStreak() 
         }
     }
 
@@ -33,7 +33,7 @@ final class HomeHeaderViewModel: ObservableObject {
             self.commitsInMonth = dayAllCommitCount.reduce(0, +)
         }
 
-        /// 이번 달의 연속된 커밋 일 수 계산 (🔥 자동 업데이트)
+        /// 이번 달의 연속된 커밋 일 수 계산
         private func calculateCommitStreak() {
             let today = Calendar.current.component(.day, from: Date())
             commitStreak = 0
@@ -47,19 +47,34 @@ final class HomeHeaderViewModel: ObservableObject {
             }
         }
     
-    // 기존의 stampName, tooltipText 등은 그대로 둡니다.
     func stampName(for stampOrder: Int) -> String {
         switch stampOrder {
         case 1:
-            return commitStreak >= 3 ? "stamp_1st_enable" : "stamp_1st_disable"
+            let index = today - 3
+            if index >= 0, index < dayAllCommitCount.count, dayAllCommitCount[index] > 0 {
+                return "stamp_1st_enable"
+            } else {
+                return "stamp_1st_disable"
+            }
         case 2:
-            return commitStreak >= 2 ? "stamp_2nd_3rd_enable" : "stamp_2nd_3rd_disable"
+            let index = today - 2
+            if index >= 0, index < dayAllCommitCount.count, dayAllCommitCount[index] > 0 {
+                return "stamp_2nd_3rd_enable"
+            } else {
+                return "stamp_2nd_3rd_disable"
+            }
         case 3:
-            return commitStreak >= 1 ? "stamp_2nd_3rd_enable" : "stamp_2nd_3rd_disable"
+            let index = today - 1
+            if index < dayAllCommitCount.count, dayAllCommitCount[index] > 0 {
+                return "stamp_2nd_3rd_enable"
+            } else {
+                return "stamp_2nd_3rd_disable"
+            }
         default:
             return ""
         }
     }
+
     
     var tooltipText: String {
         if today - 1 >= dayAllCommitCount.count || dayAllCommitCount[today - 1] == 0 {

@@ -35,6 +35,14 @@ final class HomeViewModel: ObservableObject {
         self.commitListViewModel = commitListVM
         self.commitCreateViewModel = commitCreateVM
         
+        
+        calendarViewModel.objectWillChange
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                 self?.objectWillChange.send()
+            }
+            .store(in: &cancellables)
+        
         // `calendarViewModel.dayAllCommitCount` 변경 감지 → `homeHeaderViewModel` 자동 업데이트
         calendarViewModel.$dayAllCommitCount
             .sink { [weak self] newCommitCounts in
