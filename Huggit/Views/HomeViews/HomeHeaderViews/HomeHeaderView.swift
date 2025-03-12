@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct HomeHeaderView: View {
+    @EnvironmentObject var homeViewModel: HomeViewModel
+    var homeHeaderViewModel: HomeHeaderViewModel {
+        homeViewModel.homeHeaderViewModel
+    }
+    
     let month = Calendar.current.component(.month, from: Date())
-    var commitsInMonth: Int = 20
+    
     var body: some View {
         HStack {
             VStack (alignment: .leading) {
@@ -20,7 +25,7 @@ struct HomeHeaderView: View {
                 (
                     Text("\(month)월에는 ")
                         .foregroundStyle(.white)
-                    + Text("\(commitsInMonth)개")
+                    + Text("\(homeHeaderViewModel.commitsInMonth)개")
                         .foregroundStyle(.blue)
                     + Text("의 커밋이\n업로드 되었어요!")
                         .foregroundStyle(.white)

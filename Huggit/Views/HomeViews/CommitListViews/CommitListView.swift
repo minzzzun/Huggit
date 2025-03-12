@@ -27,7 +27,7 @@ struct CommitListView: View {
             .font(.system(size: 16))
             
             VStack(spacing: 16) {
-                ForEach(commitListViewModel.soredCommitList, id: \.id) { commit in
+                ForEach(commitListViewModel.sortedCommitList, id: \.id) { commit in
                     CommitListCellView(commit: commit)
                 }
             }

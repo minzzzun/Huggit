@@ -25,8 +25,7 @@ final class HomeViewModel: ObservableObject {
     init() {
         let calendarVM = CalendarViewModel()
         let commitDetailVM = CommitDetailViewModel()
-        let homeHeaderVM = HomeHeaderViewModel(dayAllCommitCount: calendarVM.dayAllCommitCount,
-                                               historicalDayAllCommitCounts: calendarVM.historicalDayAllCommitCounts ?? [])
+        let homeHeaderVM = HomeHeaderViewModel(dayAllCommitCount: calendarVM.dayAllCommitCount)
         let commitListVM = CommitListViewModel()
         let commitCreateVM = CommitCreateViewModel()
         
@@ -36,26 +35,27 @@ final class HomeViewModel: ObservableObject {
         self.commitListViewModel = commitListVM
         self.commitCreateViewModel = commitCreateVM
         
-        
-        calendarViewModel.objectWillChange.sink { [weak self] _ in
-            self?.objectWillChange.send()
-            self?.homeHeaderViewModel.dayAllCommitCount = self?.calendarViewModel.dayAllCommitCount ?? []
-            self?.homeHeaderViewModel.historicalDayAllCommitCounts = self?.calendarViewModel.historicalDayAllCommitCounts ?? []
-            
-            self?.commitDetailViewModel.selectedYear = self?.calendarViewModel.currentYear ?? 2025
-            self?.commitDetailViewModel.selectedMonth = self?.calendarViewModel.currentMonth ?? 3
-        }.store(in: &cancellables)
-        
-        commitDetailViewModel.objectWillChange.sink { [weak self] _ in
-            self?.objectWillChange.send()
-        }.store(in: &cancellables)
-        
+        // `calendarViewModel.dayAllCommitCount` 변경 감지 → `homeHeaderViewModel` 자동 업데이트
+        calendarViewModel.$dayAllCommitCount
+            .sink { [weak self] newCommitCounts in
+                self?.homeHeaderViewModel.dayAllCommitCount = newCommitCounts
+            }
+            .store(in: &cancellables)
+
+        // `commitDetailViewModel` 변경 감지
+        commitDetailViewModel.objectWillChange
+            .sink { [weak self] _ in
+                self?.objectWillChange.send()
+            }
+            .store(in: &cancellables)
+
+        // `commitCreateViewModel` 변경 감지
         commitCreateViewModel.objectWillChange
             .sink { [weak self] _ in
                 self?.objectWillChange.send()
             }
             .store(in: &cancellables)
-        
+
         fetchGithubUser()
     }
     
@@ -68,7 +68,6 @@ final class HomeViewModel: ObservableObject {
                     self?.githubUser = user
                     self?.calendarViewModel.username = user.login
                     self?.commitDetailViewModel.username = user.login
-                    // 사용자 정보가 로드되면 HomeViewModel에서 모든 데이터를 한 번에 불러옵니다.
                     self?.loadAllData()
                 case .failure(let error):
                     print("Error fetching GitHub user: \(error)")
@@ -77,25 +76,19 @@ final class HomeViewModel: ObservableObject {
         }
     }
     
+    // 전체 데이터 로드
     func loadAllData() {
         self.loadContributionDataInCurrentMonth()
     }
     
+    // 이번 달의 커밋 데이터 불러오기
     func loadContributionDataInCurrentMonth() {
         guard let username = githubUser?.login else {
             print("GitHub 사용자 정보가 아직 로드되지 않음")
             return
         }
         
-        // 현재 달의 contributions
         calendarViewModel.fetchContributions(for: username)
-        
-        homeHeaderViewModel.dayAllCommitCount = calendarViewModel.dayAllCommitCount
-        homeHeaderViewModel.historicalDayAllCommitCounts = calendarViewModel.historicalDayAllCommitCounts ?? []
-        homeHeaderViewModel.calculateCommitStreak()
-        
         commitDetailViewModel.fetchAllContributionDetails(for: username)
-        
-        // TODO: CommitListViewModel을 통해 Tistory, Velog 정보 불러오기
     }
 }
