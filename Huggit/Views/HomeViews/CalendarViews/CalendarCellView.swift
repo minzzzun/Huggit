@@ -20,6 +20,20 @@ struct CalendarCellView: View {
     
     let onSelect: (CGRect) -> Void
     
+    // 오늘에 해당 하는 셀인지
+    var isToday: Bool {
+        guard let day = day else { return false }
+        let current = Date()
+        let calendar = Calendar.current
+        let currentDay = calendar.component(.day, from: current)
+        let currentMonth = calendar.component(.month, from: current)
+        let currentYear = calendar.component(.year, from: current)
+        
+        return (day == currentDay) &&
+        (calendarViewModel.currentMonth == currentMonth) &&
+        (calendarViewModel.currentYear == currentYear)
+    }
+    
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 4) {
@@ -35,10 +49,14 @@ struct CalendarCellView: View {
                             .foregroundColor(.clear)
                             .background(cellBackground)
                             .clipShape(RoundedRectangle(cornerRadius: 4.55))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 4.55)
+                                    .stroke(isToday ? Color.green : Color.clear, lineWidth: 1)
+                            )
                     }
                     Text("\(day)")
                         .font(.caption)
-                        .foregroundColor(.white)
+                        .foregroundColor(isToday ? .green : .white)
                         .frame(height: 8)
                 } else {
                     // 빈 칸 처리
@@ -99,8 +117,8 @@ struct CalendarCellView: View {
             return AnyView(
                 LinearGradient(
                     gradient: Gradient(colors: [codeColor, blogColor]),
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
+                    startPoint: .bottomTrailing,
+                    endPoint: .topLeading
                 )
             )
         }

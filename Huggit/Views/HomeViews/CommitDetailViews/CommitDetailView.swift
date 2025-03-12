@@ -17,6 +17,7 @@ struct CommitDetailView: View {
     let arrowHeight: CGFloat
     let tooltipWidth: CGFloat
     let tooltipHeight: CGFloat
+    let arrowDirection: ArrowDirection
     
     var body: some View {
         Tooltip(width: tooltipWidth,
@@ -26,7 +27,7 @@ struct CommitDetailView: View {
                 arrowPosition: arrowPosition,
                 arrowTipRadius: 2,
                 color: Color(hex: "1F2125"),
-                arrowDirection: .up) {
+                arrowDirection: arrowDirection) {
             VStack {
                 HStack(alignment: .top) {
                     (

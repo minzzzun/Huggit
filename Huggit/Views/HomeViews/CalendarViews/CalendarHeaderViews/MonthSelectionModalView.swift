@@ -38,20 +38,20 @@ struct MonthSelectionModalView: View {
                         calendarViewModel.selectMonth = false
                         homeViewModel.loadContributionDataInCurrentMonth()
                     }) {
-                        Text("\(item.year)년 \(item.month)월")
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                            .padding(.vertical, 10)
-                            .padding(.horizontal, 10)
-                            .foregroundColor(.black)
+                        Text("\(String(item.year))년 \(item.month)월")
+                            .foregroundColor(.white)
+                            .font(.system(size: 11))
                     }
+                    .frame(height: (109 - 1.5) / 4)
                     if item.date != months.last?.date {
                         Divider()
+                            .frame(height: 0.5)
                     }
                 }
             }
         }
-        .background(Color.white)
-        .cornerRadius(8)
-        .shadow(radius: 5)
+        .background(.gray)
+        .cornerRadius(5)
+        .shadow(radius: 30)
     }
 }

@@ -14,7 +14,7 @@ final class HomeHeaderViewModel: ObservableObject {
     @Published var dayAllCommitCount: [Int] {
         didSet {
             updateCommitsInMonth()
-            calculateCommitStreak() 
+            calculateCommitStreak()
         }
     }
 

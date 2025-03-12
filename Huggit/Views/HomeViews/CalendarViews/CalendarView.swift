@@ -104,7 +104,7 @@ struct CalendarView: View {
                         
                         // 월 선택 모달 (기본 4개 항목 보임, 총 30개 항목 스크롤 가능)
                         MonthSelectionModalView()
-                            .frame(width: 150, height: 4 * 44)
+                            .frame(width: 94, height: 109)
                             .padding(.top, 1)
                     }
                 }
