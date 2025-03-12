@@ -13,8 +13,6 @@ struct HomeHeaderView: View {
         homeViewModel.homeHeaderViewModel
     }
     
-    let month = Calendar.current.component(.month, from: Date())
-    
     var body: some View {
         HStack {
             VStack (alignment: .leading) {
@@ -23,7 +21,7 @@ struct HomeHeaderView: View {
                     .font(.system(size: 12))
                     .padding(.top, 18)
                 (
-                    Text("\(month)월에는 ")
+                    Text("\(homeHeaderViewModel.selectedMonth)월에는 ")
                         .foregroundStyle(.white)
                     + Text("\(homeHeaderViewModel.commitsInMonth)개")
                         .foregroundStyle(.blue)

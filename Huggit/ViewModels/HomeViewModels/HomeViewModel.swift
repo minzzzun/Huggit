@@ -35,35 +35,52 @@ final class HomeViewModel: ObservableObject {
         self.commitListViewModel = commitListVM
         self.commitCreateViewModel = commitCreateVM
         
-        
+        // calendarViewModel 변경 감지
         calendarViewModel.objectWillChange
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
-                 self?.objectWillChange.send()
+                self?.objectWillChange.send()
             }
             .store(in: &cancellables)
         
-        // `calendarViewModel.dayAllCommitCount` 변경 감지 → `homeHeaderViewModel` 자동 업데이트
-        calendarViewModel.$dayAllCommitCount
-            .sink { [weak self] newCommitCounts in
-                self?.homeHeaderViewModel.dayAllCommitCount = newCommitCounts
+        calendarViewModel.$currentYear
+            .sink { [weak self] newYear in
+                self?.commitDetailViewModel.selectedYear = newYear
             }
             .store(in: &cancellables)
-
-        // `commitDetailViewModel` 변경 감지
+        
+        calendarViewModel.$currentMonth
+            .sink { [weak self] newMonth in
+                self?.homeHeaderViewModel.selectedMonth = newMonth
+                self?.commitDetailViewModel.selectedMonth = newMonth
+            }
+            .store(in: &cancellables)
+        
+        calendarVM.$dayAllCommitCount
+            .sink { [weak self] newCounts in
+                guard let self = self else { return }
+                // 최신 전체 데이터를 업데이트
+                self.homeHeaderViewModel.dayAllCommitCount = newCounts
+                
+                // snapshot이 아직 비어있으면 한 번만 업데이트
+                self.homeHeaderViewModel.updateCommitsInThisMonth(with: newCounts)
+            }
+            .store(in: &cancellables)
+        
+        // commitDetailViewModel 변경 감지
         commitDetailViewModel.objectWillChange
             .sink { [weak self] _ in
                 self?.objectWillChange.send()
             }
             .store(in: &cancellables)
-
-        // `commitCreateViewModel` 변경 감지
+        
+        // commitCreateViewModel 변경 감지
         commitCreateViewModel.objectWillChange
             .sink { [weak self] _ in
                 self?.objectWillChange.send()
             }
             .store(in: &cancellables)
-
+        
         fetchGithubUser()
     }
     
