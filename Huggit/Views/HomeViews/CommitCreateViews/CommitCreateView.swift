@@ -16,8 +16,9 @@ struct CommitCreateView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("CommitCreateView")
-                    .font(.headline)
+                Text("성실한 개발자로 한발씩 더 성장!")
+                    .font(.system(size: 12))
+                    .foregroundStyle(.blue)
                 Spacer()
                 Button(action: {
                     commitCreateViewModel.cancelCommit()
@@ -32,16 +33,19 @@ struct CommitCreateView: View {
                 get: { commitCreateViewModel.commitTitle },
                 set: { commitCreateViewModel.commitTitle = $0 }
             ))
-                .padding()
-                .background(Color.gray)
-                .cornerRadius(8)
+            .padding()
+            .background(Color.black)
+            .foregroundStyle(.white)
+            .cornerRadius(8)
             
             TextEditor(text: Binding(
                 get: { commitCreateViewModel.commitDetails },
                 set: { commitCreateViewModel.commitDetails = $0 }
             ))
             .padding()
-            .background(Color.gray)
+            .scrollContentBackground(.hidden)
+            .background(Color.black)
+            .foregroundStyle(.white)
             .cornerRadius(8)
             
             Spacer()

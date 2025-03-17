@@ -17,14 +17,19 @@ enum GithubAPIError: Error {
     case networkError(Error)
 }
 
+struct GithubErrorResponse: Decodable, Error {
+    let message: String
+    let documentation_url: String
+}
+
 final class GithubRestManager {
     static let shared = GithubRestManager()
     private init() {}
     
     private let baseURL = "https://api.github.com"
     private var token: String {
-            return UserDefaults.standard.string(forKey: "githubAccessToken") ?? ""
-        }
+        return UserDefaults.standard.string(forKey: "githubAccessToken") ?? ""
+    }
     private let session = URLSession.shared
     
     func request<T: Decodable>(endpoint: String,
@@ -50,15 +55,27 @@ final class GithubRestManager {
             }
         }
         
-        session.dataTask(with: request) { data, _, error in
+        session.dataTask(with: request) { data, response, error in
             if let error = error {
                 completion(.failure(.networkError(error)))
                 return
             }
-            guard let data = data else {
+            guard let data = data, let httpResponse = response as? HTTPURLResponse else {
                 completion(.failure(.invalidURL))
                 return
             }
+            
+            // HTTP 상태 코드 체크 (200~299이면 성공)
+            if !(200...299).contains(httpResponse.statusCode) {
+                // 에러 응답 디코딩 시도
+                if let githubError = try? JSONDecoder().decode(GithubErrorResponse.self, from: data) {
+                    completion(.failure(.networkError(NSError(domain: githubError.message, code: httpResponse.statusCode, userInfo: nil))))
+                } else {
+                    completion(.failure(.networkError(NSError(domain: "HTTP Error", code: httpResponse.statusCode, userInfo: nil))))
+                }
+                return
+            }
+            
             do {
                 let decoded = try JSONDecoder().decode(T.self, from: data)
                 completion(.success(decoded))
