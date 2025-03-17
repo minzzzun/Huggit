@@ -13,6 +13,7 @@ struct MyPageView: View {
     var body: some View {
         ScrollView(.vertical) {
             VStack {
+                // 앱바
                 AppBarView(
                     isHomeView: false,
                     title: "마이페이지",
@@ -21,9 +22,25 @@ struct MyPageView: View {
                         router.offAll("/")
                     }
                 )
-                Text("My Page")
+                
+                // 마이페이지_유저 이름 & 커밋 수
+                UserInfoView()
+                    .padding(.top, 15)
+                
+                // 피드백 설문 폼
+                FeedbackView()
+                    .padding(.top, 20)
+                
+                // 계정 정보
+                AccountInfoView()
+                    .padding(.top, 40)
+                
+                // 이용 안내
+                UseInfoView()
+                    .padding(.top, 40)
+                
             }
-            .padding(.horizontal, 21)
+            .padding(.horizontal, 20)
         }
         .background(.black)
         .navigationBarHidden(true)

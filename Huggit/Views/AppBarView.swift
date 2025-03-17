@@ -41,7 +41,7 @@ struct AppBarView: View {
                 Button(action: {
                     router.back()
                 }) {
-                    Image(systemName: "arrow.left")
+                    Image(systemName: "chevron.left")
                         .foregroundStyle(.white)
                         .scaledToFit()
                         .frame(height: 15)
