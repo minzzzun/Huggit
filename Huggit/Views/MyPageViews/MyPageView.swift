@@ -27,7 +27,6 @@ struct MyPageView: View {
                 // 마이페이지_유저 이름 & 커밋 수
                 UserInfoView()
                     .padding(.top, 15)
-                    .environmentObject(myPageViewModel)
                 
                 // 피드백 설문 폼
                 FeedbackView()
@@ -36,7 +35,6 @@ struct MyPageView: View {
                 // 계정 정보
                 AccountInfoView()
                     .padding(.top, 40)
-                    .environmentObject(myPageViewModel)
                 
                 // 이용 안내
                 UseInfoView()
@@ -46,6 +44,7 @@ struct MyPageView: View {
             .padding(.horizontal, 20)
         }
         .background(.black)
+        .environmentObject(myPageViewModel)
         .navigationBarHidden(true)
     }
 }

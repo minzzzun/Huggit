@@ -18,6 +18,8 @@ class MyPageViewModel: ObservableObject {
     
     @Published var totalCommitsThisMonth: Int = 0
     
+    
+    
     init() {
         fetchGithubUser()
     }
@@ -58,5 +60,11 @@ class MyPageViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    func logout(completion: @escaping () -> Void) {
+        UserDefaults.standard.removeObject(forKey: "appleId")
+        print("로그아웃 완료: appleId가 삭제되었습니다.")
+        completion()
     }
 }
