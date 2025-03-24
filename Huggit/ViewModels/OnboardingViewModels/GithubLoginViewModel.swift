@@ -38,12 +38,12 @@ class GithubLoginViewModel: ObservableObject {
             "code": code
         ]
         
-        print("📤 요청 Body:", body)
+//        print("📤 요청 Body:", body)
         
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
         
         URLSession.shared.dataTask(with: request) { data, response, error in
-            print("📡 응답 받음")
+//            print("📡 응답 받음")
             
             if let error = error {
                 print("❌ 네트워크 에러:", error.localizedDescription)
@@ -51,34 +51,34 @@ class GithubLoginViewModel: ObservableObject {
             }
             
             if let httpResponse = response as? HTTPURLResponse {
-                print("📡 HTTP 상태 코드:", httpResponse.statusCode)
+//                print("📡 HTTP 상태 코드:", httpResponse.statusCode)
                 
                 // 헤더 디버깅
-                print("🔍 응답 헤더:")
+//                print("🔍 응답 헤더:")
                 httpResponse.allHeaderFields.forEach { key, value in
                     print("   \(key): \(value)")
                 }
             }
             
             if let data = data, let responseString = String(data: data, encoding: .utf8) {
-                print("📦 응답 데이터:", responseString)
+//                print("📦 응답 데이터:", responseString)
             } else {
                 print("❌ 응답 데이터가 없거나 읽을 수 없음")
             }
             
             if let data = data, let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
-                print("🔍 파싱된 JSON:", json)
+//                print("🔍 파싱된 JSON:", json)
                 
                 if let token = json["access_token"] as? String {
                     DispatchQueue.main.async {
                         self.accessToken = token
                         self.defaults.set(self.accessToken, forKey: "githubAccessToken")
-                        print("✅ GitHub Access Token:", token)
+//                        print("✅ GitHub Access Token:", token)
                         
                         let gitToken = UserDefaults.standard.string(forKey: "githubAccessToken")
                         let appleId = self.defaults.string(forKey: "appleId")
-                        print("appleId 저장됨: \(appleId)")
-                        print("gitToken 저장됨: \(gitToken)")
+//                        print("appleId 저장됨: \(appleId)")
+//                        print("gitToken 저장됨: \(gitToken)")
 //                        self.getUser() // 토큰을 받은 후 사용자 정보 요청
 //                        self.getRepos()
                         self.createRepository()
@@ -101,9 +101,10 @@ class GithubLoginViewModel: ObservableObject {
             return
         }
     
-        GithubRepoManager.shared.createRepository(accessToken: accessToken, name: "NewRepo1", description: "Test repository", isPrivate: false) { result in
+        GithubRepoManager.shared.createRepository(accessToken: accessToken, name: "HUGGIT_TECHBLOG", description: "Test repository", isPrivate: false) { result in
             switch result {
             case .success(let repository):
+                UserDefaults.standard.set("HUGGIT_TECHBLOG", forKey: "repoName")
                 print("리포지토리 생성 성공: \(repository.name)")
             case .failure(let error):
                 print("리포지토리 생성 실패: \(error.localizedDescription)")
