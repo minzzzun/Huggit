@@ -18,19 +18,26 @@ final class GithubRepoManager {
         headers["Authorization"] = "token \(accessToken)"
         headers["Accept"] = "application/vnd.github.v3+json"
         
-        GithubRestManager.shared.request(endpoint: endpoint, method: .POST, parameters: parameters) { (result: Result<Data, GithubAPIError>) in
-            switch result {
-            case .success(let data):
-                do {
-                    let repository = try JSONDecoder().decode(GithubRepository.self, from: data)
-                    completion(.success(repository))
-                } catch {
-                    completion(.failure(.decodingError(error)))
-                }
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+//        GithubRestManager.shared.request(endpoint: endpoint, method: .POST, parameters: parameters) { (result: Result<Data, GithubAPIError>) in
+//            switch result {
+//            case .success(let data):
+//                do {
+//                    let repository = try JSONDecoder().decode(GithubRepository.self, from: data)
+//                    completion(.success(repository))
+//                } catch {
+//                    completion(.failure(.decodingError(error)))
+//                }
+//            case .failure(let error):
+//                completion(.failure(error))
+//            }
+//        }
+        GithubRestManager.shared.request(endpoint: endpoint,
+                                          method: .POST,
+                                          parameters: parameters) { (result: Result<GithubRepository, GithubAPIError>) in
+               completion(result)
+           }
+        
+        
     }
     
     
