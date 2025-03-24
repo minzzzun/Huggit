@@ -14,8 +14,8 @@ struct CommitCreateView: View {
     }
     
     var body: some View {
-        VStack {
-            HStack {
+        VStack (alignment: .leading, spacing: 0) {
+            HStack (alignment: .top, spacing: 0) {
                 Text("성실한 개발자로 한발씩 더 성장!")
                     .font(.system(size: 12))
                     .foregroundStyle(.blue)
@@ -29,39 +29,47 @@ struct CommitCreateView: View {
                 }
             }
             
-            TextField("", text: Binding(
-                get: { commitCreateViewModel.commitTitle },
-                set: { commitCreateViewModel.commitTitle = $0 }
-            ))
-            .padding()
-            .background(Color.black)
-            .foregroundStyle(.white)
-            .cornerRadius(8)
+            Text("제목은 커밋 메시지로,\n내용은 파일로 업로드 돼요!")
+                .font(.system(size: 18))
+                .fontWeight(.bold)
+                .foregroundStyle(.white)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, 5)
             
-            TextEditor(text: Binding(
-                get: { commitCreateViewModel.commitDetails },
-                set: { commitCreateViewModel.commitDetails = $0 }
-            ))
-            .padding()
-            .scrollContentBackground(.hidden)
-            .background(Color.black)
-            .foregroundStyle(.white)
-            .cornerRadius(8)
+            VStack(spacing: 9) {
+                TextField("", text: Binding(
+                                get: { commitCreateViewModel.commitTitle },
+                                set: { commitCreateViewModel.commitTitle = $0 }
+                            ))
+                .padding(EdgeInsets(top: 14, leading: 18, bottom: 14, trailing: 18))
+                .font(.system(size: 14))
+                            .background(Color.black)
+                            .foregroundStyle(.white)
+                            .cornerRadius(5)
+                
+                LineNumberTextEditor(text: Binding(
+                                get: { commitCreateViewModel.commitDetails },
+                                set: { commitCreateViewModel.commitDetails = $0 }
+                            ))
+                .background(Color.black)
+                            .frame(height: 231)
+                            .cornerRadius(5)
+            }
+            .padding(.top, 18)
             
             Spacer()
             
             Button(action: {
                 commitCreateViewModel.pushCommit()
             }) {
-                Text("commit")
+                Text("commit!")
                     .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
+                    .frame(maxWidth: .infinity, maxHeight: 55)
                     .background(Color.blue)
-                    .cornerRadius(8)
+                    .cornerRadius(10)
             }
             
         }
-        .padding()
+        .padding(20)
     }
 }

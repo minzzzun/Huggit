@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MyPageView: View {
+    @StateObject var myPageViewModel = MyPageViewModel()
     @EnvironmentObject var router: NavigationRouter
 
     var body: some View {
@@ -26,6 +27,7 @@ struct MyPageView: View {
                 // 마이페이지_유저 이름 & 커밋 수
                 UserInfoView()
                     .padding(.top, 15)
+                    .environmentObject(myPageViewModel)
                 
                 // 피드백 설문 폼
                 FeedbackView()
@@ -34,6 +36,7 @@ struct MyPageView: View {
                 // 계정 정보
                 AccountInfoView()
                     .padding(.top, 40)
+                    .environmentObject(myPageViewModel)
                 
                 // 이용 안내
                 UseInfoView()

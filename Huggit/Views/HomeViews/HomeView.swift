@@ -100,9 +100,10 @@ struct HomeView: View {
                             }
                         
                         CommitCreateView()
-                            .frame(width: geometry.size.width * 0.9, height: 300)
+                        .frame(height: 500)
                             .background(Color.gray)
                             .cornerRadius(12)
+                            .padding(.horizontal, horizontalPadding)
                     
                 }
             }

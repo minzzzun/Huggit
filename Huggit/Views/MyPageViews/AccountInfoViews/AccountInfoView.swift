@@ -14,12 +14,16 @@ struct Service {
 }
 
 struct AccountInfoView: View {
-    // TODO: ViewModel에서 detail이랑 action 정의하기
-    let services: [Service] = [
-        Service(name: "github", detail: "서비스 정보", action: {}),
-        Service(name: "Velog", detail: "서비스 정보", action: {}),
-        Service(name: "tistory", detail: "서비스 정보", action: {})
-    ]
+    @EnvironmentObject var viewModel: MyPageViewModel
+    
+    // TODO: ViewModel에서 action 정의하기
+    var services: [Service] {
+        [
+            Service(name: "Github", detail: viewModel.githubName, action: {}),
+            Service(name: "Velog", detail: viewModel.velogName, action: {}),
+            Service(name: "Tistory", detail: viewModel.tistoryName, action: {})
+        ]
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
