@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MyPageView: View {
+    @StateObject var myPageViewModel = MyPageViewModel()
     @EnvironmentObject var router: NavigationRouter
 
     var body: some View {
@@ -43,6 +44,7 @@ struct MyPageView: View {
             .padding(.horizontal, 20)
         }
         .background(.black)
+        .environmentObject(myPageViewModel)
         .navigationBarHidden(true)
     }
 }

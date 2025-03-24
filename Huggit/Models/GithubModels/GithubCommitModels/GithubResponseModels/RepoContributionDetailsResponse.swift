@@ -22,6 +22,7 @@ struct RepoContributionDetailsResponse: Decodable {
                         let nodes: [CommitNode]
                         struct CommitNode: Decodable {
                             let message: String
+                            let committedDate: String? // 추가된 부분
                             let author: Author?
                             struct Author: Decodable {
                                 let user: GithubUser?

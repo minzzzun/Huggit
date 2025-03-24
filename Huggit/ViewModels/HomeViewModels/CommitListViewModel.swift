@@ -38,7 +38,6 @@ final class CommitListViewModel: ObservableObject {
         VelogPostManager.shared.fetchVelogPosts(username: velogUsername) { [weak self] posts in
             DispatchQueue.main.async {
                 guard let self = self else { return }
-                print("Appending fetched posts: \(posts)") // ✅ UI 업데이트 로그 추가
                 self.commitList = self.commitList + posts // ✅ 새로운 배열을 할당하여 UI 변경 감지
             }
         }

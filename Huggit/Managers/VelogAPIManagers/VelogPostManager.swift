@@ -25,7 +25,6 @@ final class VelogPostManager {
                         summary: post.short_description
                     )
                 }
-                print("📢 Velog Posts Fetched: \(posts)")
                 completion(posts)
             case .failure(let error):
                 print("❌ Velog 데이터 요청 실패: \(error)")

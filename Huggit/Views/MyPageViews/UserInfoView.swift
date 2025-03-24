@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct UserInfoView: View {
+    @EnvironmentObject var viewModel: MyPageViewModel
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("오늘도 성실한 개발자로 한발짝 더 성장!")
@@ -15,7 +17,7 @@ struct UserInfoView: View {
                 .foregroundStyle(.blue)
             
             // TODO: 실제 UserName으로 바꾸기
-            Text("김민준님")
+            Text("\(viewModel.githubName)님")
                 .font(.system(size: 23))
                 .foregroundStyle(.white)
                 .padding(.top, 8)
@@ -23,11 +25,11 @@ struct UserInfoView: View {
             
             HStack {
                 // TODO: 실제 월, 잔디수로 바꾸기
-                Text("2월의 잔디 수")
+                Text("\(viewModel.currentMonth)월의 잔디 수")
                     .font(.system(size: 15))
                     .foregroundStyle(.white)
                 Spacer()
-                Text("20개")
+                Text("\(viewModel.totalCommitsThisMonth)개")
                     .font(.system(size: 13))
                     .foregroundStyle(.blue)
             }

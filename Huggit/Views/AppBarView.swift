@@ -32,7 +32,7 @@ struct AppBarView: View {
     var body: some View {
         HStack {
             if isHomeView {
-                Image("githubLogo")
+                Image("applogo")
                     .resizable()
                     .scaledToFit()
                     .frame(height: 22)
@@ -55,8 +55,8 @@ struct AppBarView: View {
             Spacer()
             
             Button(action: action ?? {router.toNamed("/mypageView")}) {
-                Image(systemName: buttonImage ?? "person.circle")
-                    .foregroundStyle(.white)
+                Image(buttonImage ?? "mypage")
+                    .resizable()
                     .scaledToFit()
                     .frame(height: 20)
             }

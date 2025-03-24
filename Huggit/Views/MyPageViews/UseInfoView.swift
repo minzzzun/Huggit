@@ -13,13 +13,27 @@ struct UseInfo {
 }
 
 struct UseInfoView: View {
-    // TODO: ViewModel에서 관리
-    let useInfos: [UseInfo] = [
-        UseInfo(name: "개인정보 처리방침", action: {}),
-        UseInfo(name: "서비스 이용 약관", action: {}),
-        UseInfo(name: "로그아웃", action: {}),
-        UseInfo(name: "탈퇴하기", action: {})
-    ]
+    @EnvironmentObject var myPageViewModel: MyPageViewModel
+    @EnvironmentObject var router: NavigationRouter
+    
+    var useInfos: [UseInfo] {
+        [
+            UseInfo(name: "개인정보 처리방침", action: {
+                // 개인정보 처리방침 액션 처리
+            }),
+            UseInfo(name: "서비스 이용 약관", action: {
+                // 서비스 이용 약관 액션 처리
+            }),
+            UseInfo(name: "로그아웃", action: {
+                myPageViewModel.logout {
+                    router.offAll("/appleLogin")
+                }
+            }),
+            UseInfo(name: "탈퇴하기", action: {
+                // 탈퇴하기 액션 처리
+            })
+        ]
+    }
     
     var body: some View {
         VStack (alignment: .leading) {
