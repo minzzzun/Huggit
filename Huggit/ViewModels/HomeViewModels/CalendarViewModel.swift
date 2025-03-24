@@ -84,22 +84,53 @@ final class CalendarViewModel: ObservableObject {
         comps.day = totalDays
         guard let endDate = calendar.date(from: comps) else { return }
         
-        print("Fetching contributions for \(username)")
-        print("Start date: \(startDate) / End date: \(endDate)")
-        
         GithubCommitFetchManager.shared.fetchContributionCountsInPeriod(username: username,
                                                         from: startDate,
                                                         to: endDate) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let countsByDate):
-                    print("API Response countsByDate:")
-                    for (key, value) in countsByDate {
-                        print("  \(key): \(value)")
-                    }
                     self?.updateCommitCounts(with: countsByDate)
                 case .failure(let error):
                     print("Failed to fetch contributions: \(error)")
+                }
+            }
+        }
+    }
+    
+    func fetchBlogContributions(for username: String) {
+        let calendar = Calendar.current
+        var comps = DateComponents(year: currentYear, month: currentMonth, day: 1)
+        guard let startDate = calendar.date(from: comps),
+              let range = calendar.range(of: .day, in: .month, for: startDate) else { return }
+        let totalDays = range.count
+        comps.day = totalDays
+        guard let endDate = calendar.date(from: comps) else { return }
+        
+        GithubCommitFetchManager.shared.fetchBlogContributionCountsInPeriod(username: username,
+                                                                            from: startDate,
+                                                                            to: endDate) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let countsByDate):
+                    // 여기서 countsByDate는 "yyyy-MM-dd" 형식의 키와 커밋 수를 담고 있음
+                    print("디코딩된 Blog Contribution countsByDate: \(countsByDate)")
+                    // 이를 바탕으로 dayBlogCommitCount 배열을 업데이트 합니다.
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    var newCounts: [Int] = []
+                    var comps = DateComponents(year: self?.currentYear, month: self?.currentMonth, day: 1)
+                    for day in 1...totalDays {
+                        comps.day = day
+                        if let date = calendar.date(from: comps) {
+                            let key = dateFormatter.string(from: date)
+                            let count = countsByDate[key] ?? 0
+                            newCounts.append(count)
+                        }
+                    }
+                    self?.dayBlogCommitCount = newCounts
+                case .failure(let error):
+                    print("Failed to fetch blog contributions: \(error)")
                 }
             }
         }
@@ -122,21 +153,16 @@ final class CalendarViewModel: ObservableObject {
             ? (todayComps.day ?? totalDays)
             : totalDays
         
-        print("Updating commit counts for currentMonth: \(currentMonth), totalDays: \(totalDays), dayLimit: \(dayLimit)")
-        
         for day in 1...totalDays {
             comps.day = day
             if let date = calendar.date(from: comps) {
                 let key = dateFormatter.string(from: date)
                 let count = (day <= dayLimit) ? (countsByDate[key] ?? 0) : 0
                 newCounts.append(count)
-                print("Day \(day): key=\(key), count=\(count)")
             }
         }
         self.dayAllCommitCount = newCounts
         // dayBlogCommitCount도 동일한 길이로 초기화 (혹은 실제 데이터로 업데이트)
         self.dayBlogCommitCount = Array(repeating: 0, count: totalDays)
-        
-        print("Updated dayAllCommitCount: \(self.dayAllCommitCount)")
     }
 }

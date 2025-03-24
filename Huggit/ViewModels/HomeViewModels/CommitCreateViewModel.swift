@@ -77,7 +77,6 @@ final class CommitCreateViewModel: ObservableObject {
                     DispatchQueue.main.async {
                         switch pushResult {
                         case .success(let response):
-                            print("Commit pushed successfully: \(response.commit.sha)")
                             self.selectedCommit = nil
                         case .failure(let error):
                             print("Failed to push commit: \(error)")
@@ -108,7 +107,6 @@ final class CommitCreateViewModel: ObservableObject {
                         DispatchQueue.main.async {
                             switch pushResult {
                             case .success(let response):
-                                print("Commit pushed successfully: \(response.commit.sha)")
                                 self.selectedCommit = nil
                             case .failure(let error):
                                 print("Failed to push commit: \(error)")

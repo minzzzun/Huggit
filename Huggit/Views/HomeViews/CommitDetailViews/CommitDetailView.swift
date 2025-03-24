@@ -67,7 +67,7 @@ struct CommitDetailView: View {
         }
                 .onAppear {
                     if let details = commitDetailViewModel.contributionDetailsByDay[commitDetailViewModel.selectedDay] {
-                        commitDetailViewModel.contributionDetails = details
+                        commitDetailViewModel.contributionDetails = commitDetailViewModel.filterContributionDetails(details)
                     }
                 }
     }

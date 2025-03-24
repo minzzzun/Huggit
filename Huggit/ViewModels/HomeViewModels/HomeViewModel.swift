@@ -56,7 +56,7 @@ final class HomeViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        calendarVM.$dayAllCommitCount
+        calendarViewModel.$dayAllCommitCount
             .sink { [weak self] newCounts in
                 guard let self = self else { return }
                 // 최신 전체 데이터를 업데이트
@@ -64,6 +64,12 @@ final class HomeViewModel: ObservableObject {
                 
                 // snapshot이 아직 비어있으면 한 번만 업데이트
                 self.homeHeaderViewModel.updateCommitsInThisMonth(with: newCounts)
+            }
+            .store(in: &cancellables)
+        
+        calendarViewModel.$currentGrass
+            .sink { newGrass in
+                self.commitDetailViewModel.currentGrass = newGrass
             }
             .store(in: &cancellables)
         
@@ -114,6 +120,7 @@ final class HomeViewModel: ObservableObject {
         }
         
         calendarViewModel.fetchContributions(for: username)
+        calendarViewModel.fetchBlogContributions(for: username)
         commitDetailViewModel.fetchAllContributionDetails(for: username)
     }
 }

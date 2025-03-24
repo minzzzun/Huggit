@@ -47,7 +47,7 @@ struct GithubGraphQLQueries {
     }
     
     static func nonCommitContributionDetailsQuery(username: String, from: String, to: String) -> String {
-            return """
+        return """
             query {
               user(login: "\(username)") {
                 contributionsCollection(from: "\(from)", to: "\(to)") {
@@ -90,10 +90,10 @@ struct GithubGraphQLQueries {
               }
             }
             """
-        }
-        
-        // 해당 레파지토리의 commit history (실제 커밋 메시지)
-        static func contributionHistoryQuery(owner: String, repoName: String, from: String, to: String) -> String {
+    }
+    
+    // 해당 레파지토리의 commit history (실제 커밋 메시지)
+    static func contributionHistoryQuery(owner: String, repoName: String, from: String, to: String) -> String {
             return """
             query {
               repository(owner: "\(owner)", name: "\(repoName)") {
@@ -103,6 +103,7 @@ struct GithubGraphQLQueries {
                       history(since: "\(from)", until: "\(to)", first: 100) {
                         nodes {
                           message
+                          committedDate
                           author {
                             user {
                               login

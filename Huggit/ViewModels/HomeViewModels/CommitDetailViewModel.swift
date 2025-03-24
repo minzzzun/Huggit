@@ -24,6 +24,9 @@ final class CommitDetailViewModel: ObservableObject {
     // 현재 선택된 날짜의 contribution 정보
     @Published var contributionDetails: [ContributionDetail] = [] // Repo 이름, 메시지들 Repo 이름, 커밋 메시지들
     
+    // 잔디 타입을 저장 (홈에서 calendarViewModel의 currentGrass와 동기화)
+    @Published var currentGrass: CurrentGrass = .allGrass
+    
     private var cancellables = Set<AnyCancellable>()
     
     func updateSelection(cellFrame: CGRect, containerFrame: CGRect, day: Int, horizontalPadding: CGFloat) {
@@ -41,12 +44,10 @@ final class CommitDetailViewModel: ObservableObject {
     
     // 기존의 개별 날짜에 대해 contribution
     func fetchContributionDetails(for username: String, on date: Date, completion: @escaping ([ContributionDetail]) -> Void) {
-        print("fetchContributionDetails: 시작 - \(username), 날짜: \(date)")
         GithubCommitFetchManager.shared.fetchContributionDetails(for: username, on: date) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let details):
-                    print("fetchContributionDetails: 성공 - 커밋 섹션 수: \(details.count)")
                     completion(details)
                 case .failure(let error):
                     print("fetchContributionDetails: 에러 발생 - \(error)")
@@ -83,7 +84,21 @@ final class CommitDetailViewModel: ObservableObject {
             if let selected = self.contributionDetailsByDay[self.selectedDay] {
                 self.contributionDetails = selected
             }
-            print("모든 날짜의 contribution 내역을 불러왔습니다.")
+        }
+    }
+    
+    // 필터링 함수: currentGrass 값에 따라 ContributionDetail 배열을 필터링
+    // TODO: 레포 이름 따로 저장해서 사용하는 것으로 수정
+    func filterContributionDetails(_ details: [ContributionDetail]) -> [ContributionDetail] {
+        switch currentGrass {
+        case .allGrass:
+            return details
+        case .codeGrass:
+            // NewRepo1 관련 내역은 제외 (대소문자 주의: "NewRepo1")
+            return details.filter { $0.repositoryName != "NewRepo1" }
+        case .blogGrass:
+            // 오직 NewRepo1의 내역만 포함
+            return details.filter { $0.repositoryName == "NewRepo1" }
         }
     }
     

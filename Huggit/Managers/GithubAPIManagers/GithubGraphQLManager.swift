@@ -47,11 +47,6 @@ final class GithubGraphQLManager {
                 return
             }
             
-            // 원시 API 응답을 JSON 문자열로 변환해 로그에 출력
-            if let jsonString = String(data: data, encoding: .utf8) {
-                print("Raw API Response:\n\(jsonString)")
-            }
-            
             do {
                 let decoded = try JSONDecoder().decode(T.self, from: data)
                 completion(.success(decoded))

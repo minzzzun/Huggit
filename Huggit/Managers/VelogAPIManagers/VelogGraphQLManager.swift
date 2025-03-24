@@ -40,17 +40,12 @@ final class VelogGraphQLManager {
                 completion(.failure(NSError(domain: "No data received", code: -2, userInfo: nil)))
                 return
             }
-            
-            // ✅ API 응답 로그 추가 (Raw JSON 출력)
-            if let jsonString = String(data: data, encoding: .utf8) {
-                print("📢 Raw API Response:\n\(jsonString)") // <--- 추가된 로그
-            }
 
             do {
                 let decoded = try JSONDecoder().decode(T.self, from: data)
                 completion(.success(decoded))
             } catch {
-                print("❌ JSON Decoding Error: \(error)")  // <--- 디코딩 에러 확인
+                print("❌ JSON Decoding Error: \(error)")
                 completion(.failure(error))
             }
         }.resume()
