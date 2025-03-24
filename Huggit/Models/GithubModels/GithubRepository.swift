@@ -1,7 +1,6 @@
 import Foundation
 
-struct GithubRepository: Decodable {
-    let id: Int
-    let name: String
-    let htmlUrl: String
+struct GithubRepository: Codable {
+    let id: Int?
+    let name: String?
 }

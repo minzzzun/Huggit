@@ -41,8 +41,8 @@ struct ContentView: View {
         .onAppear {
             viewModel.checkAppleLogin()
             if viewModel.isAppleLogined {
-                router.toNamed("/") // 테스트 끝나면 원상복구
-//                router.toNamed("/appleLogin")
+//                router.toNamed("/") // 테스트 끝나면 원상복구
+                router.toNamed("/appleLogin")
             } else {
                 router.toNamed("/appleLogin")
             }
