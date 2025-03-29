@@ -18,6 +18,7 @@ final class CommitListViewModel: ObservableObject {
     init() {
         self.commitList = Self.generateMockPosts()
         fetchVelogPosts()
+        fetchTistoryPosts()
     }
     
     static func generateMockPosts() -> [Post] {
@@ -42,4 +43,21 @@ final class CommitListViewModel: ObservableObject {
             }
         }
     }
+    
+    func fetchTistoryPosts() {
+           let tistoryName = UserDefaults.standard.string(forKey: "tistoryName") ?? ""
+           guard !tistoryName.isEmpty else { return }
+           
+        TistoryPostManager.shared.fetchTistoryPosts(tistoryName: tistoryName) { [weak self] posts in
+            DispatchQueue.main.async{
+                guard let self = self else { return }
+                self.commitList = self.commitList + posts
+            }
+        }
+       }
+    
+    
+    
+    
+    
 }
