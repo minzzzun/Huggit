@@ -68,15 +68,7 @@ final class TistoryPostManager {
                         summary: summary
                     )
                     posts.append(post)
-                    
-                    // 디버깅용 출력
-                    print("제목: \(title)")
-                    print("요약: \(summary)")
-                    print("날짜: \(dateString)")
-                    print("링크: \(fullLink)")
-                    print("-------------------")
                 }
-                print("✅ 크롤링된 포스트 수: \(posts.count)")
                 completion(posts)
                 
             } catch {
