@@ -43,7 +43,7 @@ struct ContentView: View {
             viewModel.requestNotificationAuthorization()
             if viewModel.isAppleLogined {
                 router.offAll("/") // 테스트 끝나면 원상복구
-                //                router.toNamed("/appleLogin")
+//                                router.toNamed("/appleLogin")
             } else {
                 router.offAll("/appleLogin")
             }
