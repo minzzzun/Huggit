@@ -19,6 +19,9 @@ struct AppleLoginButton: View {
         .frame(width: UIScreen.main.bounds.width - 40)
         .frame(height: 64)
         .cornerRadius(8)
+        .onAppear() {
+            viewModel.isAuthenticated = false
+        }
         .onChange(of: viewModel.isAuthenticated) { newValue in
             if newValue {
                 print("loginRouteStack: \(router.loginRouteStack)")

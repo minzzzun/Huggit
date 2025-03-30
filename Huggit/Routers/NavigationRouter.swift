@@ -17,6 +17,7 @@ final class NavigationRouter: ObservableObject {
     
     /// 로그인 스택: 현재 userDefault 상태에 따라 생성 (유효성 검사)
     @Published var loginRouteStack: [LoginRoute] = []
+    @Published var loginLength: Int = 3
     
     /// 해당 경로로 이동 (push)
     func toNamed(_ route: String, arguments: AnyHashable? = nil) {
@@ -72,6 +73,7 @@ final class NavigationRouter: ObservableObject {
             if missingApple { missingRoutes.append(.apple) }
             
             self.loginRouteStack = missingRoutes
+            self.loginLength = missingRoutes.count
             print("업데이트된 로그인 스택: \(self.loginRouteStack.map { $0.rawValue })")
             completion()
         }

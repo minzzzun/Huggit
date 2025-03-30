@@ -14,7 +14,7 @@ struct GithubLoginView : View {
             
             VStack(spacing: 0) {
                 // HeaderView
-                OnboardingHeaderView(activeIndex: 0)
+                OnboardingHeaderView()
                 Spacer()
                     .frame(height: 50)
                 
@@ -86,6 +86,9 @@ struct GithubLoginView : View {
             } else {
                 print("❌ Failed to extract code from URL")
             }
+        }
+        .onAppear() {
+            viewModel.isAuthenticated = false
         }
         // 로그인 완료 상태 감지 후 화면 전환
         .onChange(of: viewModel.isAuthenticated) { newValue in

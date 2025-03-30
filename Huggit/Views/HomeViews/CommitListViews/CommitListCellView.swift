@@ -51,7 +51,7 @@ struct CommitListCellView: View {
         case .tistory:
             return "tistoryLogo"
         case .velog:
-            return "VelogLogo"
+            return "velogLogo"
         }
     }
 }

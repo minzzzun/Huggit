@@ -19,9 +19,9 @@ struct AccountInfoView: View {
     // TODO: ViewModel에서 action 정의하기
     var services: [Service] {
         [
-            Service(name: "Github", detail: viewModel.githubName, action: {}),
-            Service(name: "Velog", detail: viewModel.velogName, action: {}),
-            Service(name: "Tistory", detail: viewModel.tistoryName, action: {})
+            Service(name: "github", detail: viewModel.githubName, action: {}),
+            Service(name: "velog", detail: viewModel.velogName, action: {}),
+            Service(name: "tistory", detail: viewModel.tistoryName, action: {})
         ]
     }
     
