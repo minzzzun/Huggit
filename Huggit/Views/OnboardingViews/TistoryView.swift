@@ -63,7 +63,13 @@ struct TistoryView : View {
                 
                 Button(action:{
                     viewModel.saveTistoryName()
-                    router.offAll("/")
+                    let nextRoute = router.popNextLoginRoute()
+                    if nextRoute == "/" {
+                        router.offAll(nextRoute)
+                    }
+                    else {
+                        router.toNamed(nextRoute)
+                    }
                 }){
                     Text(viewModel.tistoryName.isEmpty ? "건너뛰기" : "다음")
                         .frame(maxWidth: .infinity)

@@ -22,7 +22,13 @@ struct AppleLoginButton: View {
         .onChange(of: viewModel.isAuthenticated) { newValue in
             if newValue {
                 print("loginRouteStack: \(router.loginRouteStack)")
-                router.offAll(router.popNextLoginRoute())
+                let nextRoute = router.popNextLoginRoute()
+                if nextRoute == "/" {
+                    router.offAll(nextRoute)
+                }
+                else {
+                    router.toNamed(nextRoute)
+                }
             }
         }
     }

@@ -2,11 +2,15 @@ import SwiftUI
 
 class GithubLoginViewModel: ObservableObject {
     @Published var accessToken : String? = nil
+    @Published var isAuthenticated: Bool = false
+    @Published var isLoggingIn: Bool = false
+    
     let clientId = GitHubConfig.client_id
     let clientSecret = GitHubConfig.client_secret
     
     //MARK: - 1. 깃허브에서 code 받아오기
     func requestCode() {
+        isLoggingIn = true
         GithubAuthManager.shared.requestCode()
     }
     
@@ -19,7 +23,10 @@ class GithubLoginViewModel: ObservableObject {
                     self?.accessToken = token
                     UserInfo.githubAccessToken = token
                     self?.fetchGithubUser()
-                    self?.createRepository()
+                    self?.createRepository {
+                        self?.isAuthenticated = true
+                        self?.isLoggingIn = false
+                    }
                 case .failure(let error):
                     print("Access token 요청 실패: \(error)")
                 }
@@ -71,9 +78,10 @@ class GithubLoginViewModel: ObservableObject {
     }
     
     //MARK: - 레포 생성하기
-    func createRepository() {
+    func createRepository(completion: @escaping () -> Void) {
         guard let accessToken = self.accessToken else {
             print("🚨 토큰 없음")
+            completion()
             return
         }
         
@@ -87,6 +95,7 @@ class GithubLoginViewModel: ObservableObject {
             case .failure(let error):
                 print("리포지토리 생성 실패: \(error.localizedDescription)")
             }
+            completion()
         }
     }
 }

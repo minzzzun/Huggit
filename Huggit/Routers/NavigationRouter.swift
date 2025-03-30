@@ -47,6 +47,7 @@ final class NavigationRouter: ObservableObject {
     func updateLoginStatus(completion: @escaping () -> Void) {
         let group = DispatchGroup()
         
+        print("velog: \(UserInfo.velogName)\ntistory: \(UserInfo.tistoryName)")
         let missingTistory = UserInfo.tistoryName.isEmpty
         let missingVelog = UserInfo.velogName.isEmpty
         let missingApple = UserInfo.appleId.isEmpty
@@ -65,8 +66,8 @@ final class NavigationRouter: ObservableObject {
         group.notify(queue: DispatchQueue.main) {
             var missingRoutes = [LoginRoute]()
             // 원하는 순서: 티스토리 → 벨로그 → 깃허브 → 애플
-            if missingTistory && missingApple { missingRoutes.append(.tistory) }
-            if missingVelog && missingApple { missingRoutes.append(.velog) }
+            if missingTistory { missingRoutes.append(.tistory) }
+            if missingVelog { missingRoutes.append(.velog) }
             if missingGitHub { missingRoutes.append(.github) }
             if missingApple { missingRoutes.append(.apple) }
             

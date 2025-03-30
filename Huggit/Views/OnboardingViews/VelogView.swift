@@ -63,7 +63,13 @@ struct VelogView: View {
                 
                 Button(action:{
                     viewModel.saveVelog()
-                    router.offAll("/tistoryView")
+                    let nextRoute = router.popNextLoginRoute()
+                    if nextRoute == "/" {
+                        router.offAll(nextRoute)
+                    }
+                    else {
+                        router.toNamed(nextRoute)
+                    }
                 }){
                     Text(viewModel.velogName.isEmpty ? "건너뛰기" : "다음")
                         .frame(maxWidth: .infinity)
@@ -76,7 +82,7 @@ struct VelogView: View {
                 .padding(.bottom, 48)
                 
             }
-        }// z
+        }//
         .navigationBarHidden(true)
     }
 }
