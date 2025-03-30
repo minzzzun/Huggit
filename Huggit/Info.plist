@@ -13,6 +13,10 @@
 			</array>
 		</dict>
 	</array>
+	<key>GitHubClientID</key>
+	<string>Ov23liTg6IE1pWEHIJLd</string>
+	<key>GitHubClientSecret</key>
+	<string>1a3797c3577b7191c930cda5b542efc80ab4f9da</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

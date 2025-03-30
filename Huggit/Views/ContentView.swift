@@ -39,13 +39,13 @@ struct ContentView: View {
         .environmentObject(router)
         // 애플 로그인 한적 있는지 확인
         .onAppear {
-            viewModel.checkAppleLogin()
-            viewModel.requestNotificationAuthorization()
-            if viewModel.isAppleLogined {
-                router.offAll("/") // 테스트 끝나면 원상복구
-//                                router.toNamed("/appleLogin")
-            } else {
-                router.offAll("/appleLogin")
+            // 유효성 검사(애플, 깃허브, Velog, Tistory)
+            router.updateLoginStatus {
+                if router.loginRouteStack.isEmpty {
+                    router.offAll("/")
+                } else {
+                    router.offAll(router.popNextLoginRoute())
+                }
             }
         }
         

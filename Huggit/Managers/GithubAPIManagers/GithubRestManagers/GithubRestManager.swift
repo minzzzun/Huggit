@@ -28,7 +28,7 @@ final class GithubRestManager {
     
     private let baseURL = "https://api.github.com"
     private var token: String {
-        return UserDefaults.standard.string(forKey: "githubAccessToken") ?? ""
+        return UserInfo.githubAccessToken
     }
     private let session = URLSession.shared
     

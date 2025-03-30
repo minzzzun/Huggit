@@ -26,7 +26,9 @@ struct UseInfoView: View {
             }),
             UseInfo(name: "로그아웃", action: {
                 myPageViewModel.logout {
-                    router.offAll("/appleLogin")
+                    router.updateLoginStatus {
+                        router.offAll(router.popNextLoginRoute())
+                    }
                 }
             }),
             UseInfo(name: "탈퇴하기", action: {

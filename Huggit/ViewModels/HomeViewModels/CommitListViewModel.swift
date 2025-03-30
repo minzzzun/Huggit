@@ -33,7 +33,7 @@ final class CommitListViewModel: ObservableObject {
     }
     
     func fetchVelogPosts() {
-        let velogUsername = UserDefaults.standard.string(forKey: "velogName") ?? ""
+        let velogUsername = UserInfo.velogName
         guard !velogUsername.isEmpty else { return }
         
         VelogPostManager.shared.fetchVelogPosts(username: velogUsername) { [weak self] posts in
@@ -45,7 +45,7 @@ final class CommitListViewModel: ObservableObject {
     }
     
     func fetchTistoryPosts() {
-           let tistoryName = UserDefaults.standard.string(forKey: "tistoryName") ?? ""
+        let tistoryName = UserInfo.tistoryName
            guard !tistoryName.isEmpty else { return }
            
         TistoryPostManager.shared.fetchTistoryPosts(tistoryName: tistoryName) { [weak self] posts in

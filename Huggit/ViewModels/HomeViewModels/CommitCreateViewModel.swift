@@ -54,29 +54,33 @@ final class CommitCreateViewModel: ObservableObject {
         }
         let base64Content = data.base64EncodedString()
         
-        let repoOwner = "Kim-Min-Hyeok"
-        let repoName = "NewRepo1"
+        let repoOwner = UserInfo.gitLogin
+        let ownerEmail = UserInfo.gitEmail
+        guard !UserInfo.repoName.isEmpty else {
+            print("레포지토리 이름이 저장되어 있지 않습니다.")
+            return
+        }
         let filePath = "\(commitTitle.replacingOccurrences(of: " ", with: "_")).txt"
         
         // 먼저, 파일이 이미 존재하는지 확인하여 sha 값을 가져옵니다.
-        GithubFileManager.shared.fetchFileSha(repoOwner: repoOwner, repoName: repoName, filePath: filePath) { result in
+        GithubFileManager.shared.fetchFileSha(repoOwner: repoOwner, repoName: UserInfo.repoName, filePath: filePath) { result in
             switch result {
             case .success(let sha):
                 // 파일이 존재하므로 업데이트 진행 (sha 포함)
                 let commitPushRequest = CommitPushRequestModel(
                     message: commitMessage,
-                    committer: Committer(name: "Kim-Min-Hyeok", email: "kkmin11203@gmail.com"),
+                    committer: Committer(name: repoOwner, email: ownerEmail),
                     content: base64Content,
                     sha: sha
                 )
                 
                 GithubCommitPushManager.shared.pushCommit(repoOwner: repoOwner,
-                                                           repoName: repoName,
-                                                           filePath: filePath,
-                                                           commitPushRequest: commitPushRequest) { pushResult in
+                                                          repoName: UserInfo.repoName,
+                                                          filePath: filePath,
+                                                          commitPushRequest: commitPushRequest) { pushResult in
                     DispatchQueue.main.async {
                         switch pushResult {
-                        case .success(let response):
+                        case .success(_):
                             self.selectedCommit = nil
                         case .failure(let error):
                             print("Failed to push commit: \(error)")
@@ -95,18 +99,18 @@ final class CommitCreateViewModel: ObservableObject {
                     // 파일이 존재하지 않으므로, sha 없이 새 파일 생성 요청 진행
                     let commitPushRequest = CommitPushRequestModel(
                         message: commitMessage,
-                        committer: Committer(name: "Kim-Min-Hyeok", email: "kkmin11203@gmail.com"),
+                        committer: Committer(name: repoOwner, email: ownerEmail),
                         content: base64Content,
                         sha: nil
                     )
                     
                     GithubCommitPushManager.shared.pushCommit(repoOwner: repoOwner,
-                                                               repoName: repoName,
-                                                               filePath: filePath,
-                                                               commitPushRequest: commitPushRequest) { pushResult in
+                                                              repoName: UserInfo.repoName,
+                                                              filePath: filePath,
+                                                              commitPushRequest: commitPushRequest) { pushResult in
                         DispatchQueue.main.async {
                             switch pushResult {
-                            case .success(let response):
+                            case .success(_):
                                 self.selectedCommit = nil
                             case .failure(let error):
                                 print("Failed to push commit: \(error)")
@@ -118,7 +122,7 @@ final class CommitCreateViewModel: ObservableObject {
                 }
             }
         }
-
+        
     }
-
+    
 }

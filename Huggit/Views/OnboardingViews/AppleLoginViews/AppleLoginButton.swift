@@ -21,7 +21,8 @@ struct AppleLoginButton: View {
         .cornerRadius(8)
         .onChange(of: viewModel.isAuthenticated) { newValue in
             if newValue {
-                router.toNamed("/githubLogin")
+                print("loginRouteStack: \(router.loginRouteStack)")
+                router.offAll(router.popNextLoginRoute())
             }
         }
     }

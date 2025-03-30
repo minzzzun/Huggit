@@ -47,25 +47,23 @@ final class GithubCommitFetchManager {
         let isoFormatter = ISO8601DateFormatter()
         let fromStr = isoFormatter.string(from: startDate)
         let toStr = isoFormatter.string(from: endDate)
-        
-        // 우선, contributionsCollection에서 commitContributionsByRepository를 가져오도록 nonCommitContributionDetailsQuery를 사용합니다.
-        // (이 쿼리는 commitContributionsByRepository를 포함하므로, 여기서 "newRepo1"이 있는지 확인합니다.)
         let query = GithubGraphQLQueries.nonCommitContributionDetailsQuery(username: username, from: fromStr, to: toStr)
         
         GithubGraphQLManager.shared.request(query: query) { (result: Result<ContributionDetailsResponse, GithubAPIError>) in
             switch result {
             case .success(let response):
-                // commitContributionsByRepository 배열 중, repository 이름이 "newRepo1"인 항목만 선택
                 let commitRepoList = response.data.user.contributionsCollection.commitContributionsByRepository
-                guard let blogRepo = commitRepoList.first(where: { $0.repository.name == "NewRepo1" }) else {
+                // 저장된 repoName과 비교하여 블로그 레포지토리 선택
+                guard !UserInfo.repoName.isEmpty,
+                      let blogRepo = commitRepoList.first(where: { $0.repository.name == UserInfo.repoName }) else {
                     // 해당 레파지토리가 없으면 빈 결과 반환
                     completion(.success([:]))
                     return
                 }
                 let owner = blogRepo.repository.owner.login
+                // blogRepo.repository.name은 이미 String 타입이므로 추가 언래핑 불필요
                 let repoName = blogRepo.repository.name
-                
-                // 이제 해당 레파지토리의 commit history 쿼리를 실행합니다.
+                // 해당 레포지토리의 commit history 쿼리를 실행합니다.
                 let historyQuery = GithubGraphQLQueries.contributionHistoryQuery(owner: owner, repoName: repoName, from: fromStr, to: toStr)
                 
                 GithubGraphQLManager.shared.request(query: historyQuery) { (historyResult: Result<RepoContributionDetailsResponse, GithubAPIError>) in
@@ -75,12 +73,12 @@ final class GithubCommitFetchManager {
                             completion(.success([:]))
                             return
                         }
-                        // 날짜별로 커밋 수 집계 (committedDate 필드를 사용)
+                        // 날짜별 커밋 수 집계
                         var countsByDate: [String: Int] = [:]
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "yyyy-MM-dd"
+                        
                         for node in nodes {
-                            // 쿼리 수정 후 committedDate가 포함되어야 합니다.
                             if let committedDateString = node.committedDate,
                                let committedDate = isoFormatter.date(from: committedDateString) {
                                 let key = dateFormatter.string(from: committedDate)
@@ -97,6 +95,7 @@ final class GithubCommitFetchManager {
             }
         }
     }
+
     
     // 특정 날짜에 대한 커밋 내용
     func fetchContributionDetails(for username: String,

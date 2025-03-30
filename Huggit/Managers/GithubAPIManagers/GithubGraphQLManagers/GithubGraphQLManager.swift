@@ -13,7 +13,7 @@ final class GithubGraphQLManager {
     
     private let graphQLURL = "https://api.github.com/graphql"
     private var token: String {
-        return UserDefaults.standard.string(forKey: "githubAccessToken") ?? ""
+        return UserInfo.githubAccessToken
     }
     private let session = URLSession.shared
     

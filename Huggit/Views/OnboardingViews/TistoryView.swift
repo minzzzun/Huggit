@@ -63,7 +63,7 @@ struct TistoryView : View {
                 
                 Button(action:{
                     viewModel.saveTistoryName()
-                    router.toNamed("/")
+                    router.offAll("/")
                 }){
                     Text(viewModel.tistoryName.isEmpty ? "건너뛰기" : "다음")
                         .frame(maxWidth: .infinity)
