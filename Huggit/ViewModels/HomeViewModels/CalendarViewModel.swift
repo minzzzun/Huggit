@@ -82,7 +82,9 @@ final class CalendarViewModel: ObservableObject {
               let range = calendar.range(of: .day, in: .month, for: startDate) else { return }
         let totalDays = range.count
         comps.day = totalDays
-        guard let endDate = calendar.date(from: comps) else { return }
+        guard let rawEndDate = calendar.date(from: comps) else { return }
+            // endDate를 23:59:59로 변경하여 해당 날짜의 마지막 순간까지 포함되도록 합니다.
+            guard let endDate = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: rawEndDate) else { return }
         
         GithubCommitFetchManager.shared.fetchContributionCountsInPeriod(username: username,
                                                         from: startDate,
@@ -105,7 +107,9 @@ final class CalendarViewModel: ObservableObject {
               let range = calendar.range(of: .day, in: .month, for: startDate) else { return }
         let totalDays = range.count
         comps.day = totalDays
-        guard let endDate = calendar.date(from: comps) else { return }
+        guard let rawEndDate = calendar.date(from: comps) else { return }
+            // endDate를 23:59:59로 변경하여 해당 날짜의 마지막 순간까지 포함되도록 합니다.
+            guard let endDate = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: rawEndDate) else { return }
         
         GithubCommitFetchManager.shared.fetchBlogContributionCountsInPeriod(username: username,
                                                                             from: startDate,
