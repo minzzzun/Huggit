@@ -19,9 +19,19 @@ struct AppleLoginButton: View {
         .frame(width: UIScreen.main.bounds.width - 40)
         .frame(height: 64)
         .cornerRadius(8)
+        .onAppear() {
+            viewModel.isAuthenticated = false
+        }
         .onChange(of: viewModel.isAuthenticated) { newValue in
             if newValue {
-                router.toNamed("/githubLogin")
+                print("loginRouteStack: \(router.loginRouteStack)")
+                let nextRoute = router.popNextLoginRoute()
+                if nextRoute == "/" {
+                    router.offAll(nextRoute)
+                }
+                else {
+                    router.toNamed(nextRoute)
+                }
             }
         }
     }

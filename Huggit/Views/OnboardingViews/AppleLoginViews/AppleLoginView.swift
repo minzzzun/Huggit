@@ -68,6 +68,5 @@ struct AppleLoginView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationBarHidden(true)
     }
-        
 }
 

@@ -3,6 +3,7 @@ import SwiftUI
 struct VelogView: View {
     @EnvironmentObject var router: NavigationRouter
     @StateObject private var viewModel = VelogViewModel()
+    
     var body: some View {
         
         ZStack {
@@ -12,14 +13,14 @@ struct VelogView: View {
             
             VStack (spacing: 0){
                 //헤더뷰
-                OnboardingHeaderView(activeIndex: 1)
+                OnboardingHeaderView()
                 Spacer()
                     .frame(height: 50)
 
                 //bodyView
                 
                 VStack(alignment: .leading,spacing: 15) {
-                    Image("VelogLogo")
+                    Image("velogLogo")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 35, height: 35)
@@ -63,7 +64,13 @@ struct VelogView: View {
                 
                 Button(action:{
                     viewModel.saveVelog()
-                    router.toNamed("/tistoryView")
+                    let nextRoute = router.popNextLoginRoute()
+                    if nextRoute == "/" {
+                        router.offAll(nextRoute)
+                    }
+                    else {
+                        router.toNamed(nextRoute)
+                    }
                 }){
                     Text(viewModel.velogName.isEmpty ? "건너뛰기" : "다음")
                         .frame(maxWidth: .infinity)
@@ -76,7 +83,7 @@ struct VelogView: View {
                 .padding(.bottom, 48)
                 
             }
-        }// z
+        }//
         .navigationBarHidden(true)
     }
 }

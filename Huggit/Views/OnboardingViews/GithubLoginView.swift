@@ -14,10 +14,10 @@ struct GithubLoginView : View {
             
             VStack(spacing: 0) {
                 // HeaderView
-                OnboardingHeaderView(activeIndex: 0)
+                OnboardingHeaderView()
                 Spacer()
                     .frame(height: 50)
-
+                
                 // BodyView
                 HStack {
                     // GitHub 로고와 텍스트
@@ -49,7 +49,6 @@ struct GithubLoginView : View {
                 Button(action: {
                     print("깃허브 로그인")
                     viewModel.requestCode()
-                    router.toNamed("/velogView")
                 }) {
                     Text("깃허브 로그인")
                         .font(.system(size: 16, weight: .semibold))
@@ -59,6 +58,7 @@ struct GithubLoginView : View {
                         .foregroundColor(.white)
                         .cornerRadius(10)
                 }
+                .disabled(viewModel.isLoggingIn)
                 .padding(.horizontal, 20)
                 .padding(.bottom, 58)
                 
@@ -87,6 +87,20 @@ struct GithubLoginView : View {
                 print("❌ Failed to extract code from URL")
             }
         }
-        
+        .onAppear() {
+            viewModel.isAuthenticated = false
+        }
+        // 로그인 완료 상태 감지 후 화면 전환
+        .onChange(of: viewModel.isAuthenticated) { newValue in
+            if newValue {
+                let nextRoute = router.popNextLoginRoute()
+                if nextRoute == "/" {
+                    router.offAll(nextRoute)
+                }
+                else {
+                    router.toNamed(nextRoute)
+                }
+            }
+        }
     }
 }

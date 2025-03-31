@@ -5,6 +5,7 @@ class VelogViewModel: ObservableObject {
     @Published var velogName: String = ""
     
     func saveVelog(){
-        UserDefaults.standard.set(velogName, forKey: "velogName")
+        let trimmed = velogName.trimmingCharacters(in: .whitespacesAndNewlines)
+        UserInfo.velogName = trimmed.isEmpty ? "미등록" : trimmed
     }
 }

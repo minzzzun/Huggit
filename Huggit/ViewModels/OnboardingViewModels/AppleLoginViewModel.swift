@@ -4,7 +4,6 @@ import AuthenticationServices
 
 class AppleLoginViewModel: ObservableObject {
     @Published var isAuthenticated = false
-    let defaults = UserDefaults.standard
     
     func handleAppleSignIn(result: Result<ASAuthorization, Error>) {
         switch result {
@@ -14,17 +13,19 @@ class AppleLoginViewModel: ObservableObject {
             case let appleIDCredential as ASAuthorizationAppleIDCredential:
                 // 계정 정보 가져오기
                 let appleId = appleIDCredential.user
-                let fullName = appleIDCredential.fullName
-                let email = appleIDCredential.email
-                let identityToken = String(data: appleIDCredential.identityToken!, encoding: .utf8)
-                let authorizationCode = String(data: appleIDCredential.authorizationCode!, encoding: .utf8)
+                _ = appleIDCredential.fullName
+                _ = appleIDCredential.email
+                _ = String(data: appleIDCredential.identityToken!, encoding: .utf8)
+                _ = String(data: appleIDCredential.authorizationCode!, encoding: .utf8)
                 
                 // UserDefaults에 저장
-                defaults.set(appleId, forKey: "appleId")
+                UserInfo.appleId = appleId
                 print("uid 저장됨 \(appleId)")
                 
                 // 인증 상태 업데이트
-                isAuthenticated = true
+                DispatchQueue.main.async {
+                    self.isAuthenticated = true
+                }
                 
             default:
                 break

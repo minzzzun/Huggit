@@ -12,7 +12,7 @@ struct TistoryView : View {
             
             VStack (spacing: 0){
                 //헤더뷰
-                OnboardingHeaderView(activeIndex: 2)
+                OnboardingHeaderView()
                 Spacer()
                     .frame(height: 50)
 
@@ -63,7 +63,13 @@ struct TistoryView : View {
                 
                 Button(action:{
                     viewModel.saveTistoryName()
-                    router.toNamed("/")
+                    let nextRoute = router.popNextLoginRoute()
+                    if nextRoute == "/" {
+                        router.offAll(nextRoute)
+                    }
+                    else {
+                        router.toNamed(nextRoute)
+                    }
                 }){
                     Text(viewModel.tistoryName.isEmpty ? "건너뛰기" : "다음")
                         .frame(maxWidth: .infinity)

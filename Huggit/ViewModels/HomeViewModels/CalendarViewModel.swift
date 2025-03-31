@@ -9,7 +9,7 @@ enum CurrentGrass {
 
 final class CalendarViewModel: ObservableObject {
     // Github User 이름
-    @Published var username: String? = nil
+    @Published var username: String? = UserInfo.gitLogin
     
     // 현재 년/월
     @Published var currentYear: Int = Calendar.current.component(.year, from: Date())

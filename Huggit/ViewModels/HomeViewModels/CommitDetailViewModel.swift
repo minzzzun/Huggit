@@ -10,7 +10,7 @@ import Combine
 
 final class CommitDetailViewModel: ObservableObject {
     // Github User 이름
-    @Published var username: String? = nil
+    @Published var username: String = UserInfo.gitLogin
     
     @Published var arrowPosition: CGFloat = 0.5
     @Published var selectedCellFrame: CGRect? = nil
@@ -28,6 +28,12 @@ final class CommitDetailViewModel: ObservableObject {
     @Published var currentGrass: CurrentGrass = .allGrass
     
     private var cancellables = Set<AnyCancellable>()
+    
+    private var repoName: String?
+    
+    init() {
+        self.repoName = UserInfo.repoName
+    }
     
     func updateSelection(cellFrame: CGRect, containerFrame: CGRect, day: Int, horizontalPadding: CGFloat) {
         let tooltipWidth = containerFrame.width - horizontalPadding * 2
@@ -94,11 +100,9 @@ final class CommitDetailViewModel: ObservableObject {
         case .allGrass:
             return details
         case .codeGrass:
-            // NewRepo1 관련 내역은 제외 (대소문자 주의: "NewRepo1")
-            return details.filter { $0.repositoryName != "NewRepo1" }
+            return details.filter { $0.repositoryName != self.repoName }
         case .blogGrass:
-            // 오직 NewRepo1의 내역만 포함
-            return details.filter { $0.repositoryName == "NewRepo1" }
+            return details.filter { $0.repositoryName == self.repoName }
         }
     }
     

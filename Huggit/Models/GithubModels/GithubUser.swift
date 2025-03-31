@@ -11,5 +11,6 @@ struct GithubUser: Decodable, Equatable {
     let login: String
     let id: Int?
     let name: String?
+    let email: String?
     let avatar_url: String?
 }
