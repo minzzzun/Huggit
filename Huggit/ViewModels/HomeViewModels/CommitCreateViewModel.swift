@@ -26,7 +26,19 @@ final class CommitCreateViewModel: ObservableObject {
                 dateFormatter.timeStyle = .short
                 let dateString = dateFormatter.string(from: commit.date)
                 
-                commitDetails = "\(dateString)\n\(commit.link)\n\(commit.summary)"
+                commitDetails = """
+                    **Date**  
+                    \(dateString)
+
+                    **Blog**  
+                    \(typeString)
+
+                    **Summary**  
+                    \(commit.summary)
+
+                    **Link**  
+                    \(commit.link)
+                    """
             } else {
                 commitTitle = ""
                 commitDetails = ""
@@ -60,7 +72,7 @@ final class CommitCreateViewModel: ObservableObject {
             print("레포지토리 이름이 저장되어 있지 않습니다.")
             return
         }
-        let filePath = "\(commitTitle.replacingOccurrences(of: " ", with: "_")).txt"
+        let filePath = "\(commitTitle.replacingOccurrences(of: " ", with: "_")).md"
         
         // 먼저, 파일이 이미 존재하는지 확인하여 sha 값을 가져옵니다.
         GithubFileManager.shared.fetchFileSha(repoOwner: repoOwner, repoName: UserInfo.repoName, filePath: filePath) { result in
