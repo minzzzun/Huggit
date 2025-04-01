@@ -18,21 +18,22 @@ class MyPageViewModel: ObservableObject {
     
     @Published var totalCommitsThisMonth: Int = 0
     
-    
-    
-    init() {}
+    init() {
+        fetchTotalCommits()
+    }
     
     func fetchTotalCommits() {
-        guard githubName != "미등록" else { return }
-        
         let calendar = Calendar.current
         var comps = DateComponents(year: currentYear, month: currentMonth, day: 1)
         guard let startDate = calendar.date(from: comps),
               let range = calendar.range(of: .day, in: .month, for: startDate) else { return }
-        comps.day = range.count
-        guard let endDate = calendar.date(from: comps) else { return }
+        let totalDays = range.count
+        comps.day = totalDays
+        guard let rawEndDate = calendar.date(from: comps) else { return }
+            // endDate를 23:59:59로 변경하여 해당 날짜의 마지막 순간까지 포함되도록 합니다.
+            guard let endDate = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: rawEndDate) else { return }
         
-        GithubCommitFetchManager.shared.fetchContributionCountsInPeriod(username: githubName, from: startDate, to: endDate) { [weak self] result in
+        GithubCommitFetchManager.shared.fetchContributionCountsInPeriod(username: UserInfo.gitLogin, from: startDate, to: endDate) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let countsByDate):

@@ -16,6 +16,8 @@ final class GithubCommitFetchManager {
                                          to endDate: Date,
                                          completion: @escaping (Result<[String: Int], GithubAPIError>) -> Void) {
         let isoFormatter = ISO8601DateFormatter()
+        isoFormatter.timeZone = TimeZone.current // 로컬 타임존 적용
+        isoFormatter.formatOptions = [.withInternetDateTime]
         let fromStr = isoFormatter.string(from: startDate)
         let toStr = isoFormatter.string(from: endDate)
         
