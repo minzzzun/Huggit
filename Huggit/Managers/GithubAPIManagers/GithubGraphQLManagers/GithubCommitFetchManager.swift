@@ -39,7 +39,6 @@ final class GithubCommitFetchManager {
     }
     
     // 일정 기간 내 블로그 커밋 수
-    // TODO: 레파지토리 이름 따로 저장해두고 사용하도록 수정해야 함.
     func fetchBlogContributionCountsInPeriod(username: String,
                                              from startDate: Date,
                                              to endDate: Date,
@@ -103,12 +102,14 @@ final class GithubCommitFetchManager {
                                   completion: @escaping (Result<[ContributionDetail], GithubAPIError>) -> Void) {
         let calendar = Calendar(identifier: .gregorian)
         let startOfDay = calendar.startOfDay(for: date)
-        guard let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay) else {
+        guard let endOfDay = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: startOfDay) else {
             completion(.failure(.invalidURL))
             return
         }
-        
+
         let isoFormatter = ISO8601DateFormatter()
+        // 타임존을 로컬로 설정 (예: KST)
+        isoFormatter.timeZone = TimeZone.current
         isoFormatter.formatOptions = [.withInternetDateTime]
         let fromStr = isoFormatter.string(from: startOfDay)
         let toStr = isoFormatter.string(from: endOfDay)

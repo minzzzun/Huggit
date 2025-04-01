@@ -73,21 +73,22 @@ struct CalendarCellView: View {
     
     // 상대적 계산을 위한 함수: 색상을 반환
     func colorForCommitCount(count: Int, maxCount: Int, palette: [Color]) -> Color {
-        // maxCount가 1 이하인 경우 안전하게 첫 번째 색상 반환
-        guard maxCount > 1 else { return palette.first ?? Color.clear }
-        
-        // count가 0이면 무조건 첫 번째 단계 반환
+        // commit count가 0이면 무조건 첫 번째 색상 반환
         if count == 0 {
             return palette[0]
-        } else {
-            // count > 0인 경우, 1~maxCount를 1부터 palette.count-1까지 매핑
-            let adjustedMax = maxCount - 1  // 최대 범위 조정
-            let adjustedCount = count - 1   // 최소 값 1을 0부터 시작하도록 조정
-            let ratio = CGFloat(adjustedCount) / CGFloat(adjustedMax)
-            // index는 1부터 시작하여 palette.count-1까지
-            let index = 1 + min(Int(ratio * CGFloat(palette.count - 1)), palette.count - 2)
-            return palette[index]
         }
+        
+        // 최대값이 1 이하인 경우, commit이 있는 날이면 두 번째 색상 반환 (palette에 두 번째 색상이 있는지 확인)
+        if maxCount <= 1 {
+            return palette.count > 1 ? palette[1] : palette[0]
+        }
+        
+        // count가 1 이상이고 maxCount가 2 이상인 경우 비율에 따라 색상을 선택
+        let adjustedMax = maxCount - 1
+        let adjustedCount = count - 1
+        let ratio = CGFloat(adjustedCount) / CGFloat(adjustedMax)
+        let index = 1 + min(Int(ratio * CGFloat(palette.count - 1)), palette.count - 2)
+        return palette[index]
     }
     
     // 셀 배경 반환

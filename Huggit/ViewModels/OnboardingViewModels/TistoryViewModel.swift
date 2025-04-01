@@ -1,7 +1,7 @@
 import SwiftUI
 
 class TistoryViewModel: ObservableObject {
-    @Published var tistoryName: String = ""
+    @Published var tistoryName: String = UserInfo.tistoryName
     
     func saveTistoryName(){
         let trimmed = tistoryName.trimmingCharacters(in: .whitespacesAndNewlines)

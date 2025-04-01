@@ -26,6 +26,8 @@ struct ContentView: View {
                         TistoryView()
                     case "/velogView":
                         VelogView()
+                    case "/warning":
+                        WarningView()
                     case "/mypageView":
                         MyPageView()
                         
@@ -39,12 +41,12 @@ struct ContentView: View {
         .environmentObject(router)
         // 애플 로그인 한적 있는지 확인
         .onAppear {
-            // 유효성 검사(애플, 깃허브, Velog, Tistory)
-            router.updateLoginStatus {
-                if router.loginRouteStack.isEmpty {
+            router.isNeededLogin { needLogin in
+                if needLogin {
+                    router.offAll("/appleLogin")
+                }
+                else {
                     router.offAll("/")
-                } else {
-                    router.offAll(router.popNextLoginRoute())
                 }
             }
         }

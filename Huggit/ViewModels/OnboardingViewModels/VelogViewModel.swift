@@ -2,7 +2,7 @@ import SwiftUI
 
 
 class VelogViewModel: ObservableObject {
-    @Published var velogName: String = ""
+    @Published var velogName: String = UserInfo.velogName
     
     func saveVelog(){
         let trimmed = velogName.trimmingCharacters(in: .whitespacesAndNewlines)

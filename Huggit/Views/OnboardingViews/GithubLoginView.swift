@@ -14,7 +14,7 @@ struct GithubLoginView : View {
             
             VStack(spacing: 0) {
                 // HeaderView
-                OnboardingHeaderView()
+                OnboardingHeaderView(loginStep: 1)
                 Spacer()
                     .frame(height: 50)
                 
@@ -41,7 +41,6 @@ struct GithubLoginView : View {
                     }// v
                     Spacer()
                 }
-                .padding(.horizontal, 20)
                 
                 Spacer()
                 
@@ -59,16 +58,12 @@ struct GithubLoginView : View {
                         .cornerRadius(10)
                 }
                 .disabled(viewModel.isLoggingIn)
-                .padding(.horizontal, 20)
                 .padding(.bottom, 58)
-                
             }
+            .padding(.horizontal, 20)
             
         }
         .foregroundColor(.white)
-        .navigationBarHidden(true)
-        
-        
         .navigationBarHidden(true)
         .onOpenURL { url in
             print("🔗 URL received: \(url)")
@@ -93,13 +88,7 @@ struct GithubLoginView : View {
         // 로그인 완료 상태 감지 후 화면 전환
         .onChange(of: viewModel.isAuthenticated) { newValue in
             if newValue {
-                let nextRoute = router.popNextLoginRoute()
-                if nextRoute == "/" {
-                    router.offAll(nextRoute)
-                }
-                else {
-                    router.toNamed(nextRoute)
-                }
+                router.toNamed("/velogView")
             }
         }
     }
