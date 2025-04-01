@@ -83,9 +83,4 @@ final class TistoryPostManager {
         dateFormatter.dateFormat = "yyyy.MM.dd" // Tistory 날짜 형식에 맞게 수정
         return dateFormatter.date(from: dateString)
     }
-    
-    
-    
-    
-    
 }

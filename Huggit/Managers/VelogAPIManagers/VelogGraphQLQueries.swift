@@ -24,4 +24,19 @@ struct VelogGraphQLQueries {
             """
         ]
     }
+    
+    static func fetchUserQuery(username: String) -> [String: Any] {
+        return [
+            "operationName": "IsVelogUser",
+            "variables": ["username": username],
+            "query": """
+                query IsVelogUser($username: String!) {
+                  user(username: $username) {
+                    id
+                    username
+                  }
+                }
+                """
+        ]
+    }
 }

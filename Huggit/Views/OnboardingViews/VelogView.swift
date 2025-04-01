@@ -10,6 +10,10 @@ struct VelogView: View {
             Rectangle()
                 .fill(Color.blackBackground)
                 .ignoresSafeArea()
+                .onTapGesture {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+                                                    to: nil, from: nil, for: nil)
+                }
             
             VStack (spacing: 0){
                 //헤더뷰
@@ -36,20 +40,33 @@ struct VelogView: View {
                         .font(.system(size: 13, weight: .regular))
                         .foregroundColor(.blueButton)
                     
-                    TextField("", text: $viewModel.velogName, prompt: Text("닉네임을 입력하세요.")
-                        .foregroundColor(Color.gray))
-                    .padding() // 내부 패딩 추가
-                    .background(Color.blackBackground) // 배경색 추가
-                    .cornerRadius(5) // 모서리 둥글게
-                    .foregroundColor(.white) // 입력 텍스트 색상
-                    .overlay(
-                        Rectangle()
-                            .frame(height: 1)
-                            .foregroundColor(.gray),
-                        alignment: .bottom
+                    VStack(alignment: .leading, spacing: 12) {
+                        TextField("", text: $viewModel.velogName, prompt: Text("닉네임을 입력하세요.")
+                            .foregroundColor(.gray)
+                        )
+                        .padding(.vertical)
+                        .background(Color.blackBackground)
+                        .cornerRadius(5)
+                        .foregroundColor(viewModel.showError ? .red : .white)
+                        .overlay(
+                            Rectangle()
+                                .frame(height: 1)
+                                .foregroundColor(.gray),
+                            alignment: .bottom
+                        )
                         
-                    )
-                    
+                        if viewModel.showError {
+                            HStack (spacing: 6){
+                                Image("error")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 13.5)
+                                Text("존재하지 않는 닉네임이에요")
+                                    .font(.system(size: 12))
+                                    .foregroundColor(.red)
+                            }
+                        }
+                    }
                 }
                 
                 Spacer()
@@ -61,15 +78,21 @@ struct VelogView: View {
                     .padding(.bottom, 19)
                 
                 
-                Button(action:{
-                    viewModel.saveVelog()
-                    router.toNamed("/tistoryView")
-                }){
+                Button(action: {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+                                                    to: nil, from: nil, for: nil)
+                    viewModel.validateVelog { isValid in
+                        if isValid {
+                            viewModel.saveVelogName()
+                            router.toNamed("/tistoryView")
+                        }
+                    }
+                }) {
                     Text(viewModel.velogName.isEmpty ? "건너뛰기" : "다음")
                         .frame(maxWidth: .infinity)
                         .frame(height: 64)
                         .background(Color.blueButton)
-                        .foregroundColor(Color.white)
+                        .foregroundColor(.white)
                         .cornerRadius(10)
                 }
                 .padding(.bottom, 48)

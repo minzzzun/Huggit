@@ -9,6 +9,10 @@ struct TistoryView : View {
             Rectangle()
                 .fill(Color.blackBackground)
                 .ignoresSafeArea()
+                .onTapGesture {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+                                                    to: nil, from: nil, for: nil)
+                }
             
             VStack (spacing: 0){
                 //헤더뷰
@@ -34,21 +38,33 @@ struct TistoryView : View {
                     Text("* 선택")
                         .font(.system(size: 13, weight: .regular))
                         .foregroundColor(.blueButton)
-                    
-                    TextField("", text: $viewModel.tistoryName, prompt: Text("닉네임을 입력하세요.")
-                        .foregroundColor(Color.gray))
-                    .padding() // 내부 패딩 추가
-                    .background(Color.blackBackground) // 배경색 추가
-                    .cornerRadius(5) // 모서리 둥글게
-                    .foregroundColor(.white) // 입력 텍스트 색상
-                    .overlay(
-                        Rectangle()
-                            .frame(height: 1)
-                            .foregroundColor(.gray),
-                        alignment: .bottom
+                    VStack(alignment: .leading, spacing: 12) {
+                        TextField("", text: $viewModel.tistoryName, prompt: Text("닉네임을 입력하세요.")
+                            .foregroundColor(Color.gray)
+                        )
+                        .padding(.vertical)
+                        .background(Color.blackBackground)
+                        .cornerRadius(5)
+                        .foregroundColor(viewModel.showError ? .red : .white)
+                        .overlay(
+                            Rectangle()
+                                .frame(height: 1)
+                                .foregroundColor(.gray),
+                            alignment: .bottom
+                        )
                         
-                    )
-                    
+                        if viewModel.showError {
+                            HStack (spacing: 6){
+                                Image("error")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 13.5)
+                                Text("존재하지 않는 닉네임이에요")
+                                    .font(.system(size: 12))
+                                    .foregroundColor(.red)
+                            }
+                        }
+                    }
                 }
                 
                 Spacer()
@@ -61,8 +77,14 @@ struct TistoryView : View {
                 
                 
                 Button(action:{
-                    viewModel.saveTistoryName()
-                    router.toNamed("/warning")
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+                                                    to: nil, from: nil, for: nil)
+                    viewModel.validateTistory { isValid in
+                        if isValid {
+                            viewModel.saveTistoryName()
+                            router.toNamed("/warning")
+                        }
+                    }
                 }){
                     Text(viewModel.tistoryName.isEmpty ? "건너뛰기" : "다음")
                         .frame(maxWidth: .infinity)
