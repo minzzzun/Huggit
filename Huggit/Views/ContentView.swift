@@ -46,7 +46,7 @@ struct ContentView: View {
                     router.offAll("/appleLogin")
                 }
                 else {
-                    router.offAll("/velogView")
+                    router.offAll("/")
                 }
             }
         }

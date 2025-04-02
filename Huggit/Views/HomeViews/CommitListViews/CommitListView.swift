@@ -25,6 +25,7 @@ struct CommitListView: View {
                     .foregroundStyle(.white)
             )
             .font(.system(size: 16))
+            .frame(maxWidth: .infinity, alignment: .leading)
             
             VStack(spacing: 16) {
                 ForEach(commitListViewModel.sortedCommitList, id: \.id) { commit in

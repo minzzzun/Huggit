@@ -77,6 +77,12 @@ final class HomeViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
+        commitListViewModel.objectWillChange
+            .sink { [weak self] _ in
+                self?.objectWillChange.send()
+            }
+            .store(in: &cancellables)
+        
         // commitCreateViewModel 변경 감지
         commitCreateViewModel.objectWillChange
             .sink { [weak self] _ in
