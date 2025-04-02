@@ -30,8 +30,11 @@ struct CommitListView: View {
             VStack(spacing: 16) {
                 ForEach(commitListViewModel.sortedCommitList, id: \.id) { commit in
                     CommitListCellView(commit: commit)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
             }
+            .animation(.easeInOut, value: commitListViewModel.commitList)
+
             .padding(.top, 20)
         }
     }

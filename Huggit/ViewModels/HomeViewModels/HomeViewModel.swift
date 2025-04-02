@@ -15,14 +15,20 @@ final class HomeViewModel: ObservableObject {
     @Published var homeHeaderViewModel: HomeHeaderViewModel
     @Published var commitListViewModel: CommitListViewModel
     @Published var commitCreateViewModel: CommitCreateViewModel
+
+    @Published var currentYear: Int = Calendar.current.component(.year, from: Date())
+    @Published var currentMonth: Int = Calendar.current.component(.month, from: Date())
+    @Published var contributionDetailsByDay: [Int: [ContributionDetail]] = [:]
+    // 커밋 푸시 됐을 때 토스트
+    @Published var showToast: Bool = false
     
     private var cancellables = Set<AnyCancellable>()
     
-    // 하위 ViewModels 관리
+    // 하위 ViewModel 관리
     init() {
         let calendarVM = CalendarViewModel()
         let commitDetailVM = CommitDetailViewModel()
-        let homeHeaderVM = HomeHeaderViewModel(dayAllCommitCount: calendarVM.dayAllCommitCount)
+        let homeHeaderVM = HomeHeaderViewModel()
         let commitListVM = CommitListViewModel()
         let commitCreateVM = CommitCreateViewModel()
         
@@ -32,7 +38,7 @@ final class HomeViewModel: ObservableObject {
         self.commitListViewModel = commitListVM
         self.commitCreateViewModel = commitCreateVM
         
-        // calendarViewModel 변경 감지
+        // MARK: 하위 ViewModel 변경 감지 (이거 안하면, UI 업데이트 안됨)
         calendarViewModel.objectWillChange
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
@@ -40,38 +46,13 @@ final class HomeViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        calendarViewModel.$currentYear
-            .sink { [weak self] newYear in
-                self?.commitDetailViewModel.selectedYear = newYear
-            }
-            .store(in: &cancellables)
-        
-        calendarViewModel.$currentMonth
-            .sink { [weak self] newMonth in
-                self?.homeHeaderViewModel.selectedMonth = newMonth
-                self?.commitDetailViewModel.selectedMonth = newMonth
-            }
-            .store(in: &cancellables)
-        
-        calendarViewModel.$dayAllCommitCount
-            .sink { [weak self] newCounts in
-                guard let self = self else { return }
-                // 최신 전체 데이터를 업데이트
-                self.homeHeaderViewModel.dayAllCommitCount = newCounts
-                
-                // snapshot이 아직 비어있으면 한 번만 업데이트
-                self.homeHeaderViewModel.updateCommitsInThisMonth(with: newCounts)
-            }
-            .store(in: &cancellables)
-        
-        calendarViewModel.$currentGrass
-            .sink { newGrass in
-                self.commitDetailViewModel.currentGrass = newGrass
-            }
-            .store(in: &cancellables)
-        
-        // commitDetailViewModel 변경 감지
         commitDetailViewModel.objectWillChange
+            .sink { [weak self] _ in
+                self?.objectWillChange.send()
+            }
+            .store(in: &cancellables)
+        
+        homeHeaderViewModel.objectWillChange
             .sink { [weak self] _ in
                 self?.objectWillChange.send()
             }
@@ -83,31 +64,134 @@ final class HomeViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        // commitCreateViewModel 변경 감지
         commitCreateViewModel.objectWillChange
             .sink { [weak self] _ in
                 self?.objectWillChange.send()
             }
             .store(in: &cancellables)
         
+        // MARK: 하위 ViewModel 데이터 제공
+        $currentYear
+            .removeDuplicates()
+            .sink { [weak self] newYear in
+                self?.calendarViewModel.currentYear = newYear
+                self?.commitDetailViewModel.selectedYear = newYear
+                self?.fetchAllContributionDetails(for: UserInfo.gitLogin)
+            }
+            .store(in: &cancellables)
+        
+        $currentMonth
+            .removeDuplicates()
+            .sink { [weak self] newMonth in
+                self?.homeHeaderViewModel.selectedMonth = newMonth
+                self?.calendarViewModel.currentMonth = newMonth
+                self?.commitDetailViewModel.selectedMonth = newMonth
+                self?.fetchAllContributionDetails(for: UserInfo.gitLogin)
+            }
+            .store(in: &cancellables)
+        
+        // contributionDetailsByDay 바인딩
+        $contributionDetailsByDay
+            .sink { [weak self] newDetails in
+                self?.homeHeaderViewModel.contributionDetailsByDay = newDetails
+                self?.calendarViewModel.contributionDetailsByDay = newDetails
+                self?.commitDetailViewModel.contributionDetailsByDay = newDetails
+            }
+            .store(in: &cancellables)
+        
+        // CalenarViewModel 년/월 선택 감지
+        calendarViewModel.$currentYear
+            .sink { [weak self] newYear in
+                self?.currentYear = newYear
+            }
+            .store(in: &cancellables)
+        
+        calendarViewModel.$currentMonth
+            .sink { [weak self] newMonth in
+                self?.currentMonth = newMonth
+            }
+            .store(in: &cancellables)
+        
+        // CalendarViewModel 잔디 탭 변화 감지
+        calendarViewModel.$currentGrass
+            .sink { newGrass in
+                self.commitDetailViewModel.currentGrass = newGrass
+            }
+            .store(in: &cancellables)
+        
+        // CommitListView에서 커밋할 Post 감지
+        commitListViewModel.$selectedCommit
+            .sink { newCommit in
+                self.commitCreateViewModel.selectedCommit = newCommit
+            }
+            .store(in: &cancellables)
+        
+        // CommitCreateView에서 커밋 성공 감지
+        commitCreateViewModel.onCommitPushSuccess = { [weak self] pushedCommit in
+            guard let self = self else { return }
+            self.self.fetchAllContributionDetails(for: UserInfo.gitLogin)
+            withAnimation(.easeInOut(duration: 1.0)) {
+                self.commitListViewModel.commitList.removeAll { $0.id == pushedCommit.id }
+            }
+            self.commitListViewModel.selectedCommit = nil
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.showToastMessage()
+            }
+        }
+        
         loadAllData()
     }
     
     // 전체 데이터 로드
     func loadAllData() {
-        self.loadContributionDataInCurrentMonth()
+        self.fetchAllContributionDetails(for: UserInfo.gitLogin)
+        commitListViewModel.fetchPosts()
     }
     
-    // 이번 달의 커밋 데이터 불러오기
-    func loadContributionDataInCurrentMonth() {
-        guard !UserInfo.gitLogin.isEmpty else {
-            print("GitHub 사용자 정보가 아직 로드되지 않음")
-            return
+    // 기존의 개별 날짜에 대해 contribution
+    func fetchContributionDetails(for username: String, on date: Date, completion: @escaping ([ContributionDetail]) -> Void) {
+        GithubCommitFetchManager.shared.fetchContributionDetails(for: username, on: date) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let details):
+                    completion(details)
+                case .failure(let error):
+                    print("fetchContributionDetails: 에러 발생 - \(error)")
+                    completion([])
+                }
+            }
         }
-        let username = UserInfo.gitLogin
+    }
+    
+    // 이번 달의 모든 날짜에 대한 contribution
+    func fetchAllContributionDetails(for username: String) {
+        self.contributionDetailsByDay = [:]
+        let calendar = Calendar.current
+        // 현재 달의 1일 날짜 계산
+        guard let startOfMonth = calendar.date(from: DateComponents(year: currentYear, month: currentMonth, day: 1)),
+              let range = calendar.range(of: .day, in: .month, for: startOfMonth) else { return }
+        let totalDays = range.count
         
-        calendarViewModel.fetchContributions(for: username)
-        calendarViewModel.fetchBlogContributions(for: username)
-        commitDetailViewModel.fetchAllContributionDetails(for: username)
+        // 각 날짜에 대해 API 호출
+        for day in 1...totalDays {
+            let comps = DateComponents(year: currentYear, month: currentMonth, day: day)
+            guard let date = calendar.date(from: comps) else { continue }
+            
+            fetchContributionDetails(for: username, on: date) { details in
+                self.contributionDetailsByDay[day] = details
+            }
+        }
+    }
+    
+    // 커밋 푸시 토스트
+    func showToastMessage() {
+        withAnimation(.easeInOut(duration: 1.0)) {
+            showToast = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            withAnimation(.easeInOut(duration: 1.0)) {
+                self.showToast = false
+            }
+        }
     }
 }

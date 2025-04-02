@@ -23,21 +23,26 @@ final class GithubCommitFetchManager {
         
         let query = GithubGraphQLQueries.contributionsCalendarQuery(username: username, from: fromStr, to: toStr)
         
-        GithubGraphQLManager.shared.request(query: query) { (result: Result<ContributionCountsInPeriodResponse, GithubAPIError>) in
-            switch result {
-            case .success(let response):
-                var countsByDate: [String: Int] = [:]
-                for week in response.data.user.contributionsCollection.contributionCalendar.weeks {
-                    for day in week.contributionDays {
-                        countsByDate[day.date] = day.contributionCount
+        // 캐싱을 무시하도록 설정
+        GithubGraphQLManager.shared.request(
+            query: query,
+            cachePolicy: .reloadIgnoringLocalCacheData,
+            completion: { (result: Result<ContributionCountsInPeriodResponse, GithubAPIError>) in
+                switch result {
+                case .success(let response):
+                    var countsByDate: [String: Int] = [:]
+                    for week in response.data.user.contributionsCollection.contributionCalendar.weeks {
+                        for day in week.contributionDays {
+                            countsByDate[day.date] = day.contributionCount
+                        }
                     }
+                    print("GraphQL Response countsByDate: \(countsByDate)")
+                    completion(.success(countsByDate))
+                case .failure(let error):
+                    completion(.failure(error))
                 }
-                print("GraphQL Response countsByDate: \(countsByDate)")
-                completion(.success(countsByDate))
-            case .failure(let error):
-                completion(.failure(error))
             }
-        }
+        )
     }
     
     // 일정 기간 내 블로그 커밋 수

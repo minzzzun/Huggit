@@ -10,14 +10,18 @@ import Combine
 
 final class CommitListViewModel: ObservableObject {
     @Published var commitList: [Post] = []
-    private var tempPostsList: [Post] = []
+    @Published var tempPostsList: [Post] = []
+    @Published var selectedCommit: Post? = nil
     
     var sortedCommitList: [Post] {
         commitList.sorted { $0.date < $1.date }
     }
     
-    init() {
+    init() {}
+    
+    func fetchPosts() {
         let group = DispatchGroup()
+        tempPostsList = []
         
         group.enter()
         fetchVelogPosts(completion: {
@@ -98,8 +102,6 @@ final class CommitListViewModel: ObservableObject {
         
         group.notify(queue: .main) {
             let commitMessageSet = Set(commitMessages)
-            print("Before filtering, tempPostsList count: \(self.tempPostsList.count)")
-            print("Commit message set: \(commitMessageSet)")
             
             // 필터링 후에 최종 결과를 commitList에 할당
             self.commitList = self.tempPostsList.filter { post in
@@ -107,7 +109,6 @@ final class CommitListViewModel: ObservableObject {
                 let formattedTitle = ("[\(typeString)] \(post.title)")
                 return !commitMessageSet.contains(formattedTitle)
             }
-            print("After filtering, commitList count: \(self.commitList.count)")
         }
     }
 }

@@ -9,91 +9,78 @@ import SwiftUI
 import Combine
 
 final class HomeHeaderViewModel: ObservableObject {
+    
+    // MARK: 뷰에서 사용되는 값
     @Published var selectedMonth: Int = 3
     @Published var commitsInMonth: Int = 0
     @Published var commitStreak: Int = 0
-    @Published var dayAllCommitCount: [Int] {
+    
+    // MARK: 가공되어야 하는 데이터
+    @Published var contributionDetailsByDay: [Int: [ContributionDetail]] = [:] {
         didSet {
             updateCommitsInMonth()
+            calculateCommitStreak()
         }
-    }
-    @Published var dayAllCommitCountInThisMonth: [Int] {
-        didSet {
-            calculateCommitStreak() // 연속 커밋일 계산에 사용
-        }
-    }
-    
-    init(dayAllCommitCount: [Int] = [], dayAllCommitCountInThisMonth: [Int] = []) {
-        self.dayAllCommitCount = dayAllCommitCount
-        self.dayAllCommitCountInThisMonth = dayAllCommitCountInThisMonth
-        updateCommitsInMonth()
-        calculateCommitStreak()
     }
     
     private var today: Int {
         Calendar.current.component(.day, from: Date())
     }
     
-    /// 전체 커밋 수 업데이트
-    private func updateCommitsInMonth() {
-        self.commitsInMonth = dayAllCommitCount.reduce(0, +)
+    private func commitCount(for day: Int) -> Int {
+        return contributionDetailsByDay[day]?.reduce(0, { $0 + $1.messages.count }) ?? 0
     }
     
-    
-    // 이번달의 커밋 수 업데이트
-    func updateCommitsInThisMonth(with newCounts: [Int]) {
-        let currentRealMonth = Calendar.current.component(.month, from: Date())
-        if self.selectedMonth != currentRealMonth {
-            return
+    /// 전체 커밋 수 업데이트
+    private func updateCommitsInMonth() {
+        let total = contributionDetailsByDay.reduce(0) { result, pair in
+            let (_, details) = pair
+            return result + details.reduce(0, { $0 + $1.messages.count })
         }
-        if !newCounts.isEmpty {
-            self.dayAllCommitCountInThisMonth = newCounts
-        }
+        self.commitsInMonth = total
     }
     
     /// 이번 달의 연속된 커밋 일 수 계산
     private func calculateCommitStreak() {
-        let today = Calendar.current.component(.day, from: Date())
-        commitStreak = 0
-        for day in stride(from: today - 1, through: 0, by: -1) {
-            if day < dayAllCommitCountInThisMonth.count, dayAllCommitCountInThisMonth[day] > 0 {
-                commitStreak += 1
+        let currentDay = today
+        var streak = 0
+        // 오늘부터 1일까지 반복
+        for day in stride(from: currentDay, through: 1, by: -1) {
+            if commitCount(for: day) > 0 {
+                streak += 1
             } else {
                 break
             }
         }
+        self.commitStreak = streak
     }
     
     func stampName(for stampOrder: Int) -> String {
+        // 원래 로직:
+        // stampOrder 1: 오늘 - 3번째 날의 커밋 상태,
+        // stampOrder 2: 오늘 - 2번째,
+        // stampOrder 3: 오늘 - 1번째
+        let targetDay: Int
         switch stampOrder {
         case 1:
-            let index = today - 3
-            if index >= 0, index < dayAllCommitCountInThisMonth.count, dayAllCommitCountInThisMonth[index] > 0 {
-                return "stamp_1st_enable"
-            } else {
-                return "stamp_1st_disable"
-            }
+            targetDay = today - 2
         case 2:
-            let index = today - 2
-            if index >= 0, index < dayAllCommitCountInThisMonth.count, dayAllCommitCountInThisMonth[index] > 0 {
-                return "stamp_2nd_3rd_enable"
-            } else {
-                return "stamp_2nd_3rd_disable"
-            }
+            targetDay = today - 1
         case 3:
-            let index = today - 1
-            if index < dayAllCommitCountInThisMonth.count, dayAllCommitCountInThisMonth[index] > 0 {
-                return "stamp_2nd_3rd_enable"
-            } else {
-                return "stamp_2nd_3rd_disable"
-            }
+            targetDay = today
         default:
             return ""
+        }
+        if targetDay >= 1, commitCount(for: targetDay) > 0 {
+            return stampOrder == 1 ? "stamp_1st_enable" : "stamp_2nd_3rd_enable"
+        } else {
+            return stampOrder == 1 ? "stamp_1st_disable" : "stamp_2nd_3rd_disable"
         }
     }
     
     var tooltipText: String {
-        if today - 1 >= dayAllCommitCountInThisMonth.count || dayAllCommitCountInThisMonth[today - 1] == 0 {
+        let todayCount = commitCount(for: today)
+        if todayCount == 0 {
             return "오늘의 커밋 도장을 찍어볼까요?"
         } else {
             if commitStreak == 1 {

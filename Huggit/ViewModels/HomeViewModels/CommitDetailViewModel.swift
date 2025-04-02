@@ -16,7 +16,11 @@ final class CommitDetailViewModel: ObservableObject {
     @Published var selectedCellFrame: CGRect? = nil
     @Published var selectedYear: Int = 2025
     @Published var selectedMonth: Int = 3
-    @Published var selectedDay: Int = 1
+    @Published var selectedDay: Int = 1 {
+        didSet {
+            contributionDetails = contributionDetailsByDay[selectedDay] ?? []
+        }
+    }
     
     // 각 날짜별 contribution 정보를 저장하는 딕셔너리
     @Published var contributionDetailsByDay: [Int: [ContributionDetail]] = [:]
@@ -28,12 +32,6 @@ final class CommitDetailViewModel: ObservableObject {
     @Published var currentGrass: CurrentGrass = .allGrass
     
     private var cancellables = Set<AnyCancellable>()
-    
-    private var repoName: String?
-    
-    init() {
-        self.repoName = UserInfo.repoName
-    }
     
     func updateSelection(cellFrame: CGRect, containerFrame: CGRect, day: Int, horizontalPadding: CGFloat) {
         let tooltipWidth = containerFrame.width - horizontalPadding * 2
@@ -48,61 +46,15 @@ final class CommitDetailViewModel: ObservableObject {
         contributionDetails = []
     }
     
-    // 기존의 개별 날짜에 대해 contribution
-    func fetchContributionDetails(for username: String, on date: Date, completion: @escaping ([ContributionDetail]) -> Void) {
-        GithubCommitFetchManager.shared.fetchContributionDetails(for: username, on: date) { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let details):
-                    completion(details)
-                case .failure(let error):
-                    print("fetchContributionDetails: 에러 발생 - \(error)")
-                    completion([])
-                }
-            }
-        }
-    }
-    
-    // 이번 달의 모든 날짜에 대한 contribution
-    func fetchAllContributionDetails(for username: String) {
-        let calendar = Calendar.current
-        // 현재 달의 1일 날짜 계산
-        guard let startOfMonth = calendar.date(from: DateComponents(year: selectedYear, month: selectedMonth, day: 1)),
-              let range = calendar.range(of: .day, in: .month, for: startOfMonth) else { return }
-        let totalDays = range.count
-        
-        let dispatchGroup = DispatchGroup()
-        
-        // 각 날짜에 대해 API 호출
-        for day in 1...totalDays {
-            let comps = DateComponents(year: selectedYear, month: selectedMonth, day: day)
-            guard let date = calendar.date(from: comps) else { continue }
-            
-            dispatchGroup.enter()
-            fetchContributionDetails(for: username, on: date) { details in
-                self.contributionDetailsByDay[day] = details
-                dispatchGroup.leave()
-            }
-        }
-        
-        dispatchGroup.notify(queue: .main) {
-            // API 호출이 모두 완료되면, 선택된 날짜의 데이터를 contributionDetails에 반영
-            if let selected = self.contributionDetailsByDay[self.selectedDay] {
-                self.contributionDetails = selected
-            }
-        }
-    }
-    
     // 필터링 함수: currentGrass 값에 따라 ContributionDetail 배열을 필터링
-    // TODO: 레포 이름 따로 저장해서 사용하는 것으로 수정
     func filterContributionDetails(_ details: [ContributionDetail]) -> [ContributionDetail] {
         switch currentGrass {
         case .allGrass:
             return details
         case .codeGrass:
-            return details.filter { $0.repositoryName != self.repoName }
+            return details.filter { $0.repositoryName != UserInfo.repoName }
         case .blogGrass:
-            return details.filter { $0.repositoryName == self.repoName }
+            return details.filter { $0.repositoryName == UserInfo.repoName }
         }
     }
     

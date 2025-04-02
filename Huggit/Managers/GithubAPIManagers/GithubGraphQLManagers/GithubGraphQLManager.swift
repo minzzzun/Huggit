@@ -17,8 +17,11 @@ final class GithubGraphQLManager {
     }
     private let session = URLSession.shared
     
-    func request<T: Decodable>(query: String,
-                               completion: @escaping (Result<T, GithubAPIError>) -> Void) {
+    func request<T: Decodable>(
+        query: String,
+        cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy,
+        completion: @escaping (Result<T, GithubAPIError>) -> Void
+    ) {
         guard let url = URL(string: graphQLURL) else {
             completion(.failure(.invalidURL))
             return
@@ -28,6 +31,9 @@ final class GithubGraphQLManager {
         request.httpMethod = HTTPMethod.POST.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        // 캐싱 정책 설정
+        request.cachePolicy = cachePolicy
         
         let body = ["query": query]
         do {

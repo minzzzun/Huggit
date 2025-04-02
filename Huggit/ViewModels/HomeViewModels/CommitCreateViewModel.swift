@@ -49,12 +49,14 @@ final class CommitCreateViewModel: ObservableObject {
     @Published var commitTitle: String = ""
     @Published var commitDetails: String = ""
     
+    var onCommitPushSuccess: ((Post) -> Void)?
+    
     func cancelCommit() {
         selectedCommit = nil
     }
     
     func pushCommit() {
-        guard let _ = selectedCommit else { return }
+        guard let commit = selectedCommit else { return }
         
         let commitMessage = commitTitle
         let originalContent = commitDetails
@@ -123,7 +125,7 @@ final class CommitCreateViewModel: ObservableObject {
                         DispatchQueue.main.async {
                             switch pushResult {
                             case .success(_):
-                                self.selectedCommit = nil
+                                self.onCommitPushSuccess?(commit)
                             case .failure(let error):
                                 print("Failed to push commit: \(error)")
                             }
@@ -136,5 +138,4 @@ final class CommitCreateViewModel: ObservableObject {
         }
         
     }
-    
 }
