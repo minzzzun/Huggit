@@ -57,11 +57,11 @@ struct HomeView: View {
                     let arrowPos = (cellFrame.midX - containerFrame.minX - horizontalPadding) / tooltipWidth
                     
                     let localCellFrame = CGRect(
-                            x: cellFrame.minX - containerFrame.minX + safeAreaInsets.leading - 1,
-                            y: cellFrame.minY - containerFrame.minY + safeAreaInsets.top - 1,
-                            width: cellFrame.width + 2,
-                            height: cellFrame.height + 2
-                        )
+                        x: cellFrame.minX - containerFrame.minX + safeAreaInsets.leading - 1,
+                        y: cellFrame.minY - containerFrame.minY + safeAreaInsets.top - 1,
+                        width: cellFrame.width + 2,
+                        height: cellFrame.height + 2
+                    )
                     
                     HoleShape(holeRect: localCellFrame)
                         .fill(Color.black.opacity(0.7), style: FillStyle(eoFill: true))
@@ -78,7 +78,7 @@ struct HomeView: View {
                     ? (localCellFrame.maxY + 9 + tooltipHeight / 2 - safeAreaInsets.top)
                     : (localCellFrame.minY - 9 - tooltipHeight / 2 - 11 - safeAreaInsets.top)
                     let arrowDirection: ArrowDirection = fitsBelow ? .up : .down
-
+                    
                     
                     CommitDetailView(arrowPosition: arrowPos,
                                      arrowHeight: 11,
@@ -92,21 +92,28 @@ struct HomeView: View {
                 }
                 // CommitCreateView
                 if homeViewModel.commitCreateViewModel.selectedCommit != nil {
-                        // 배경 터치 시 CommitCreateView 닫힘
-                        Color.black.opacity(0.3)
-                            .ignoresSafeArea()
-                            .onTapGesture {
-                                homeViewModel.commitCreateViewModel.cancelCommit()
-                            }
-                        
-                        CommitCreateView()
+                    // 배경 터치 시 CommitCreateView 닫힘
+                    Color.black.opacity(0.3)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            homeViewModel.commitCreateViewModel.cancelCommit()
+                        }
+                    
+                    CommitCreateView()
                         .frame(height: 500)
-                            .background(Color.gray)
-                            .cornerRadius(12)
-                            .padding(.horizontal, horizontalPadding)
+                        .background(Color.gray)
+                        .cornerRadius(12)
+                        .padding(.horizontal, horizontalPadding)
                     
                 }
+                
+                if homeViewModel.showToast {
+                    ToastView(image: "push_check", message: "잔디 심기가 완료되었어요")
+                        .transition(.move(edge: .bottom))
+                        .zIndex(1)
+                }
             }
+            .animation(.easeInOut, value: homeViewModel.showToast)
             .environmentObject(homeViewModel)
             .navigationBarHidden(true)
         }

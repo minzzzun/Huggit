@@ -7,7 +7,7 @@ struct AppleLoginButton: View {
     @StateObject private var viewModel = AppleLoginViewModel()
     
     var body: some View {
-
+        
         SignInWithAppleButton(
             onRequest: { request in
                 request.requestedScopes = [.fullName, .email]
@@ -24,14 +24,7 @@ struct AppleLoginButton: View {
         }
         .onChange(of: viewModel.isAuthenticated) { newValue in
             if newValue {
-                print("loginRouteStack: \(router.loginRouteStack)")
-                let nextRoute = router.popNextLoginRoute()
-                if nextRoute == "/" {
-                    router.offAll(nextRoute)
-                }
-                else {
-                    router.toNamed(nextRoute)
-                }
+                router.toNamed("/githubLogin")
             }
         }
     }

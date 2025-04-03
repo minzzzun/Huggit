@@ -9,6 +9,9 @@ import SwiftUI
 
 struct CommitListCellView: View {
     @EnvironmentObject var homeViewModel: HomeViewModel
+    var commitListViewModel: CommitListViewModel {
+        homeViewModel.commitListViewModel
+    }
     
     var commit: Post
     
@@ -27,7 +30,7 @@ struct CommitListCellView: View {
                 .padding(.leading, 20)
             Spacer()
             Button(action: {
-                homeViewModel.commitCreateViewModel.selectedCommit = commit
+                commitListViewModel.selectedCommit = commit
             }) {
                 Text("commit")
                     .font(.system(size: 13))

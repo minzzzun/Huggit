@@ -48,6 +48,7 @@ final class TistoryPostManager {
                 var posts: [Post] = []
                 
                 for article in articles.array() {
+                    if posts.count >= 3 { break }
                     // 제목 추출
                     let title = try article.select("strong.title").text()
                     // 요약 추출
@@ -83,9 +84,4 @@ final class TistoryPostManager {
         dateFormatter.dateFormat = "yyyy.MM.dd" // Tistory 날짜 형식에 맞게 수정
         return dateFormatter.date(from: dateString)
     }
-    
-    
-    
-    
-    
 }

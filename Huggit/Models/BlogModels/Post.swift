@@ -7,16 +7,20 @@
 
 import Foundation
 
-enum PostType {
+enum PostType: Equatable {
     case tistory
     case velog
 }
 
-struct Post {
+struct Post: Identifiable, Equatable {
     let id = UUID()
     let type: PostType
     let date: Date
     let link: String
     let title: String
     let summary: String
+    
+    static func == (lhs: Post, rhs: Post) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
