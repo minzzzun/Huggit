@@ -38,22 +38,22 @@ struct CommitCreateView: View {
             
             VStack(spacing: 9) {
                 TextField("", text: Binding(
-                                get: { commitCreateViewModel.commitTitle },
-                                set: { commitCreateViewModel.commitTitle = $0 }
-                            ))
+                    get: { commitCreateViewModel.commitTitle },
+                    set: { commitCreateViewModel.commitTitle = $0 }
+                ))
                 .padding(EdgeInsets(top: 14, leading: 18, bottom: 14, trailing: 18))
                 .font(.system(size: 14))
-                            .background(Color.black)
-                            .foregroundStyle(.white)
-                            .cornerRadius(5)
+                .background(Color.black)
+                .foregroundStyle(.white)
+                .cornerRadius(5)
                 
                 LineNumberTextEditor(text: Binding(
-                                get: { commitCreateViewModel.commitDetails },
-                                set: { commitCreateViewModel.commitDetails = $0 }
-                            ))
+                    get: { commitCreateViewModel.commitDetails },
+                    set: { commitCreateViewModel.commitDetails = $0 }
+                ))
                 .background(Color.black)
-                            .frame(height: 231)
-                            .cornerRadius(5)
+                .frame(height: 231)
+                .cornerRadius(5)
             }
             .padding(.top, 18)
             
@@ -62,11 +62,18 @@ struct CommitCreateView: View {
             Button(action: {
                 commitCreateViewModel.pushCommit()
             }) {
-                Text("commit!")
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity, maxHeight: 55)
-                    .background(Color.blue)
-                    .cornerRadius(10)
+                HStack {
+                    if commitCreateViewModel.isLoading {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .padding(.trailing, 5)
+                    }
+                    Text("commit!")
+                        .foregroundColor(.white)
+                }
+                .frame(maxWidth: .infinity, maxHeight: 55)
+                .background(Color.blue)
+                .cornerRadius(10)
             }
             
         }

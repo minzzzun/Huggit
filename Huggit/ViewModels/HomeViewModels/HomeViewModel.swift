@@ -9,22 +9,23 @@ import SwiftUI
 import Combine
 
 final class HomeViewModel: ObservableObject {
-    // 하위 ViewModels
+    // MARK: 하위 ViewModel
     @Published var calendarViewModel: CalendarViewModel
     @Published var commitDetailViewModel: CommitDetailViewModel
     @Published var homeHeaderViewModel: HomeHeaderViewModel
     @Published var commitListViewModel: CommitListViewModel
     @Published var commitCreateViewModel: CommitCreateViewModel
 
+    // MARK: HomeViewModel -> 하위 ViewModel 데이터
     @Published var currentYear: Int = Calendar.current.component(.year, from: Date())
     @Published var currentMonth: Int = Calendar.current.component(.month, from: Date())
     @Published var contributionDetailsByDay: [Int: [ContributionDetail]] = [:]
+    
     // 커밋 푸시 됐을 때 토스트
-    @Published var showToast: Bool = false
+    @Published var showCommitPushToast: Bool = false
     
     private var cancellables = Set<AnyCancellable>()
     
-    // 하위 ViewModel 관리
     init() {
         let calendarVM = CalendarViewModel()
         let commitDetailVM = CommitDetailViewModel()
@@ -70,7 +71,7 @@ final class HomeViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        // MARK: 하위 ViewModel 데이터 제공
+        // MARK: HomeViewModel -> 하위 ViewModel 데이터
         $currentYear
             .removeDuplicates()
             .sink { [weak self] newYear in
@@ -90,7 +91,6 @@ final class HomeViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        // contributionDetailsByDay 바인딩
         $contributionDetailsByDay
             .sink { [weak self] newDetails in
                 self?.homeHeaderViewModel.contributionDetailsByDay = newDetails
@@ -99,7 +99,7 @@ final class HomeViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        // CalenarViewModel 년/월 선택 감지
+        // MARK: 하위 ViewModel -> 하위 ViewModel 데이터
         calendarViewModel.$currentYear
             .sink { [weak self] newYear in
                 self?.currentYear = newYear
@@ -112,23 +112,23 @@ final class HomeViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        // CalendarViewModel 잔디 탭 변화 감지
         calendarViewModel.$currentGrass
             .sink { newGrass in
                 self.commitDetailViewModel.currentGrass = newGrass
             }
             .store(in: &cancellables)
         
-        // CommitListView에서 커밋할 Post 감지
         commitListViewModel.$selectedCommit
             .sink { newCommit in
                 self.commitCreateViewModel.selectedCommit = newCommit
             }
             .store(in: &cancellables)
         
-        // CommitCreateView에서 커밋 성공 감지
+        // MARK: CommitCreateView 커밋 성공 클로저
         commitCreateViewModel.onCommitPushSuccess = { [weak self] pushedCommit in
             guard let self = self else { return }
+            
+            // loadAllData를 하지 않는 이유: Post를 새로 가지고 와서 다시 넣어주면, 애니메이션 적용 안됨
             self.self.fetchAllContributionDetails(for: UserInfo.gitLogin)
             withAnimation(.easeInOut(duration: 1.0)) {
                 self.commitListViewModel.commitList.removeAll { $0.id == pushedCommit.id }
@@ -186,11 +186,11 @@ final class HomeViewModel: ObservableObject {
     // 커밋 푸시 토스트
     func showToastMessage() {
         withAnimation(.easeInOut(duration: 1.0)) {
-            showToast = true
+            showCommitPushToast = true
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             withAnimation(.easeInOut(duration: 1.0)) {
-                self.showToast = false
+                self.showCommitPushToast = false
             }
         }
     }

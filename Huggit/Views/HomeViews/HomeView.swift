@@ -107,13 +107,13 @@ struct HomeView: View {
                     
                 }
                 
-                if homeViewModel.showToast {
+                if homeViewModel.showCommitPushToast {
                     ToastView(image: "push_check", message: "잔디 심기가 완료되었어요")
                         .transition(.move(edge: .bottom))
                         .zIndex(1)
                 }
             }
-            .animation(.easeInOut, value: homeViewModel.showToast)
+            .animation(.easeInOut, value: homeViewModel.showCommitPushToast)
             .environmentObject(homeViewModel)
             .navigationBarHidden(true)
         }

@@ -29,13 +29,13 @@ final class CommitCreateViewModel: ObservableObject {
                 commitDetails = """
                     **Date**  
                     \(dateString)
-
+                    
                     **Blog**  
                     \(typeString)
-
+                    
                     **Summary**  
                     \(commit.summary)
-
+                    
                     **Link**  
                     \(commit.link)
                     """
@@ -48,6 +48,7 @@ final class CommitCreateViewModel: ObservableObject {
     
     @Published var commitTitle: String = ""
     @Published var commitDetails: String = ""
+    @Published var isLoading: Bool = false
     
     var onCommitPushSuccess: ((Post) -> Void)?
     
@@ -57,6 +58,8 @@ final class CommitCreateViewModel: ObservableObject {
     
     func pushCommit() {
         guard let commit = selectedCommit else { return }
+        
+        isLoading = true
         
         let commitMessage = commitTitle
         let originalContent = commitDetails
@@ -76,7 +79,7 @@ final class CommitCreateViewModel: ObservableObject {
         }
         let filePath = "\(commitTitle.replacingOccurrences(of: " ", with: "_")).md"
         
-        // 먼저, 파일이 이미 존재하는지 확인하여 sha 값을 가져옵니다.
+        // 파일이 이미 존재하는지 확인
         GithubFileManager.shared.fetchFileSha(repoOwner: repoOwner, repoName: UserInfo.repoName, filePath: filePath) { result in
             switch result {
             case .success(let sha):
@@ -123,6 +126,7 @@ final class CommitCreateViewModel: ObservableObject {
                                                               filePath: filePath,
                                                               commitPushRequest: commitPushRequest) { pushResult in
                         DispatchQueue.main.async {
+                            self.isLoading = false
                             switch pushResult {
                             case .success(_):
                                 self.onCommitPushSuccess?(commit)
@@ -133,6 +137,9 @@ final class CommitCreateViewModel: ObservableObject {
                     }
                 } else {
                     print("Failed to fetch file sha: \(error)")
+                    DispatchQueue.main.async {
+                        self.isLoading = false
+                    }
                 }
             }
         }

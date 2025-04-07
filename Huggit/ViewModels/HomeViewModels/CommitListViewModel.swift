@@ -72,6 +72,8 @@ final class CommitListViewModel: ObservableObject {
     
     func filterPostsMatchingCommitMessages() {
         guard let earliestPost = tempPostsList.sorted(by: { $0.date < $1.date }).first else { return }
+        print("earlist: \(earliestPost.title)")
+        print("earlist: \(earliestPost.date)")
         let calendar = Calendar.current
         
         // 가장 오래된 post 날짜보다 하루 전을 시작 날짜로 설정
@@ -102,6 +104,12 @@ final class CommitListViewModel: ObservableObject {
         
         group.notify(queue: .main) {
             let commitMessageSet = Set(commitMessages)
+            print("commitMessageSet: \(commitMessageSet)")
+            for post in self.tempPostsList {
+                        let typeString = (post.type == .tistory) ? "Tistory" : "Velog"
+                        let formattedTitle = "[\(typeString)] \(post.title)"
+                        print("formattedTitle: \(formattedTitle)")
+                    }
             
             // 필터링 후에 최종 결과를 commitList에 할당
             self.commitList = self.tempPostsList.filter { post in
