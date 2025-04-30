@@ -1,6 +1,13 @@
+//
+//  GithubModifyViewModel.swift
+//  Huggit
+//
+//  Created by Minhyeok Kim on 4/9/25.
+//
+
 import SwiftUI
 
-class GithubLoginViewModel: ObservableObject {
+class GithubModifyViewModel: ObservableObject {
     @Published var accessToken : String? = nil
     @Published var isAuthenticated: Bool = false
     @Published var isLoggingIn: Bool = false
@@ -98,3 +105,4 @@ class GithubLoginViewModel: ObservableObject {
         }
     }
 }
+

@@ -20,13 +20,13 @@ struct HomeView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                Color.black.ignoresSafeArea()
+                Color.black
                 
                 ScrollView(.vertical) {
                     VStack {
                         AppBarView(isHomeView: true)
                         HomeHeaderView()
-                            .padding(.top, 11)
+                            .padding(.top, 15)
                         CalendarView { cellInfo in
                             let containerFrame = geometry.frame(in: .global)
                             homeViewModel.commitDetailViewModel.updateSelection(
@@ -37,10 +37,10 @@ struct HomeView: View {
                             )
                         }
                         .frame(height: calendarHeight)
-                        .padding(.top, 49)
+                        .padding(.top, 60)
                         
                         CommitListView()
-                            .padding(.top, 53)
+                            .padding(.top, 60)
                     }
                     .padding(.horizontal, horizontalPadding)
                 }
