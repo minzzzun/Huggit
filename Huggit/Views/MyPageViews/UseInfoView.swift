@@ -15,22 +15,23 @@ struct UseInfo {
 struct UseInfoView: View {
     @EnvironmentObject var myPageViewModel: MyPageViewModel
     @EnvironmentObject var router: NavigationRouter
+    @Environment(\.openURL) private var openURL
+    
+    private let privacyPolicyURL = URL(string: "https://future-glass-b30.notion.site/Huggit-1ce93d5fc4ad8037956cdc09a468375a?pvs=4")!
+    private let termsOfUseURL = URL(string: "https://future-glass-b30.notion.site/Huggit-1ce93d5fc4ad8001a179c56061082798?pvs=4")!
     
     var useInfos: [UseInfo] {
         [
             UseInfo(name: "개인정보 처리방침", action: {
-                // 개인정보 처리방침 액션 처리
+                openURL(privacyPolicyURL)
             }),
             UseInfo(name: "서비스 이용 약관", action: {
-                // 서비스 이용 약관 액션 처리
+                openURL(termsOfUseURL)
             }),
             UseInfo(name: "로그아웃", action: {
                 myPageViewModel.logout {
                     router.offAll("/appleLogin")
                 }
-            }),
-            UseInfo(name: "탈퇴하기", action: {
-                // 탈퇴하기 액션 처리
             })
         ]
     }
