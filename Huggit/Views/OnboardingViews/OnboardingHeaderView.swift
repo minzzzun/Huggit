@@ -16,10 +16,13 @@ struct OnboardingHeaderView: View {
             
             Spacer()
             
-            if router.path.last?.name != "/warning" {
+            if let lastPath = router.path.last?.name,
+               lastPath != "/warning",
+               !lastPath.hasSuffix("Modify")
+            {
                 // 페이지 인디케이터
                 HStack(spacing: 4) {
-                    ForEach(Array(0..<router.loginLength), id: \.self) { index in
+                    ForEach(0..<router.loginLength, id: \.self) { index in
                         Circle()
                             .fill(index < loginStep ? Color.blueButton : Color.gray.opacity(0.5))
                             .frame(width: 6, height: 6)

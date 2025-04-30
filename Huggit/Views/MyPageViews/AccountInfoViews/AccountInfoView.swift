@@ -15,45 +15,42 @@ struct Service {
 
 struct AccountInfoView: View {
     @EnvironmentObject var viewModel: MyPageViewModel
+    @EnvironmentObject var router: NavigationRouter
     
     // TODO: ViewModel에서 action 정의하기
     var services: [Service] {
         [
-            Service(name: "github", detail: viewModel.githubName, action: {}),
-            Service(name: "velog", detail: viewModel.velogName, action: {}),
-            Service(name: "tistory", detail: viewModel.tistoryName, action: {})
+            Service(name: "github", detail: viewModel.githubName, action: {
+                router.toNamed("/githubModify")
+            }),
+            Service(name: "velog", detail: viewModel.velogName, action: {
+                router.toNamed("/velogModify")
+            }),
+            Service(name: "tistory", detail: viewModel.tistoryName, action: {
+                router.toNamed("/tistoryModify")
+            })
         ]
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 20) {
             Text("계정 정보")
                 .font(.system(size: 17))
                 .foregroundStyle(.white)
-                .padding(.bottom, 20)
-            VStack {
+            VStack(spacing: 30) {
                 ForEach(services.indices, id: \.self) { index in
                     let service = services[index]
-                    VStack(spacing: 0) {
-                        AccountButtonView(
-                            service: service.name,
-                            serviceDetail: service.detail,
-                            action: service.action
-                        )
-                        if index < services.count - 1 {
-                            VStack {
-                                Divider()
-                                    .frame(height: 0.8)
-                            }
-                            .padding(.vertical, 18)
-                            .padding(.horizontal, 30)
-                        }
-                    }
+                    AccountButtonView(
+                        service: service.name,
+                        serviceDetail: service.detail,
+                        action: service.action
+                    )
                 }
             }
-            .padding(20)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 25)
             .background(
-                RoundedRectangle(cornerRadius: 11)
+                RoundedRectangle(cornerRadius: 10)
                     .fill(Color.gray)
             )
         }

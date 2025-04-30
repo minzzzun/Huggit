@@ -1,8 +1,14 @@
+//
+//  GithubModifyView.swift
+//  Huggit
+//
+//  Created by Minhyeok Kim on 4/9/25.
+//
+
 import SwiftUI
 
-
-struct GithubLoginView : View {
-    @StateObject private var viewModel = GithubLoginViewModel()
+struct GithubModifyView: View {
+    @StateObject private var viewModel = GithubModifyViewModel()
     @EnvironmentObject var router : NavigationRouter
     
     var body: some View {
@@ -21,21 +27,22 @@ struct GithubLoginView : View {
                 // BodyView
                 HStack {
                     // GitHub 로고와 텍스트
-                    VStack(alignment: .leading ,spacing: 16) {
+                    VStack(alignment: .leading ,spacing: 15) {
                         Image("githubLogo")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 80, height: 80)
                             .foregroundColor(.white)
+                            .padding(.bottom, 15)
                         
                         VStack(alignment: .leading,spacing: 8) {
-                            Text("깃허브 연동이")
+                            Text("새로운 깃허브 연동이")
                                 .font(.system(size: 24, weight: .bold))
                             Text("필요해요!")
                                 .font(.system(size: 24, weight: .bold))
-                        } // v
+                        }
                         
-                        Text("깃허브 잔디 정보를 불러오는 데 사용돼요!")
+                        Text("교체할 깃허브 계정으로 로그인 해주세요!")
                             .font(.system(size: 14))
                             .foregroundColor(.blueButton)
                     }// v
@@ -46,7 +53,6 @@ struct GithubLoginView : View {
                 
                 // 깃허브 로그인 버튼
                 Button(action: {
-                    print("깃허브 로그인")
                     viewModel.requestCode()
                 }) {
                     Text("깃허브 로그인")
@@ -89,8 +95,9 @@ struct GithubLoginView : View {
         .onChange(of: viewModel.isAuthenticated) { newValue in
             if newValue {
                 viewModel.isLoggingIn = false
-                router.toNamed("/velogView")
+                router.back()
             }
         }
     }
 }
+

@@ -30,8 +30,12 @@ struct ContentView: View {
                         WarningView()
                     case "/mypageView":
                         MyPageView()
-                        
-                        
+                    case "/githubModify":
+                        GithubModifyView()
+                    case "/tistoryModify":
+                        TistoryModifyView()
+                    case "/velogModify":
+                        VelogModifyView()
                     default:
                         Text("알 수 없는 경로 : \(route.name) ")
                     }

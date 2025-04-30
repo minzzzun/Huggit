@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct FeedbackView: View {
+    @Environment(\.openURL) private var openURL
+    private let feedbackURL = URL(string: "https://walla.my/survey/HSb9xSq6A0mDB8qewcSs")!
+    
     var body: some View {
         HStack (spacing: 7) {
             VStack {
@@ -38,7 +41,7 @@ struct FeedbackView: View {
                 .fill(Color.gray)
         )
         .onTapGesture {
-            // TODO: 피드백 폼 연결
+            openURL(feedbackURL)
         }
     }
 }

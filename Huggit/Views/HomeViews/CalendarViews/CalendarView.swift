@@ -93,7 +93,7 @@ struct CalendarView: View {
                             }
                         }
                     }
-                    .padding(.top, 27)
+                    .padding(.top, 30)
                     if calendarViewModel.selectMonth {
                         // 배경 터치시 모달 닫힘
                         Color.black.opacity(0.3)

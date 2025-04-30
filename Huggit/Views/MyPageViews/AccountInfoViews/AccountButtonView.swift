@@ -12,21 +12,32 @@ struct AccountButtonView: View {
     var serviceDetail: String
     var action: () -> Void
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 15) {
             Image("\(service)Logo")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 20, height: 20)
-            Text(service.firstLetterCapitalized)
-                .font(.system(size: 15))
-                .foregroundStyle(.white)
+                .frame(width: 30, height: 30)
+            VStack(alignment: .leading, spacing: 1) {
+                Text(service.firstLetterCapitalized)
+                    .font(.system(size: 11))
+                    .foregroundStyle(.white)
+                Text(serviceDetail)
+                    .font(.system(size: 14))
+                    .foregroundStyle(.white)
+            }
+            
             Spacer()
-            Text(serviceDetail)
-                .font(.system(size: 14))
-                .foregroundStyle(.white)
-        }
-        .onTapGesture {
-            action()
+            
+            Button(action: action) {
+                Text("수정")
+                    .font(.system(size: 11))
+                    .foregroundStyle(.white)
+                    .frame(width: 40, height: 25)
+            }
+            .background(
+                RoundedRectangle(cornerRadius: 5)
+                    .fill(Color.black)
+            )
         }
     }
 }
