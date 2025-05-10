@@ -2,6 +2,27 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Pretendard-Black.ttf</string>
+		<string>Pretendard-Bold.ttf</string>
+		<string>Pretendard-ExtraBold.ttf</string>
+		<string>Pretendard-ExtraLight.ttf</string>
+		<string>Pretendard-Light.ttf</string>
+		<string>Pretendard-Medium.ttf</string>
+		<string>Pretendard-Regular.ttf</string>
+		<string>Pretendard-SemiBold.ttf</string>
+		<string>Pretendard-Thin.ttf</string>
+		<string>Paperlogy-1Thin.ttf</string>
+		<string>Paperlogy-2ExtraLight.ttf</string>
+		<string>Paperlogy-3Light.ttf</string>
+		<string>Paperlogy-4Regular.ttf</string>
+		<string>Paperlogy-5Medium.ttf</string>
+		<string>Paperlogy-6SemiBold.ttf</string>
+		<string>Paperlogy-7Bold.ttf</string>
+		<string>Paperlogy-8ExtraBold.ttf</string>
+		<string>Paperlogy-9Black.ttf</string>
+	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
