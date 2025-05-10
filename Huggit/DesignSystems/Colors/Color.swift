@@ -41,7 +41,43 @@ extension Color {
         )
     }
     
+    // MARK: code Blue
+    static let codeBlue000 = Color(hex: "e6edff")
+    static let codeBlue100 = Color(hex: "d9e4ff")
+    static let codeBlue200 = Color(hex: "b0c6ff")
+    static let codeBlue300 = Color(hex: "0048ff")
+    static let codeBlue400 = Color(hex: "0041e6")
+    static let codeBlue500 = Color(hex: "003acc")
+    static let codeBlue600 = Color(hex: "0036bf")
+    static let codeBlue700 = Color(hex: "002b99")
+    static let codeBlue800 = Color(hex: "002073")
+    static let codeBlue900 = Color(hex: "001959")
     
+    // MARK: code Green
+    static let codeGreen000 = Color(hex: "f0faf0")
+    static let codeGreen100 = Color(hex: "e9f8e8")
+    static let codeGreen200 = Color(hex: "d1f0cf")
+    static let codeGreen300 = Color(hex: "6cd064")
+    static let codeGreen400 = Color(hex: "61bb5a")
+    static let codeGreen500 = Color(hex: "56a650")
+    static let codeGreen600 = Color(hex: "519c4b")
+    static let codeGreen700 = Color(hex: "417d3c")
+    static let codeGreen800 = Color(hex: "315e2d")
+    static let codeGreen900 = Color(hex: "264923")
+    
+    // MARK: System
+    static let errorRed = Color(hex: "912121")
+    static let noticGreen = Color(hex: "39D57A")
+    static let stampGreen = Color(hex: "3E8D4B")
+    static let semiBlue = Color(hex: "407DD5")
+    static let stampGray = Color(hex: "5C5C5C")
+    
+    // MARK: Primary
+    static let primaryWhite = Color(hex: "FFFFFF")
+    static let primaryDarkBlue = Color(hex: "121317")
+    static let primaryBlue = Color(hex: "3182F7")
+    
+    // TODO: 나중에 삭제할 것
     static let grayMessage = Color(hex: "484E5A")
     
     static let blackBackground = Color(hex: "121317")
