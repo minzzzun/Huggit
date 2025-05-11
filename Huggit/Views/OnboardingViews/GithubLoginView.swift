@@ -9,7 +9,7 @@ struct GithubLoginView : View {
         
         ZStack {
             Rectangle()
-                .fill(Color.blackBackground)
+                .fill(Color.primaryDarkBlue)
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
@@ -26,7 +26,7 @@ struct GithubLoginView : View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 80, height: 80)
-                            .foregroundColor(.white)
+                            .foregroundColor(.primaryWhite)
                         
                         VStack(alignment: .leading,spacing: 8) {
                             Text("깃허브 연동이")
@@ -37,7 +37,7 @@ struct GithubLoginView : View {
                         
                         Text("깃허브 잔디 정보를 불러오는 데 사용돼요!")
                             .font(.system(size: 14))
-                            .foregroundColor(.blueButton)
+                            .foregroundColor(.primaryBlue)
                     }// v
                     Spacer()
                 }
@@ -53,8 +53,8 @@ struct GithubLoginView : View {
                         .font(.system(size: 16, weight: .semibold))
                         .frame(maxWidth: .infinity)
                         .frame(height: 64)
-                        .background(Color.blueButton)
-                        .foregroundColor(.white)
+                        .background(Color.primaryBlue)
+                        .foregroundColor(.primaryWhite)
                         .cornerRadius(10)
                 }
                 .disabled(viewModel.isLoggingIn)
@@ -63,7 +63,7 @@ struct GithubLoginView : View {
             .padding(.horizontal, 20)
             
         }
-        .foregroundColor(.white)
+        .foregroundColor(.primaryWhite)
         .navigationBarHidden(true)
         .onOpenURL { url in
             print("🔗 URL received: \(url)")

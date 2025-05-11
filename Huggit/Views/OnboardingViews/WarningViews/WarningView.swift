@@ -16,11 +16,11 @@ struct WarningView: View {
             
             (
                 Text("HUGGIT_TECHBLOG 깃허브 레파지토리\n")
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.primaryWhite)
                 + Text("주의 사항")
-                    .foregroundStyle(.blue)
+                    .foregroundStyle(Color.primaryBlue)
                 + Text("을 안내 드릴게요!")
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.primaryWhite)
             )
             .font(.system(size: 23))
             .fontWeight(.bold)
@@ -61,14 +61,14 @@ struct WarningView: View {
                 Text("모두 확인했어요")
                     .frame(maxWidth: .infinity)
                     .frame(height: 64)
-                    .background(Color.blueButton)
-                    .foregroundColor(Color.white)
+                    .background(Color.primaryBlue)
+                    .foregroundColor(Color.primaryWhite)
                     .cornerRadius(10)
             }
             .padding(.bottom, 48)
         }
         .padding(.horizontal, 20)
-        .background(Color.blackBackground)
+        .background(Color.primaryDarkBlue)
         .navigationBarHidden(true)
     }
 }

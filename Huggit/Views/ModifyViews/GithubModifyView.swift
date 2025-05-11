@@ -15,7 +15,7 @@ struct GithubModifyView: View {
         
         ZStack {
             Rectangle()
-                .fill(Color.blackBackground)
+                .fill(Color.primaryDarkBlue)
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {

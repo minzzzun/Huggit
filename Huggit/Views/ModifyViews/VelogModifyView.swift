@@ -15,7 +15,7 @@ struct VelogModifyView: View {
         
         ZStack {
             Rectangle()
-                .fill(Color.blackBackground)
+                .fill(Color.primaryDarkBlue)
                 .ignoresSafeArea()
                 .onTapGesture {
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
@@ -49,7 +49,7 @@ struct VelogModifyView: View {
                             .foregroundColor(.gray)
                         )
                         .padding(.vertical)
-                        .background(Color.blackBackground)
+                        .background(Color.primaryDarkBlue)
                         .cornerRadius(5)
                         .foregroundColor(viewModel.showError ? .red : .white)
                         .overlay(

@@ -16,11 +16,11 @@ struct WarningInstructionView: View {
         HStack(spacing: 25) {
             ZStack {
                 Circle()
-                    .fill(Color(hex: "484E5A"))
+                    .fill(Color.grayMessage)
                     .frame(width: 27, height: 27)
                 
                 Text("\(num)")
-                    .foregroundColor(.white)
+                    .foregroundColor(.primaryWhite)
                     .font(.system(size: 15, weight: .semibold))
             }
             .padding(.leading, 20)
@@ -42,16 +42,16 @@ struct WarningInstructionView: View {
         if parts.count == 2 {
             // 앞부분 + 강조 + 뒷부분
             return Text(parts[0])
-                .foregroundColor(Color(hex: "484E5A"))
+                .foregroundColor(Color.grayMessage)
             + Text(highlight)
-                .foregroundColor(.white)
+                .foregroundColor(.primaryWhite)
                 .bold()
             + Text(parts[1])
-                .foregroundColor(Color(hex: "484E5A"))
+                .foregroundColor(Color.grayMessage)
         } else {
             // highlight 문자열이 instruction 안에 없거나 여러 번 등장하는 경우엔 그냥 전체 문자열 출력
             return Text(instruction)
-                .foregroundColor(Color(hex: "484E5A"))
+                .foregroundColor(Color.grayMessage)
         }
     }
 }
