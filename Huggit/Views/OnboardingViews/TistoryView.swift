@@ -90,7 +90,7 @@ struct TistoryView : View {
                         .frame(maxWidth: .infinity)
                         .frame(height: 64)
                         .background(Color.blueButton)
-                        .foregroundColor(Color.white)
+                        .foregroundColor(Color.primaryWhite)
                         .cornerRadius(10)
                 }
                 .padding(.bottom, 48)

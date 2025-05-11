@@ -16,11 +16,11 @@ struct FeedbackView: View {
             VStack {
                 (
                     Text("허깃은 여러분의 목소리로\n")
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Color.gray000)
                     + Text("더 나은 서비스")
-                        .foregroundStyle(.blue)
+                        .foregroundStyle(Color.primaryBlue)
                     + Text("를 만들어가요!")
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Color.gray000)
                 )
                 .font(.system(size: 15))
             }
@@ -30,7 +30,7 @@ struct FeedbackView: View {
                 .scaledToFit()
                 .frame(width: 73, height: 73)
             Image(systemName: "chevron.right")
-                .foregroundStyle(.white)
+                .foregroundStyle(Color.gray300)
                 .scaledToFit()
                 .frame(height: 8)
         }
@@ -38,7 +38,7 @@ struct FeedbackView: View {
         .padding(.vertical, 8)
         .background(
             RoundedRectangle(cornerRadius: 11)
-                .fill(Color.gray)
+                .fill(Color.gray500)
         )
         .onTapGesture {
             openURL(feedbackURL)

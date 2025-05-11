@@ -43,7 +43,7 @@ struct MyPageView: View {
             }
             .padding(.horizontal, 20)
         }
-        .background(.black)
+        .background(Color.primaryBlue)
         .environmentObject(myPageViewModel)
         .navigationBarHidden(true)
     }

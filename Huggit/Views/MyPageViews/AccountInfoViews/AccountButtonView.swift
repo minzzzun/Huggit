@@ -20,10 +20,10 @@ struct AccountButtonView: View {
             VStack(alignment: .leading, spacing: 1) {
                 Text(service.firstLetterCapitalized)
                     .font(.system(size: 11))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.primaryWhite)
                 Text(serviceDetail)
                     .font(.system(size: 14))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.primaryWhite)
             }
             
             Spacer()
@@ -31,12 +31,12 @@ struct AccountButtonView: View {
             Button(action: action) {
                 Text("수정")
                     .font(.system(size: 11))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.primaryWhite)
                     .frame(width: 40, height: 25)
             }
             .background(
                 RoundedRectangle(cornerRadius: 5)
-                    .fill(Color.black)
+                    .fill(Color.editGray)
             )
         }
     }

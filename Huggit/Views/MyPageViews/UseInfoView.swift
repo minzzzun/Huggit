@@ -40,7 +40,7 @@ struct UseInfoView: View {
         VStack (alignment: .leading) {
             Text("이용 안내")
                 .font(.system(size: 17))
-                .foregroundStyle(.white)
+                .foregroundStyle(Color.gray000)
                 .padding(.bottom, 20)
             VStack (spacing: 28) {
                 ForEach(useInfos.indices, id: \.self) { index in
@@ -49,11 +49,11 @@ struct UseInfoView: View {
                     HStack {
                         Text(useInfo.name)
                             .font(.system(size: 14))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Color.gray100)
                         Spacer()
                         Button(action: useInfo.action) {
                             Image(systemName: "chevron.right")
-                                .foregroundStyle(.white)
+                                .foregroundStyle(Color.gray300)
                                 .scaledToFit()
                                 .frame(height: 8)
                         }
@@ -63,7 +63,7 @@ struct UseInfoView: View {
             .padding(20)
             .background(
                 RoundedRectangle(cornerRadius: 11)
-                    .fill(Color.gray)
+                    .fill(Color.gray600)
             )
         }
     }

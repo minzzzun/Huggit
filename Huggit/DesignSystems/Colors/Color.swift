@@ -106,5 +106,8 @@ extension Color {
     static let blueHigh = Color(hex: "0038FF")
     static let blueMore = Color(hex: "0048FF")
     static let blueButton = Color(hex: "3182F7")
+    
+    static let editGray = Color(hex: "2A2D34") // 디자인시스템에 없어서 추가함
+        
 }
 

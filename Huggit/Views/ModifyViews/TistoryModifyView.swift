@@ -38,22 +38,22 @@ struct TistoryModifyView: View {
                     
                     Text("Tistory 닉네임을")
                         .font(.system(size: 27, weight: .semibold))
-                        .foregroundColor(.white)
+                        .foregroundColor(Color.primaryWhite)
                     Text("입력해주세요!")
                         .font(.system(size: 27, weight: .semibold))
-                        .foregroundColor(.white)
+                        .foregroundColor(Color.primaryWhite)
                     VStack(alignment: .leading, spacing: 12) {
                         TextField("", text: $viewModel.tistoryName, prompt: Text("닉네임을 입력하세요.")
-                            .foregroundColor(Color.gray)
+                            .foregroundColor(Color.gray300)
                         )
                         .padding(.vertical)
                         .background(Color.primaryDarkBlue)
                         .cornerRadius(5)
-                        .foregroundColor(viewModel.showError ? .red : .white)
+                        .foregroundColor(viewModel.showError ? .errorRed : .primaryWhite)
                         .overlay(
                             Rectangle()
                                 .frame(height: 1)
-                                .foregroundColor(.gray),
+                                .foregroundColor(Color.gray300),
                             alignment: .bottom
                         )
                         
@@ -65,7 +65,7 @@ struct TistoryModifyView: View {
                                     .frame(height: 13.5)
                                 Text("존재하지 않는 닉네임이에요")
                                     .font(.system(size: 12))
-                                    .foregroundColor(.red)
+                                    .foregroundColor(.errorRed)
                             }
                         }
                     }
@@ -76,7 +76,7 @@ struct TistoryModifyView: View {
                 
                 Text("입력하신 Tistory 계정에 올리는 글을 잔디로 심어요!")
                     .font(.system(size: 14, weight: .medium))
-                    .foregroundColor(.grayMessage)
+                    .foregroundColor(Color.gray300)
                     .padding(.bottom, 19)
                 
                 
@@ -93,8 +93,8 @@ struct TistoryModifyView: View {
                     Text("다음")
                         .frame(maxWidth: .infinity)
                         .frame(height: 64)
-                        .background(Color.blueButton)
-                        .foregroundColor(Color.white)
+                        .background(Color.primaryBlue)
+                        .foregroundColor(Color.primaryWhite)
                         .cornerRadius(10)
                 }
                 .padding(.bottom, 48)
