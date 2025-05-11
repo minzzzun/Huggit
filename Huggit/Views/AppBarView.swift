@@ -42,13 +42,13 @@ struct AppBarView: View {
                     router.back()
                 }) {
                     Image(systemName: "chevron.left")
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Color.primaryWhite)
                         .scaledToFit()
                         .frame(height: 15)
                 }
                 Text(title ?? "")
-                    .font(.system(size: 17))
-                    .foregroundStyle(.white)
+                    .textStyle(.b117SB)
+                    .foregroundStyle(Color.primaryWhite)
                     .padding(.leading, 5.5)
             }
             

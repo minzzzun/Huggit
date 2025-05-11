@@ -22,7 +22,7 @@ struct FeedbackView: View {
                     + Text("를 만들어가요!")
                         .foregroundStyle(Color.gray000)
                 )
-                .font(.system(size: 15))
+                .textStyle(.d515B)
             }
             Spacer()
             Image("feedback")

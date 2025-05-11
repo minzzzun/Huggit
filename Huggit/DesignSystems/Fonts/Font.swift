@@ -42,3 +42,4 @@ extension Font {
     static var c67M:  Font { .custom("Paperlogy-Medium", size: 7)    }
     static var c712SB:Font { .custom("Pretendard-SemiBold", size: 12) }
 }
+

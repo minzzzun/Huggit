@@ -22,8 +22,7 @@ struct WarningView: View {
                 + Text("을 안내 드릴게요!")
                     .foregroundStyle(Color.primaryWhite)
             )
-            .font(.system(size: 23))
-            .fontWeight(.bold)
+            .textStyle(.h323SB)
             .multilineTextAlignment(.center)            .padding(.top, 32)
             
             Image("repo_check")
@@ -59,6 +58,7 @@ struct WarningView: View {
                 router.offAll("/")
             }){
                 Text("모두 확인했어요")
+                    .textStyle(.b117SB)
                     .frame(maxWidth: .infinity)
                     .frame(height: 64)
                     .background(Color.primaryBlue)

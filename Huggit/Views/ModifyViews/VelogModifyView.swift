@@ -38,10 +38,10 @@ struct VelogModifyView: View {
                     
                     
                     Text("Velog 닉네임을")
-                        .font(.system(size: 27, weight: .semibold))
+                        .textStyle(.h227SB)
                         .foregroundColor(Color.primaryWhite)
                     Text("입력해주세요!")
-                        .font(.system(size: 27, weight: .semibold))
+                        .textStyle(.h227SB)
                         .foregroundColor(Color.primaryWhite)
                     
                     VStack(alignment: .leading, spacing: 12) {
@@ -66,7 +66,7 @@ struct VelogModifyView: View {
                                     .scaledToFit()
                                     .frame(height: 13.5)
                                 Text("존재하지 않는 닉네임이에요")
-                                    .font(.system(size: 12))
+                                    .textStyle(.s213M)
                                     .foregroundColor(.errorRed)
                             }
                         }
@@ -77,7 +77,7 @@ struct VelogModifyView: View {
                 
                 
                 Text("입력하신 Velog 계정에 올리는 글을 잔디로 심어요!")
-                    .font(.system(size: 14, weight: .medium))
+                    .textStyle(.s114M)
                     .foregroundColor(Color.gray300)
                     .padding(.bottom, 19)
                 
@@ -93,6 +93,7 @@ struct VelogModifyView: View {
                     }
                 }) {
                     Text("확인")
+                        .textStyle(.b117SB)
                         .frame(maxWidth: .infinity)
                         .frame(height: 64)
                         .background(Color.primaryBlue)

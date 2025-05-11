@@ -39,7 +39,7 @@ struct UseInfoView: View {
     var body: some View {
         VStack (alignment: .leading) {
             Text("이용 안내")
-                .font(.system(size: 17))
+                .textStyle(.b117SB)
                 .foregroundStyle(Color.gray000)
                 .padding(.bottom, 20)
             VStack (spacing: 28) {

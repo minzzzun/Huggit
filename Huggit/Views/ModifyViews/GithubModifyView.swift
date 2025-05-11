@@ -37,13 +37,13 @@ struct GithubModifyView: View {
                         
                         VStack(alignment: .leading,spacing: 8) {
                             Text("새로운 깃허브 연동이")
-                                .font(.system(size: 24, weight: .bold))
+                                .textStyle(.h227SB)
                             Text("필요해요!")
-                                .font(.system(size: 24, weight: .bold))
+                                .textStyle(.h227SB)
                         }
                         
                         Text("교체할 깃허브 계정으로 로그인 해주세요!")
-                            .font(.system(size: 14))
+                            .textStyle(.d222L)
                             .foregroundColor(Color.primaryBlue)
                     }// v
                     Spacer()
@@ -56,7 +56,7 @@ struct GithubModifyView: View {
                     viewModel.requestCode()
                 }) {
                     Text("깃허브 로그인")
-                        .font(.system(size: 16, weight: .semibold))
+                        .textStyle(.b117SB)
                         .frame(maxWidth: .infinity)
                         .frame(height: 64)
                         .background(Color.primaryBlue)
