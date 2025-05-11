@@ -2,6 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>githubprviewer</string>
+			</array>
+		</dict>
+	</array>
+	<key>GitHubClientID</key>
+	<string>Ov23liTg6IE1pWEHIJLd</string>
+	<key>GitHubClientSecret</key>
+	<string>1a3797c3577b7191c930cda5b542efc80ab4f9da</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Pretendard-Black.ttf</string>
@@ -23,21 +38,6 @@
 		<string>Paperlogy-8ExtraBold.ttf</string>
 		<string>Paperlogy-9Black.ttf</string>
 	</array>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>githubprviewer</string>
-			</array>
-		</dict>
-	</array>
-	<key>GitHubClientID</key>
-	<string>Ov23liTg6IE1pWEHIJLd</string>
-	<key>GitHubClientSecret</key>
-	<string>1a3797c3577b7191c930cda5b542efc80ab4f9da</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

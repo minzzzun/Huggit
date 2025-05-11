@@ -11,8 +11,8 @@ struct AppleLoginView: View {
             Rectangle()
                 .foregroundLinearGradient(
                     colors: [
-                        Color.blackBackground,
-                        Color.blackBackground,
+                        Color.primaryDarkBlue,
+                        Color.primaryDarkBlue,
                         Color.gradientBackground
                     ],
                     startPoint: .topTrailing,
@@ -34,7 +34,7 @@ struct AppleLoginView: View {
                         .fontWeight(.semibold)
                     HStack(spacing: 0) {
                         Text("모든 성실")
-                            .foregroundColor(.blueButton)
+                            .foregroundColor(Color.primaryBlue)
                         Text("을 담다,")
                     }
                     .font(.system(size: 26, weight: .regular))
@@ -64,7 +64,7 @@ struct AppleLoginView: View {
                     .padding(.bottom, 50)
             }
         }
-        .foregroundColor(Color.white)
+        .foregroundColor(Color.primaryWhite)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationBarHidden(true)
     }
