@@ -79,6 +79,16 @@ extension Color {
     
     static let gradientBackground = Color(hex: "3E4046")
     
+    // MARK: Gray
+    static let gray000 = Color(hex: "F8F6FC")
+    static let gray100 = Color(hex: "84898F")
+    static let gray200 = Color(hex: "606060")
+    static let gray300 = Color(hex: "484E5A")
+    static let gray400 = Color(hex: "3C3C46")
+    static let gray500 = Color(hex: "282A2F")
+    static let gray600 = Color(hex: "1F2125")
+    
+    
     // TODO: 나중에 삭제할 것
     static let grayMessage = Color(hex: "484E5A")
     

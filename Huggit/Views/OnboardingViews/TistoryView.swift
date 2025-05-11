@@ -7,7 +7,7 @@ struct TistoryView : View {
         
         ZStack {
             Rectangle()
-                .fill(Color.blackBackground)
+                .fill(Color.primaryDarkBlue)
                 .ignoresSafeArea()
                 .onTapGesture {
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
@@ -31,25 +31,25 @@ struct TistoryView : View {
                     
                     Text("Tistory 닉네임을")
                         .font(.system(size: 27, weight: .semibold))
-                        .foregroundColor(.white)
+                        .foregroundColor(.primaryWhite)
                     Text("입력해주세요!")
                         .font(.system(size: 27, weight: .semibold))
-                        .foregroundColor(.white)
+                        .foregroundColor(.primaryWhite)
                     Text("* 선택")
                         .font(.system(size: 13, weight: .regular))
-                        .foregroundColor(.blueButton)
+                        .foregroundColor(.primaryBlue)
                     VStack(alignment: .leading, spacing: 12) {
                         TextField("", text: $viewModel.tistoryName, prompt: Text("닉네임을 입력하세요.")
-                            .foregroundColor(Color.gray)
+                            .foregroundColor(Color.gray300)
                         )
                         .padding(.vertical)
-                        .background(Color.blackBackground)
+                        .background(Color.primaryDarkBlue)
                         .cornerRadius(5)
-                        .foregroundColor(viewModel.showError ? .red : .white)
+                        .foregroundColor(viewModel.showError ? .errorRed : .primaryWhite)
                         .overlay(
                             Rectangle()
                                 .frame(height: 1)
-                                .foregroundColor(.gray),
+                                .foregroundColor(.gray300),
                             alignment: .bottom
                         )
                         
