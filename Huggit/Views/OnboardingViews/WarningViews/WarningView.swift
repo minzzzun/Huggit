@@ -40,17 +40,17 @@ struct WarningView: View {
             VStack(spacing: 23) {
                 WarningInstructionView(
                     num: 1,
-                    instruction: "허깃 앱을 통해 심은 모든 잔디 소스는\nHUGGIT_TECHBLOG 레파지토리에 저장돼요",
-                    highlight: "HUGGIT_TECHBLOG"
+                    instruction: "허깃 앱을 통해 심은 모든 잔디 소스는\nHUGGIT 레파지토리에 저장돼요",
+                    highlight: "HUGGIT"
                 )
                 WarningInstructionView(
                     num: 2,
-                    instruction: "HUGGIT_TECHBLOG 레파지토리를 삭제할 시,\n파일에 저장된 모든 잔디 정보가 삭제돼요",
+                    instruction: "HUGGIT 레파지토리를 삭제할 시,\n파일에 저장된 모든 잔디 정보가 삭제돼요",
                     highlight: "모든 잔디 정보가 삭제"
                 )
                 WarningInstructionView(
                     num: 3,
-                    instruction: "HUGGIT_TECHBLOG 레파지토리 이름을 변경할 시,\n깃허브 계정 연동 과정을 다시 거쳐야 해요",
+                    instruction: "HUGGIT 레파지토리 이름을 변경할 시,\n깃허브 계정 연동 과정을 다시 거쳐야 해요",
                     highlight: "깃허브 계정 연동 과정을 다시 거쳐야 해요"
                 )
             }
@@ -75,3 +75,4 @@ struct WarningView: View {
         .navigationBarHidden(true)
     }
 }
+
