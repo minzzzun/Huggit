@@ -30,15 +30,15 @@ struct GithubLoginView : View {
                         
                         VStack(alignment: .leading,spacing: 8) {
                             Text("깃허브 연동이")
-                                .font(.system(size: 24, weight: .bold))
+                                .textStyle(.h227SB)
                             Text("필요해요!")
-                                .font(.system(size: 24, weight: .bold))
-                        } // v
+                                .textStyle(.h227SB)
+                        }
                         
                         Text("깃허브 잔디 정보를 불러오는 데 사용돼요!")
-                            .font(.system(size: 14))
+                            .textStyle(.s114M)
                             .foregroundColor(.primaryBlue)
-                    }// v
+                    }
                     Spacer()
                 }
                 
@@ -50,7 +50,7 @@ struct GithubLoginView : View {
                     viewModel.requestCode()
                 }) {
                     Text("깃허브 로그인")
-                        .font(.system(size: 16, weight: .semibold))
+                        .textStyle(.b117SB)
                         .frame(maxWidth: .infinity)
                         .frame(height: 64)
                         .background(Color.primaryBlue)
