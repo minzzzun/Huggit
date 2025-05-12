@@ -13,7 +13,7 @@ struct WarningInstructionView: View {
     let highlight: String
     
     var body: some View {
-        HStack(spacing: 25) {
+        HStack() {
             ZStack {
                 Circle()
                     .fill(Color.gray300)
@@ -28,17 +28,13 @@ struct WarningInstructionView: View {
             
             formattedInstructionText
                 .textStyle(.d115M)
-                .lineLimit(2)                   // 최대 2줄까지 허용
-                .minimumScaleFactor(0.75)       // 최대 75%까지 축소
-                .allowsTightening(true)         // 글자 간격도 조밀하게 압축
-
-
+                .lineLimit(2)
+                .allowsTightening(true)
+                .padding(.leading, 18)
             
             Spacer()
         }
-
-          .frame(maxWidth: .infinity, maxHeight: 67)
-
+        .frame(maxWidth: .infinity, maxHeight: 67)
         .background(
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.gray600)
