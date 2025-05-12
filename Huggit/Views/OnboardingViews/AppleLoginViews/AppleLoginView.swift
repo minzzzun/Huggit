@@ -30,18 +30,19 @@ struct AppleLoginView: View {
                 // 텍스트 영역
                 VStack(alignment: .leading, spacing: 4) {
                     Text("개발자들의")
-                        .font(.system(size: 26, weight: .regular))
-                        .fontWeight(.semibold)
+                        .textStyle(.h126SB)
+                    
                     HStack(spacing: 0) {
                         Text("모든 성실")
+                            .textStyle(.h126SB)
                             .foregroundColor(Color.primaryBlue)
                         Text("을 담다,")
+                            .textStyle(.h126SB)
                     }
-                    .font(.system(size: 26, weight: .regular))
-                    .fontWeight(.semibold)
-                    
+
+                    // TODO: 커스텀 폰트 "Wanted Sans Std" 추가해야함
                     Text("HUGGIT")
-                        .font(.system(size: 45, weight: .bold))
+                        .textStyle(.loginFont)
                         .padding(.top, 4)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -58,6 +59,7 @@ struct AppleLoginView: View {
                 
                 
                 Spacer()
+                
                 
                 // 애플 로그인 버튼
                 AppleLoginButton()

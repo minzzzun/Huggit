@@ -35,8 +35,8 @@ struct AccountInfoView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Text("계정 정보")
-                .font(.system(size: 17))
-                .foregroundStyle(.white)
+                .textStyle(.b117SB)
+                .foregroundStyle(Color.primaryWhite)
             VStack(spacing: 30) {
                 ForEach(services.indices, id: \.self) { index in
                     let service = services[index]
@@ -51,7 +51,7 @@ struct AccountInfoView: View {
             .padding(.vertical, 25)
             .background(
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.gray)
+                    .fill(Color.gray600)
             )
         }
     }

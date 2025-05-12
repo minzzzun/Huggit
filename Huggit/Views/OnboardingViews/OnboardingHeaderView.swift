@@ -9,10 +9,8 @@ struct OnboardingHeaderView: View {
             Button(action: {
                 router.back()
             }) {
-                Image("back")
-                    .resizable()
+                Image(systemName: "chevron.left")
                     .foregroundColor(.primaryWhite)
-                    .font(.system(size: 18, weight: .medium))
             }
             
             Spacer()
@@ -25,7 +23,7 @@ struct OnboardingHeaderView: View {
                 HStack(spacing: 4) {
                     ForEach(0..<router.loginLength, id: \.self) { index in
                         Circle()
-                            .fill(index < loginStep ? Color.primaryBlue : Color.gray500 )
+                            .fill(index < loginStep ? Color.primaryBlue : Color.gray500)
                             .frame(width: 6, height: 6)
                     }
                 }

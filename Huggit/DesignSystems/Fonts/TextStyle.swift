@@ -76,4 +76,9 @@ extension TextStyle {
                                    lineHeightMultiplier: 1.0, letterSpacing: 0)
     static let c712SB = TextStyle(font: .c712SB, size: 12,
                                    lineHeightMultiplier: 1.0, letterSpacing: 0)
+    
+    // MARK: - Login
+    static let loginFont = TextStyle(font: .loginFont, size: 45,
+                                     lineHeightMultiplier: 1.5, letterSpacing: -0.5)
+
 }
