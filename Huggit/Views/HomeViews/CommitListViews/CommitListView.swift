@@ -15,15 +15,17 @@ struct CommitListView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            (
+            HStack(spacing: 0) {
                 Text("오늘 ")
-                    .foregroundStyle(.white)
-                + Text("\(commitListViewModel.commitList.count)개의 ")
-                    .foregroundStyle(.white)
-                    .fontWeight(.bold)
-                + Text("커밋 내역이 있어요!")
-                    .foregroundStyle(.white)
-            )
+                    .foregroundStyle(Color.primaryWhite)
+                    .textStyle(.d415R)
+                Text("\(commitListViewModel.commitList.count)개")
+                    .foregroundStyle(Color.primaryWhite)
+                    .textStyle(.d515B)
+                Text("의 잔디를 심을 수 있어요!")
+                    .foregroundStyle(Color.primaryWhite)
+                    .textStyle(.d415R)
+            }
             .font(.system(size: 16))
             .frame(maxWidth: .infinity, alignment: .leading)
             

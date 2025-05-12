@@ -26,7 +26,7 @@ struct CalendarHeaderView: View {
             }) {
                 HStack {
                     Text("\(String(calendarViewModel.currentYear))년 \(calendarViewModel.currentMonth)월")
-                        .font(.system(size: 12))
+                        .textStyle(.c312R)
                         .foregroundColor(.primaryWhite)
                     Image(systemName: "chevron.down")
                         .foregroundColor(.white)
