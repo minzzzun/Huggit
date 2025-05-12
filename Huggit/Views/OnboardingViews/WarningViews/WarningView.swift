@@ -40,8 +40,8 @@ struct WarningView: View {
             VStack(spacing: 23) {
                 WarningInstructionView(
                     num: 1,
-                    instruction: "허깃 앱을 통해 심은 모든 잔디 소스는\nHUGGIT_TECHBLOG 레파지토리에 저장돼요",
-                    highlight: "HUGGIT_TECHBLOG"
+                    instruction: "허깃 앱을 통해 심은 모든 잔디 소스는\nHUGGIT 레파지토리에 저장돼요",
+                    highlight: "HUGGIT"
                 )
                 WarningInstructionView(
                     num: 2,
@@ -75,3 +75,4 @@ struct WarningView: View {
         .navigationBarHidden(true)
     }
 }
+
