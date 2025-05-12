@@ -41,5 +41,9 @@ extension Font {
     static var c514SB: Font { .custom("Pretendard-SemiBold", size: 14) }
     static var c67M:  Font { .custom("Paperlogy-Medium", size: 7)    }
     static var c712SB:Font { .custom("Pretendard-SemiBold", size: 12) }
+    
+    
+    // MARK: - Login
+    static var loginFont :Font { .custom("WantedSansStd-Bold", size: 45) }
 }
 

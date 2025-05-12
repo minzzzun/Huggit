@@ -42,7 +42,7 @@ struct AppleLoginView: View {
 
                     // TODO: 커스텀 폰트 "Wanted Sans Std" 추가해야함
                     Text("HUGGIT")
-                        .font(.system(size: 45, weight: .bold))
+                        .textStyle(.loginFont)
                         .padding(.top, 4)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -59,6 +59,7 @@ struct AppleLoginView: View {
                 
                 
                 Spacer()
+                
                 
                 // 애플 로그인 버튼
                 AppleLoginButton()

@@ -37,6 +37,13 @@
 		<string>Paperlogy-7Bold.ttf</string>
 		<string>Paperlogy-8ExtraBold.ttf</string>
 		<string>Paperlogy-9Black.ttf</string>
+		<string>WantedSansStd-Black.ttf</string>
+		<string>WantedSansStd-Bold.ttf</string>
+		<string>WantedSansStd-ExtraBlack.ttf</string>
+		<string>WantedSansStd-ExtraBold.ttf</string>
+		<string>WantedSansStd-Medium.ttf</string>
+		<string>WantedSansStd-Regular.ttf</string>
+		<string>WantedSansStd-SemiBold.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
