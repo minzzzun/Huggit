@@ -22,16 +22,23 @@ struct WarningInstructionView: View {
                 Text("\(num)")
                     .textStyle(.d115M)
                     .foregroundColor(.primaryWhite)
-                    
+                
             }
             .padding(.leading, 20)
             
             formattedInstructionText
                 .textStyle(.d115M)
+                .lineLimit(2)                   // 최대 2줄까지 허용
+                .minimumScaleFactor(0.75)       // 최대 75%까지 축소
+                .allowsTightening(true)         // 글자 간격도 조밀하게 압축
+
+
             
             Spacer()
         }
-        .frame(maxWidth: .infinity, maxHeight: 67)
+
+          .frame(maxWidth: .infinity, maxHeight: 67)
+
         .background(
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.gray600)
@@ -43,11 +50,14 @@ struct WarningInstructionView: View {
         if parts.count == 2 {
             // 앞부분 + 강조 + 뒷부분
             return Text(parts[0])
+                
                 .foregroundColor(Color.gray300)
             + Text(highlight)
+                
                 .foregroundColor(.primaryWhite)
                 .bold()
             + Text(parts[1])
+                
                 .foregroundColor(Color.gray300)
         } else {
             // highlight 문자열이 instruction 안에 없거나 여러 번 등장하는 경우엔 그냥 전체 문자열 출력

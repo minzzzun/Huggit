@@ -23,6 +23,9 @@ struct WarningView: View {
                     .foregroundStyle(Color.primaryWhite)
             )
             .textStyle(.h323SB)
+            .lineLimit(3)
+            .minimumScaleFactor(0.75)   // 원본의 75%까지 축소 허용
+            .allowsTightening(true)     // 글자 간격도 같이 압축
             .multilineTextAlignment(.center)            .padding(.top, 32)
             
             Image("repo_check")
