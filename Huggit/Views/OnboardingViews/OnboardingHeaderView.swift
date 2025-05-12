@@ -9,9 +9,15 @@ struct OnboardingHeaderView: View {
             Button(action: {
                 router.back()
             }) {
-                Image(systemName: "chevron.left")
-                    .foregroundColor(.primaryWhite)
+                HStack {
+                    Image(systemName: "chevron.left")
+                        .resizable()
+                        .frame(width: 10, height: 18)
+                        .foregroundColor(.primaryWhite)
+                    Spacer()
+                }
             }
+            .frame(width: 50, height: 38)
             
             Spacer()
             
@@ -30,7 +36,11 @@ struct OnboardingHeaderView: View {
             }
             
             Spacer()
+            
+            Spacer()
+                .frame(width: 50, height: 38)
         }
+        .frame(maxWidth: .infinity, maxHeight: 38)
         .padding(.top, 25)
     }
 }

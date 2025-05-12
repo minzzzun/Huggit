@@ -17,18 +17,18 @@ struct HomeHeaderView: View {
         HStack {
             VStack (alignment: .leading) {
                 Text("오늘도 1일 1커밋을 향해!")
-                    .foregroundStyle(.blue)
-                    .font(.system(size: 12))
+                    .textStyle(.s213M)
                     .padding(.top, 18)
+                    .foregroundStyle(Color.semiBlue)
                 (
                     Text("\(homeHeaderViewModel.selectedMonth)월에는 ")
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Color.gray000)
                     + Text("\(homeHeaderViewModel.commitsInMonth)개")
-                        .foregroundStyle(.blue)
+                        .foregroundStyle(Color.primaryBlue)
                     + Text("의\n잔디를 심었어요!")
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Color.gray000)
                 )
-                .font(.system(size: 21))
+                .textStyle(.h421M)
                 .padding(.top, 5)
             }
             Spacer()

@@ -22,7 +22,7 @@ struct GithubModifyView: View {
                 // HeaderView
                 OnboardingHeaderView(loginStep: 1)
                 Spacer()
-                    .frame(height: 50)
+                    .frame(height: 45)
                 
                 // BodyView
                 HStack {

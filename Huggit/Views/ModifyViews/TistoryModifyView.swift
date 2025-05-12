@@ -25,7 +25,7 @@ struct TistoryModifyView: View {
                 //헤더뷰
                 OnboardingHeaderView(loginStep: 1)
                 Spacer()
-                    .frame(height: 50)
+                    .frame(height: 45)
                 
                 //bodyView
                 

@@ -51,12 +51,12 @@ struct CalendarCellView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 4.55))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 4.55)
-                                    .stroke(isToday ? Color.green : Color.clear, lineWidth: 1)
+                                    .stroke(isToday ? Color.noticGreen : Color.clear, lineWidth: 1)
                             )
                     }
                     Text("\(day)")
                         .font(.caption)
-                        .foregroundColor(isToday ? .green : .white)
+                        .foregroundColor(isToday ? Color.noticGreen : Color.gray000)
                         .frame(height: 8)
                 } else {
                     // 빈 칸 처리

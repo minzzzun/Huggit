@@ -22,32 +22,33 @@ struct CommitDetailView: View {
     var body: some View {
         Tooltip(width: tooltipWidth,
                 height: tooltipHeight,
-                cornerRadius: 5,
+                cornerRadius: 10,
                 arrowHeight: arrowHeight,
                 arrowPosition: arrowPosition,
                 arrowTipRadius: 2,
-                color: Color(hex: "1F2125"),
+                color: Color.gray600,
                 arrowDirection: arrowDirection) {
             VStack {
                 HStack(alignment: .top) {
                     (
                         Text("\(String(commitDetailViewModel.selectedYear))년 \(commitDetailViewModel.selectedMonth)월 \(commitDetailViewModel.selectedDay)일에는 \n총 ")
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Color.primaryWhite)
                         + Text("\(commitDetailViewModel.totalContributionCount)개")
-                            .foregroundStyle(.green)
-                            .foregroundStyle(.green)
+                            .foregroundStyle(Color.noticGreen)
+                            .foregroundStyle(Color.noticGreen)
                         + Text("의 커밋을 했어요!")
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Color.primaryWhite)
                     )
-                    .font(.system(size: 15))
+                    .textStyle(.h615M)
                     Spacer()
                     Button(action: {
                         commitDetailViewModel.clearSelection()
                     }) {
                         ZStack {
-                            Image(systemName: "x.circle.fill")
-                                .frame(width: 20, height: 20)
-                                .foregroundStyle(.white)
+                            Image("cancel")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20)
                         }
                     }
                 }
