@@ -14,10 +14,10 @@ struct CalendarHeaderView: View {
     }
     
     var body: some View {
-        HStack(spacing: 19) {
-            CalendarHeaderButtonView(title: "전체 잔디", grassType: .allGrass, startColor: .greenMore, endColor: .blueMore)
-            CalendarHeaderButtonView(title: "코드 잔디", grassType: .codeGrass, startColor: .greenMore, endColor: .greenMore)
-            CalendarHeaderButtonView(title: "공부 잔디", grassType: .blogGrass, startColor: .blueMore, endColor: .blueMore)
+        HStack(alignment: .top, spacing: 19) {
+            CalendarHeaderButtonView(title: "전체 잔디", grassType: .allGrass, startColor: .codeGreen300, endColor: .codeBlue300)
+            CalendarHeaderButtonView(title: "코드 잔디", grassType: .codeGrass, startColor: .codeGreen300, endColor: .codeGreen300)
+            CalendarHeaderButtonView(title: "공부 잔디", grassType: .blogGrass, startColor: .codeBlue300, endColor: .codeBlue300)
             
             Spacer()
             
@@ -27,7 +27,7 @@ struct CalendarHeaderView: View {
                 HStack {
                     Text("\(String(calendarViewModel.currentYear))년 \(calendarViewModel.currentMonth)월")
                         .font(.system(size: 12))
-                        .foregroundColor(.white)
+                        .foregroundColor(.primaryWhite)
                     Image(systemName: "chevron.down")
                         .foregroundColor(.white)
                 }

@@ -39,8 +39,8 @@ struct MonthSelectionModalView: View {
                         homeViewModel.fetchAllContributionDetails(for: UserInfo.gitLogin)
                     }) {
                         Text("\(String(item.year))년 \(item.month)월")
-                            .foregroundColor(.white)
-                            .font(.system(size: 11))
+                            .textStyle(.c411R)
+                            .foregroundColor(.primaryWhite)
                     }
                     .frame(height: (109 - 1.5) / 4)
                     if item.date != months.last?.date {
@@ -50,7 +50,7 @@ struct MonthSelectionModalView: View {
                 }
             }
         }
-        .background(.gray)
+        .background(Color.gray500)
         .cornerRadius(5)
         .shadow(radius: 30)
     }

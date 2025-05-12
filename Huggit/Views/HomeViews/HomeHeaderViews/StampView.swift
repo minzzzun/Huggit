@@ -8,8 +8,8 @@ struct StampView: View {
         VStack(alignment: .trailing) {
             Tooltip {
                 Text(HomeHeaderViewModel.tooltipText)
-                    .foregroundStyle(.white)
-                    .font(.system(size: 9))
+                    .foregroundStyle(Color.gray000)
+                    .textStyle(.d39M)
                     .padding(.top, 7)
             }
             

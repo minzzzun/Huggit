@@ -107,4 +107,3 @@ extension Color {
     static let blueMore = Color(hex: "0048FF")
     static let blueButton = Color(hex: "3182F7")
 }
-

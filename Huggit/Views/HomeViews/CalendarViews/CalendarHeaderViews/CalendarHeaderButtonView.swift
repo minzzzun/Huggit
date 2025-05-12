@@ -32,12 +32,14 @@ struct CalendarHeaderButtonView: View {
                 Group {
                     if isActive {
                         Text(title)
+                            .textStyle(.c114R)
                             .foregroundLinearGradient(colors: [startColor, endColor],
                                                       startPoint: .leading,
                                                       endPoint: .trailing)
                     } else {
                         Text(title)
-                            .foregroundColor(.gray)
+                            .textStyle(.c114R)
+                            .foregroundColor(Color.gray100)
                     }
                 }
                 .background(
@@ -56,14 +58,10 @@ struct CalendarHeaderButtonView: View {
             if isActive {
                 Divider()
                     .frame(width: textWidth, height: 1)
-                    .background(Color.white)
+                    .background(Color.primaryWhite)
                     .foregroundLinearGradient(colors: [startColor, endColor],
                                               startPoint: .leading,
                                               endPoint: .trailing)
-            } else {
-                Divider()
-                    .frame(width: textWidth, height: 1)
-                    .background(Color.gray)
             }
         }
     }

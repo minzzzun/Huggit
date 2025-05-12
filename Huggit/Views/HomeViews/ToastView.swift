@@ -20,8 +20,8 @@ struct ToastView: View {
                     .scaledToFit()
                     .frame(width: 20)
                 Text(message)
-                    .font(.system(size: 14))
-                    .foregroundColor(.white)
+                    .textStyle(.s114M)
+                    .foregroundColor(Color.gray000)
             }
             .padding(.horizontal, 17)
             .padding(.vertical, 13)

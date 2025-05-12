@@ -43,7 +43,7 @@ struct CalendarView: View {
                                 Text(day)
                                     .font(.system(size: 9))
                                     .frame(maxWidth: .infinity)
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.gray000)
                             }
                         }
                         .padding(.bottom, 15)
@@ -96,7 +96,7 @@ struct CalendarView: View {
                     .padding(.top, 30)
                     if calendarViewModel.selectMonth {
                         // 배경 터치시 모달 닫힘
-                        Color.black.opacity(0.3)
+                        Color.primaryDarkBlue.opacity(0.3)
                             .ignoresSafeArea()
                             .onTapGesture {
                                 calendarViewModel.selectMonth = false
