@@ -53,6 +53,7 @@ struct ContentView: View {
                     router.offAll("/")
                 }
             }
+            viewModel.requestNotificationAuthorization()
         }
         
         // 알림 권한이 거부되었을 때 설정으로 이동할 수 있는 alert 표시

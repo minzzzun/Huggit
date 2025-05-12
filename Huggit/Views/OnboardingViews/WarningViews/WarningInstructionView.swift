@@ -29,8 +29,8 @@ struct WarningInstructionView: View {
             formattedInstructionText
                 .textStyle(.d115M)
                 .lineLimit(2)                   // 최대 2줄까지 허용
-                .minimumScaleFactor(0.6)       // 최대 75%까지 축소
-                .allowsTightening(true)         // 글자 간격도 조밀하게 압축  
+                .minimumScaleFactor(0.75)       // 최대 75%까지 축소
+                .allowsTightening(true)         // 글자 간격도 조밀하게 압축
 
 
             
