@@ -90,9 +90,6 @@ extension Color {
     
     
     // TODO: 나중에 삭제할 것
-    static let grayMessage = Color(hex: "484E5A")
-    
-    static let blackBackground = Color(hex: "121317")
     
     static let greenLess = Color(hex: "181B21")
     static let greenLow = Color(hex: "1F432B")
@@ -101,12 +98,8 @@ extension Color {
     static let greenMore = Color(hex: "6CD064")
     
     static let blueLess = Color(hex: "1C2026")
-    static let blueLow = Color(hex: "1F3364")
-    static let blueMedium = Color(hex: "2F52A9")
-    static let blueHigh = Color(hex: "0038FF")
-    static let blueMore = Color(hex: "0048FF")
-    static let blueButton = Color(hex: "3182F7")
-    
-    
-        
+    static let blueLow = codeBlue800
+    static let blueMedium = codeBlue700
+    static let blueHigh = codeBlue500
+    static let blueMore = codeBlue300
 }

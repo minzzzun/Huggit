@@ -55,7 +55,7 @@ struct CalendarCellView: View {
                             )
                     }
                     Text("\(day)")
-                        .font(.caption)
+                        .textStyle(.c67M)
                         .foregroundColor(isToday ? Color.noticGreen : Color.gray000)
                         .frame(height: 8)
                 } else {

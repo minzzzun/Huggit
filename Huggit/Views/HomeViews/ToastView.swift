@@ -25,7 +25,7 @@ struct ToastView: View {
             }
             .padding(.horizontal, 17)
             .padding(.vertical, 13)
-            .background(Color(hex: "292929"))
+            .background(Color.gray600)
             .clipShape(Capsule())
             .padding(.bottom, 20)
         }

@@ -72,7 +72,7 @@ extension TextStyle {
                                    lineHeightMultiplier: 1.0, letterSpacing: 0)
     static let c514SB = TextStyle(font: .c514SB, size: 14,
                                    lineHeightMultiplier: 1.0, letterSpacing: 0)
-    static let c67M   = TextStyle(font: .c67M,   size: 7,
+    static let c67M   = TextStyle(font: .c67M,   size: 10,
                                    lineHeightMultiplier: 1.0, letterSpacing: 0)
     static let c712SB = TextStyle(font: .c712SB, size: 12,
                                    lineHeightMultiplier: 1.0, letterSpacing: 0)
