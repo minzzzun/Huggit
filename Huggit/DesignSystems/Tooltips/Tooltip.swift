@@ -19,7 +19,7 @@ struct Tooltip<Content: View>: View {
     var arrowHeight: CGFloat = 5.15     // 정삼각형의 높이
     var arrowPosition: CGFloat = 0.5 // 0~1: 해당 edge에서 좌측으로부터의 상대 위치 (0.5면 중앙)
     var arrowTipRadius: CGFloat = 1
-    var color: Color = Color(hex: "282A2F")  // 전체 색상
+    var color: Color = Color.gray500  // 전체 색상
     var arrowDirection: ArrowDirection = .down  // 화살표 방향: .down (아래쪽), .up (위쪽)
     
     let content: () -> Content

@@ -41,7 +41,7 @@ struct CalendarView: View {
                         LazyVGrid(columns: columns, spacing: rowsPadding) {
                             ForEach(calendarViewModel.daysOfTheWeek, id: \.self) { day in
                                 Text(day)
-                                    .font(.system(size: 9))
+                                    .textStyle(.c29R)
                                     .frame(maxWidth: .infinity)
                                     .foregroundColor(.gray000)
                             }
