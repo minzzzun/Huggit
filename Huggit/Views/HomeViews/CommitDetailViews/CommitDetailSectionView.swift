@@ -15,13 +15,13 @@ struct CommitDetailSectionView: View {
         HStack {
             Rectangle()
                 .frame(width: 3)
-                .background(Color(hex:"313138"))
+                .foregroundStyle(Color.gray400)
             
             VStack(alignment: .leading) {
                 // Repo
                 Text(repoName)
-                    .font(.system(size: 14))
-                    .foregroundStyle(.white)
+                    .textStyle(.c514SB)
+                    .foregroundStyle(Color.gray000)
                 
                 // Commit Message
                 ForEach(Array(commitMessages.enumerated()), id: \.offset) { index, message in
@@ -29,10 +29,10 @@ struct CommitDetailSectionView: View {
                         Image(systemName: "circle.fill")
                             .resizable()
                             .frame(width: 5, height: 5)
-                            .foregroundStyle(.blue)
+                            .foregroundStyle(Color.semiBlue)
                         Text(message)
-                            .font(.system(size: 12))
-                            .foregroundStyle(.blue)
+                            .textStyle(.c312R)
+                            .foregroundStyle(Color.semiBlue)
                             .padding(.leading, 5)
                             .lineLimit(1)
                             .truncationMode(.tail)

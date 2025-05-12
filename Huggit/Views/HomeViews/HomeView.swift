@@ -20,7 +20,9 @@ struct HomeView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                Color.black
+                Color.clear
+                    .background(Color.primaryDarkBlue)
+                    .ignoresSafeArea()
                 
                 ScrollView(.vertical) {
                     VStack {
@@ -101,7 +103,7 @@ struct HomeView: View {
                     
                     CommitCreateView()
                         .frame(height: 500)
-                        .background(Color.gray)
+                        .background(Color.gray600)
                         .cornerRadius(12)
                         .padding(.horizontal, horizontalPadding)
                     
