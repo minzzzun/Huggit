@@ -37,12 +37,12 @@ struct VelogModifyView: View {
                         .frame(width: 35, height: 35)
                     
                     
-                    Text("Velog 닉네임을")
+                    Text("Velog 닉네임을\n입력해주세요!")
                         .textStyle(.h227SB)
                         .foregroundColor(Color.primaryWhite)
-                    Text("입력해주세요!")
-                        .textStyle(.h227SB)
-                        .foregroundColor(Color.primaryWhite)
+//                    Text("입력해주세요!")
+//                        .textStyle(.h227SB)
+//                        .foregroundColor(Color.primaryWhite)
                     
                     VStack(alignment: .leading, spacing: 12) {
                         TextField("", text: $viewModel.velogName, prompt: Text("닉네임을 입력하세요.")
@@ -88,7 +88,7 @@ struct VelogModifyView: View {
                     viewModel.validateVelog { isValid in
                         if isValid {
                             viewModel.saveVelogName()
-                            router.back()
+                            router.offNamed("/mypageView")
                         }
                     }
                 }) {

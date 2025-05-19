@@ -51,6 +51,7 @@ struct ContentView: View {
                 }
                 else {
                     router.offAll("/")
+//                    router.offAll("/warning")
                 }
             }
             viewModel.requestNotificationAuthorization()

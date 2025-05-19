@@ -36,14 +36,14 @@ struct GithubModifyView: View {
                             .padding(.bottom, 15)
                         
                         VStack(alignment: .leading,spacing: 8) {
-                            Text("새로운 깃허브 연동이")
+                            Text("새로운 깃허브 연동이\n필요해요!")
                                 .textStyle(.h227SB)
-                            Text("필요해요!")
-                                .textStyle(.h227SB)
+//                            Text("필요해요!")
+//                                .textStyle(.h227SB)
                         }
                         
                         Text("교체할 깃허브 계정으로 로그인 해주세요!")
-                            .textStyle(.d222L)
+                            .textStyle(.s114M)
                             .foregroundColor(Color.primaryBlue)
                     }// v
                     Spacer()
@@ -95,7 +95,7 @@ struct GithubModifyView: View {
         .onChange(of: viewModel.isAuthenticated) { newValue in
             if newValue {
                 viewModel.isLoggingIn = false
-                router.back()
+                router.offNamed("/mypageView")
             }
         }
     }

@@ -95,7 +95,7 @@ struct HomeView: View {
                 // CommitCreateView
                 if homeViewModel.commitCreateViewModel.selectedCommit != nil {
                     // 배경 터치 시 CommitCreateView 닫힘
-                    Color.black.opacity(0.3)
+                    Color.black.opacity(0.8)
                         .ignoresSafeArea()
                         .onTapGesture {
                             homeViewModel.commitCreateViewModel.cancelCommit()

@@ -62,5 +62,6 @@ struct AppBarView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: 56)
+        .padding(.top, 10)
     }
 }

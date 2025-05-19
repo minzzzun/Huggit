@@ -20,7 +20,7 @@ struct UserInfoView: View {
             Text("\(viewModel.githubName)님")
                 .textStyle(.h323SB)
                 .foregroundStyle(Color.primaryWhite)
-                .padding(.top, 8)
+                .padding(.top, 5)
                 .padding(.bottom, 32)
             
             HStack {

@@ -134,7 +134,7 @@ final class HomeViewModel: ObservableObject {
                 self.commitListViewModel.commitList.removeAll { $0.id == pushedCommit.id }
             }
             self.commitListViewModel.selectedCommit = nil
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                 self.showToastMessage()
             }
         }

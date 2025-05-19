@@ -29,10 +29,10 @@ struct GithubLoginView : View {
                             .foregroundColor(.primaryWhite)
                         
                         VStack(alignment: .leading,spacing: 8) {
-                            Text("깃허브 연동이")
+                            Text("깃허브 연동이\n필요해요!")
                                 .textStyle(.h227SB)
-                            Text("필요해요!")
-                                .textStyle(.h227SB)
+//                            Text("필요해요!")
+//                                .textStyle(.h227SB)
                         }
                         
                         Text("깃허브 잔디 정보를 불러오는 데 사용돼요!")

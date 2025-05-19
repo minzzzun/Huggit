@@ -19,25 +19,28 @@ struct WarningView: View {
                     .foregroundStyle(Color.primaryWhite)
                 + Text("주의 사항")
                     .foregroundStyle(Color.primaryBlue)
-                + Text("을 안내 드릴게요!")
+                + Text("을 안내해드릴게요!")
                     .foregroundStyle(Color.primaryWhite)
             )
             .textStyle(.h323SB)
             .lineLimit(3)
             .minimumScaleFactor(0.75)   // 원본의 75%까지 축소 허용
             .allowsTightening(true)     // 글자 간격도 같이 압축
-            .multilineTextAlignment(.center)            .padding(.top, 32)
+            .multilineTextAlignment(.center)
+            .padding(.top, 32)
+            
+            Spacer()
             
             Image("repo_check")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(height: 92)
-                .padding(.top, 68)
+//                .padding(.top, 68)
                 .padding(.leading, 9.46)
             
             Spacer()
             
-            VStack(spacing: 23) {
+            VStack(spacing: 15) {
                 WarningInstructionView(
                     num: 1,
                     instruction: "허깃 앱을 통해 심은 모든 잔디 소스는\nHUGGIT 레파지토리에 저장돼요",
@@ -54,7 +57,7 @@ struct WarningView: View {
                     highlight: "깃허브 계정 연동 과정을 다시 거쳐야 해요"
                 )
             }
-            .padding(.bottom, 52)
+            .padding(.bottom, 40)
             
             // 애플 로그인 버튼
             Button(action:{

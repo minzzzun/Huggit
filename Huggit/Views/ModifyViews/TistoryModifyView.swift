@@ -36,12 +36,12 @@ struct TistoryModifyView: View {
                         .frame(width: 35, height: 35)
                     
                     
-                    Text("Tistory 닉네임을")
+                    Text("Tistory 닉네임을\n입력해주세요!")
                         .textStyle(.h227SB)
                         .foregroundColor(Color.primaryWhite)
-                    Text("입력해주세요!")
-                        .textStyle(.h227SB)
-                        .foregroundColor(Color.primaryWhite)
+//                    Text("입력해주세요!")
+//                        .textStyle(.h227SB)
+//                        .foregroundColor(Color.primaryWhite)
                     VStack(alignment: .leading, spacing: 12) {
                         TextField("", text: $viewModel.tistoryName, prompt: Text("닉네임을 입력하세요.")
                             .foregroundColor(Color.gray300)
@@ -86,7 +86,7 @@ struct TistoryModifyView: View {
                     viewModel.validateTistory { isValid in
                         if isValid {
                             viewModel.saveTistoryName()
-                            router.back()
+                            router.offNamed("/mypageView")
                         }
                     }
                 }){

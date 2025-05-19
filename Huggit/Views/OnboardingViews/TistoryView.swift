@@ -29,12 +29,12 @@ struct TistoryView : View {
                         .frame(width: 35, height: 35)
                     
                     
-                    Text("Tistory 닉네임을")
+                    Text("Tistory 닉네임을\n입력해주세요!")
                         .textStyle(.h227SB)
                         .foregroundColor(.primaryWhite)
-                    Text("입력해주세요!")
-                        .textStyle(.h227SB)
-                        .foregroundColor(.primaryWhite)
+//                    Text("입력해주세요!")
+//                        .textStyle(.h227SB)
+//                        .foregroundColor(.primaryWhite)
                     Text("* 선택")
                         .textStyle(.s114M)
                         .foregroundColor(.primaryBlue)
