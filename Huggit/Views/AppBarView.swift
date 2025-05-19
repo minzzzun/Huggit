@@ -32,7 +32,7 @@ struct AppBarView: View {
     var body: some View {
         HStack {
             if isHomeView {
-                Image("applogo")
+                Image("appLogo")
                     .resizable()
                     .scaledToFit()
                     .frame(height: 22)
