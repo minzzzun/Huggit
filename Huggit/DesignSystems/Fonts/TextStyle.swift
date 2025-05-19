@@ -23,13 +23,13 @@ extension TextStyle {
     static let h126SB = TextStyle(font: .h126SB, size: 26,
                                    lineHeightMultiplier: 1.5, letterSpacing: 0)
     static let h227SB = TextStyle(font: .h227SB, size: 27,
-                                   lineHeightMultiplier: 1.3, letterSpacing: 0)
+                                   lineHeightMultiplier: 1.1, letterSpacing: 0)
     static let h323SB = TextStyle(font: .h323SB, size: 23,
-                                   lineHeightMultiplier: 1.5, letterSpacing: 0)
+                                   lineHeightMultiplier: 1.1, letterSpacing: 0)
     static let h421M  = TextStyle(font: .h421M,  size: 21,
-                                   lineHeightMultiplier: 1.3, letterSpacing: 0)
+                                   lineHeightMultiplier: 1.1, letterSpacing: 0)
     static let h518SB = TextStyle(font: .h518SB, size: 18,
-                                   lineHeightMultiplier: 1.3, letterSpacing: 0)
+                                   lineHeightMultiplier: 1.1, letterSpacing: 0)
     static let h615M  = TextStyle(font: .h615M,  size: 15,
                                    lineHeightMultiplier: 1.0, letterSpacing: 0)
 
@@ -41,7 +41,7 @@ extension TextStyle {
 
     // MARK: - Display
     static let d115M = TextStyle(font: .d115M, size: 15,
-                                  lineHeightMultiplier: 1.4, letterSpacing: 0)
+                                  lineHeightMultiplier: 1.2, letterSpacing: 0)
     static let d222L = TextStyle(font: .d222L, size: 22,
                                   lineHeightMultiplier: 35/22, letterSpacing: 0)
     static let d39M  = TextStyle(font: .d39M,  size: 9,
@@ -72,7 +72,7 @@ extension TextStyle {
                                    lineHeightMultiplier: 1.0, letterSpacing: 0)
     static let c514SB = TextStyle(font: .c514SB, size: 14,
                                    lineHeightMultiplier: 1.0, letterSpacing: 0)
-    static let c67M   = TextStyle(font: .c67M,   size: 10,
+    static let c67M   = TextStyle(font: .c67M,   size: 8,
                                    lineHeightMultiplier: 1.0, letterSpacing: 0)
     static let c712SB = TextStyle(font: .c712SB, size: 12,
                                    lineHeightMultiplier: 1.0, letterSpacing: 0)

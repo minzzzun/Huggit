@@ -63,6 +63,7 @@ struct CommitDetailView: View {
                     }
                     .padding(.top, 10)
                 }
+                .padding(.bottom, 10)
             }
             .padding(20)
         }

@@ -30,12 +30,12 @@ struct VelogView: View {
                         .frame(width: 35, height: 35)
                     
                     
-                    Text("Velog 닉네임을")
+                    Text("Velog 닉네임을\n입력해주세요!")
                         .textStyle(.h227SB)
                         .foregroundColor(.primaryWhite)
-                    Text("입력해주세요!")
-                        .textStyle(.h227SB)
-                        .foregroundColor(.primaryWhite)
+//                    Text("입력해주세요!")
+//                        .textStyle(.h227SB)
+//                        .foregroundColor(.primaryWhite)
                     Text("* 선택")
                         .textStyle(.s114M)
                         .foregroundColor(.primaryBlue)

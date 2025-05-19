@@ -39,7 +39,7 @@ extension Font {
     static var c312R: Font { .custom("Pretendard-Regular", size: 12) }
     static var c411R: Font { .custom("Pretendard-Regular", size: 11) }
     static var c514SB: Font { .custom("Pretendard-SemiBold", size: 14) }
-    static var c67M:  Font { .custom("Paperlogy-Medium", size: 10)    }
+    static var c67M:  Font { .custom("Paperlogy-5Medium", size: 8)    }
     static var c712SB:Font { .custom("Pretendard-SemiBold", size: 12) }
     
     

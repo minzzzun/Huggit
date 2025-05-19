@@ -29,7 +29,7 @@ struct ToastView: View {
             .clipShape(Capsule())
             .padding(.bottom, 20)
         }
-        .shadow(color: Color.white.opacity(0.25), radius: 20, x: 0, y: 0)
+        .shadow(color: Color.primaryWhite.opacity(0.2), radius: 13, x: 0, y: 0)
         .allowsHitTesting(false)
     }
 }

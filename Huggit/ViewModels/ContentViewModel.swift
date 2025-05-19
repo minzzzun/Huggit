@@ -14,7 +14,7 @@ class ContentViewModel : ObservableObject {
                         at: 13,
                         minute: 0,
                         title: "HUGGIT",
-                        body: "오늘 commit 하셨나요?",
+                        body: "\(UserInfo.gitName.isEmpty ? UserInfo.gitName : "개발자")님 좋은 하루에요 :)\n오늘도 1일 1커밋을 향해 달려볼까요?",
                         message: "", // message 없이 처리
                         imageName: nil,
                         identifier: "afternoonNotification",
@@ -25,7 +25,7 @@ class ContentViewModel : ObservableObject {
                         at: 22,
                         minute: 0,
                         title: "HUGGIT",
-                        body: "오늘 commit 하셨나요?",
+                        body: "\(UserInfo.gitName.isEmpty ? UserInfo.gitName : "개발자")님 오늘도 수고 많았어요!\n커밋으로 하루를 마무리 해볼까요?",
                         message: "",
                         imageName: nil,
                         identifier: "eveningNotification",

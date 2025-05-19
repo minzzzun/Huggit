@@ -37,7 +37,7 @@ struct CommitListView: View {
             }
             .animation(.easeInOut, value: commitListViewModel.commitList)
 
-            .padding(.top, 20)
+            .padding(.top, 13)
         }
     }
 }

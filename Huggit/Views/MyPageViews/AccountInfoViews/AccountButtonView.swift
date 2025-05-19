@@ -20,10 +20,10 @@ struct AccountButtonView: View {
             VStack(alignment: .leading, spacing: 1) {
                 Text(service.firstLetterCapitalized)
                     .textStyle(.c411R)
-                    .foregroundStyle(Color.primaryWhite)
+                    .foregroundStyle(Color.gray200)
                 Text(serviceDetail)
                     .textStyle(.h615M)
-                    .foregroundStyle(Color.primaryWhite)
+                    .foregroundStyle(serviceDetail == "아직 등록되지 않았어요" ? Color.gray300 : Color.gray100)
             }
             
             Spacer()
@@ -31,12 +31,12 @@ struct AccountButtonView: View {
             Button(action: action) {
                 Text("수정")
                     .textStyle(.d611M)
-                    .foregroundStyle(Color.primaryWhite)
+                    .foregroundStyle(Color.gray200)
                     .frame(width: 40, height: 25)
             }
             .background(
                 RoundedRectangle(cornerRadius: 5)
-                    .fill(Color.gray200)
+                    .fill(Color.gray500)
             )
         }
     }

@@ -24,14 +24,14 @@ struct StampView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 55, height: 55)
-                    .padding(.leading, -20.1)
+                    .padding(.leading, -30.1)
                     .padding(.trailing, 0)
                 
                 Image(HomeHeaderViewModel.stampName(for: 3))
                     .resizable()
                     .scaledToFit()
                     .frame(width: 63, height: 63)
-                    .padding(.leading, -24.2)
+                    .padding(.leading, -34.2)
                     .padding(.trailing, 0)
                     .shadow(color: Color.white.opacity(0.8), radius: 12.6)
             }
