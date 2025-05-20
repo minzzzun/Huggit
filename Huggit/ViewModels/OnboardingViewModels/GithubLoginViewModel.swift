@@ -24,7 +24,9 @@ class GithubLoginViewModel: ObservableObject {
                     UserInfo.githubAccessToken = token
                     self?.fetchGithubUser()
                     self?.createRepository {
-                        self?.isAuthenticated = true
+                        DispatchQueue.main.async {
+                            self?.isAuthenticated = true
+                        }
                     }
                 case .failure(let error):
                     print("Access token 요청 실패: \(error)")
