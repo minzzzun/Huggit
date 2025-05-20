@@ -17,6 +17,8 @@ struct UseInfoView: View {
     @EnvironmentObject var router: NavigationRouter
     @Environment(\.openURL) private var openURL
     
+    @Binding var showLogoutModal: Bool
+    
     private let privacyPolicyURL = URL(string: "https://future-glass-b30.notion.site/Huggit-1ce93d5fc4ad8037956cdc09a468375a?pvs=4")!
     private let termsOfUseURL = URL(string: "https://future-glass-b30.notion.site/Huggit-1ce93d5fc4ad8001a179c56061082798?pvs=4")!
     
@@ -29,9 +31,10 @@ struct UseInfoView: View {
                 openURL(termsOfUseURL)
             }),
             UseInfo(name: "로그아웃", action: {
-                myPageViewModel.logout {
-                    router.offAll("/appleLogin")
-                }
+//                myPageViewModel.logout {
+//                    router.offAll("/appleLogin")
+//                }
+                showLogoutModal = true
             })
         ]
     }
