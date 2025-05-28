@@ -4,6 +4,8 @@ import SwiftUI
 struct GithubLoginView : View {
     @StateObject private var viewModel = GithubLoginViewModel()
     @EnvironmentObject var router : NavigationRouter
+    @State private var authURL: URL?
+    @State private var showSafari = false
     
     var body: some View {
         
@@ -31,8 +33,6 @@ struct GithubLoginView : View {
                         VStack(alignment: .leading,spacing: 8) {
                             Text("깃허브 연동이\n필요해요!")
                                 .textStyle(.h227SB)
-//                            Text("필요해요!")
-//                                .textStyle(.h227SB)
                         }
                         
                         Text("깃허브 잔디 정보를 불러오는 데 사용돼요!")
@@ -47,7 +47,10 @@ struct GithubLoginView : View {
                 // 깃허브 로그인 버튼
                 Button(action: {
                     print("깃허브 로그인")
-                    viewModel.requestCode()
+                    if let url = viewModel.requestCode() {
+                        authURL = url
+                        showSafari = true
+                    }
                 }) {
                     Text("깃허브 로그인")
                         .textStyle(.b117SB)
@@ -65,6 +68,12 @@ struct GithubLoginView : View {
         }
         .foregroundColor(.primaryWhite)
         .navigationBarHidden(true)
+        .sheet(isPresented: $showSafari) {
+            if let url = authURL {
+                SafariView(url: url)
+                    .edgesIgnoringSafeArea(.all)
+            }
+        }
         .onOpenURL { url in
             print("🔗 URL received: \(url)")
             
