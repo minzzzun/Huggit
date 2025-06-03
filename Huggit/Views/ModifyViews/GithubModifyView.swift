@@ -74,7 +74,11 @@ struct GithubModifyView: View {
         }
         .foregroundColor(Color.primaryWhite)
         .navigationBarHidden(true)
-        .sheet(isPresented: $showSafari) {
+        .sheet(isPresented: $showSafari, onDismiss: {
+            showSafari = false
+            authURL = nil
+            viewModel.isLoggingIn = false
+        }) {
             if let url = authURL {
                 SafariView(url: url)
                     .edgesIgnoringSafeArea(.all)
@@ -92,6 +96,8 @@ struct GithubModifyView: View {
                let queryItems = components.queryItems,
                let code = queryItems.first(where: { $0.name == "code" })?.value {
                 print("✅ GitHub Authorization Code: \(code)")
+                showSafari = false
+                authURL = nil
                 viewModel.requestAccessToken(code: code)
             } else {
                 print("❌ Failed to extract code from URL")
@@ -99,6 +105,7 @@ struct GithubModifyView: View {
         }
         .onAppear() {
             viewModel.isAuthenticated = false
+            viewModel.isLoggingIn = false
         }
         // 로그인 완료 상태 감지 후 화면 전환
         .onChange(of: viewModel.isAuthenticated) { newValue in

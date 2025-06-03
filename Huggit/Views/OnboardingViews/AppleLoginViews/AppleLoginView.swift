@@ -65,6 +65,8 @@ struct AppleLoginView: View {
                 
                 // 애플 로그인 버튼
                 AppleLoginButton()
+                    .padding(.bottom, 20)
+                GuestLoginButton()
                     .padding(.bottom, 50)
             }
         }
