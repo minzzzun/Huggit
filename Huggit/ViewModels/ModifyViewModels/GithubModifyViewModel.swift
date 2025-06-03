@@ -16,9 +16,9 @@ class GithubModifyViewModel: ObservableObject {
     let clientSecret = GitHubConfig.client_secret
     
     //MARK: - 1. 깃허브에서 code 받아오기
-    func requestCode() {
+    func requestCode() -> URL?{
         isLoggingIn = true
-        GithubAuthManager.shared.requestCode()
+        return GithubAuthManager.shared.requestCode()
     }
     
     //MARK: - 2. 받아온 code로 Token 받기

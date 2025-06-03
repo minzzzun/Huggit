@@ -22,18 +22,16 @@ final class GithubAuthManager {
     private init() {}
     
     // OAuth 요청 URL을 구성하고, 열도록 합니다.
-    func requestCode() {
+    func requestCode() -> URL? {
         // 스코프는 공백으로 구분해야 합니다.
         let scope = "repo user user:email"
         guard let clientId = GitHubConfig.client_id else {
             print("❌ client_id가 없습니다.")
-            return
+            return nil
         }
         
         let urlString = "https://github.com/login/oauth/authorize?client_id=\(clientId)&scope=\(scope)"
-        if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url)
-        }
+        return URL(string: urlString)
     }
     
     // 받은 code로 access token을 요청하는 메서드
