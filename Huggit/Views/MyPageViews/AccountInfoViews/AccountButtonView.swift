@@ -23,21 +23,23 @@ struct AccountButtonView: View {
                     .foregroundStyle(Color.gray200)
                 Text(serviceDetail)
                     .textStyle(.h615M)
-                    .foregroundStyle(serviceDetail == "아직 등록되지 않았어요" ? Color.gray300 : Color.gray100)
+                    .foregroundStyle(serviceDetail == "아직 등록되지 않았어요" || serviceDetail == "Guest" ? Color.gray300 : Color.gray100)
             }
             
             Spacer()
             
-            Button(action: action) {
-                Text("수정")
-                    .textStyle(.d611M)
-                    .foregroundStyle(Color.gray200)
-                    .frame(width: 40, height: 25)
+            if serviceDetail != "Guest" {
+                Button(action: action) {
+                    Text("수정")
+                        .textStyle(.d611M)
+                        .foregroundStyle(Color.gray200)
+                        .frame(width: 40, height: 25)
+                }
+                .background(
+                    RoundedRectangle(cornerRadius: 5)
+                        .fill(Color.gray500)
+                )
             }
-            .background(
-                RoundedRectangle(cornerRadius: 5)
-                    .fill(Color.gray500)
-            )
         }
     }
 }

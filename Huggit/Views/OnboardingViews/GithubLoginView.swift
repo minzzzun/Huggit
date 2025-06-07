@@ -45,23 +45,23 @@ struct GithubLoginView : View {
                 Spacer()
                 
                 // 깃허브 로그인 버튼
-                Button(action: {
-                    print("깃허브 로그인")
-                    if let url = viewModel.requestCode() {
-                        authURL = url
-                        showSafari = true
+                    Button(action: {
+                        print("깃허브 로그인")
+                        if let url = viewModel.requestCode() {
+                            authURL = url
+                            showSafari = true
+                        }
+                    }) {
+                        Text("깃허브 로그인")
+                            .textStyle(.b117SB)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 64)
+                            .background(Color.primaryBlue)
+                            .foregroundColor(.primaryWhite)
+                            .cornerRadius(10)
                     }
-                }) {
-                    Text("깃허브 로그인")
-                        .textStyle(.b117SB)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 64)
-                        .background(Color.primaryBlue)
-                        .foregroundColor(.primaryWhite)
-                        .cornerRadius(10)
-                }
-                .disabled(viewModel.isLoggingIn)
-                .padding(.bottom, 58)
+                    .disabled(viewModel.isLoggingIn)
+                    .padding(.bottom, 58)
             }
             .padding(.horizontal, 20)
             
