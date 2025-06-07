@@ -9,9 +9,23 @@ import Foundation
 import Combine
 
 class MyPageViewModel: ObservableObject {
-    @Published var githubName: String = UserInfo.gitName.isEmpty ? "아직 등록되지 않았어요" : UserInfo.gitName
-    @Published var tistoryName: String = UserInfo.tistoryName.isEmpty ? "아직 등록되지 않았어요" : UserInfo.tistoryName
-    @Published var velogName: String = UserInfo.velogName.isEmpty ? "아직 등록되지 않았어요" : UserInfo.velogName
+    @Published var githubName: String = {
+        return UserInfo.appleId.isEmpty
+            ? "Guest"
+            : (UserInfo.gitName.isEmpty ? "아직 등록되지 않았어요" : UserInfo.gitName)
+    }()
+
+    @Published var tistoryName: String = {
+        return UserInfo.appleId.isEmpty
+            ? "Guest"
+            : (UserInfo.tistoryName.isEmpty ? "아직 등록되지 않았어요" : UserInfo.tistoryName)
+    }()
+
+    @Published var velogName: String = {
+        return UserInfo.appleId.isEmpty
+            ? "Guest"
+            : (UserInfo.velogName.isEmpty ? "아직 등록되지 않았어요" : UserInfo.velogName)
+    }()
     
     @Published var currentYear: Int = Calendar.current.component(.year, from: Date())
     @Published var currentMonth: Int = Calendar.current.component(.month, from: Date())
