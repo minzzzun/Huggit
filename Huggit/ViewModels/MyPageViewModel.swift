@@ -65,4 +65,15 @@ class MyPageViewModel: ObservableObject {
         print("로그아웃 완료: appleId가 삭제되었습니다.")
         completion()
     }
+    
+    //회원탈퇴 기능
+    func deleteAccount(completion: @escaping () -> Void){
+        UserInfo.appleId = ""
+        UserInfo.gitLogin = ""
+        UserInfo.gitName = ""
+        UserInfo.gitEmail = ""
+        UserInfo.repoName = ""
+        print("회원탈퇴 완료!")
+        completion()
+    }
 }
