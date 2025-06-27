@@ -4,7 +4,7 @@ import AuthenticationServices
 
 struct AppleLoginButton: View {
     @EnvironmentObject var router: NavigationRouter
-    @StateObject private var viewModel = AppleLoginViewModel()
+    @StateObject private var appleAuthManager = AppleAuthManager.shared
     
     var body: some View {
         
@@ -13,16 +13,16 @@ struct AppleLoginButton: View {
                 request.requestedScopes = [.fullName, .email]
             },
             onCompletion: { result in
-                viewModel.handleAppleSignIn(result: result)
+                appleAuthManager.handleAppleSignIn(result: result)
             }
         )
         .frame(width: UIScreen.main.bounds.width - 40)
         .frame(height: 64)
         .cornerRadius(8)
         .onAppear() {
-            viewModel.isAuthenticated = false
+            appleAuthManager.isAuthenticated = false
         }
-        .onChange(of: viewModel.isAuthenticated) { newValue in
+        .onChange(of: appleAuthManager.isAuthenticated) { newValue in
             if newValue {
                 router.toNamed("/githubLogin")
             }

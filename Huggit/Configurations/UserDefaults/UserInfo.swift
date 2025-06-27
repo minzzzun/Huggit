@@ -13,6 +13,15 @@ struct UserInfo {
     @UserDefault(key: UserDefaultsKeys.appleId.rawValue, defaultValue: "")
     static var appleId: String
     
+    @UserDefault(key: UserDefaultsKeys.appleIdentityToken.rawValue, defaultValue: "")
+    static var appleIdentityToken: String
+    
+    @UserDefault(key: UserDefaultsKeys.appleAuthorizationCode.rawValue, defaultValue: "")
+    static var appleAuthorizationCode: String
+    
+    @UserDefault(key: UserDefaultsKeys.appleRefreshToken.rawValue, defaultValue: "")
+    static var appleRefreshToken: String
+    
     @UserDefault(key: UserDefaultsKeys.gitLogin.rawValue, defaultValue: "")
     static var gitLogin: String
     

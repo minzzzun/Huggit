@@ -74,7 +74,7 @@ struct MyPageView: View {
                         showDeleteAccountModal = false
                     }
                 DeleteAccountModalView(isPresented: $showDeleteAccountModal) {
-                    myPageViewModel.logout { // 회원탈퇴로 변경
+                    myPageViewModel.deleteAccount {
                         router.offAll("/appleLogin")
                     }
                 }

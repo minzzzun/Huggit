@@ -10,6 +10,9 @@ import Foundation
 // MARK: - UserDefaults 키 모음
 enum UserDefaultsKeys: String {
     case appleId = "appleId"
+    case appleIdentityToken = "appleIdentityToken"
+    case appleAuthorizationCode = "appleAuthorizationCode"
+    case appleRefreshToken = "appleRefreshToken"
     case gitLogin = "gitLogin" // 고유 로그인 이름
     case gitName = "gitName" // Full Name
     case gitEmail = "gitEmail"

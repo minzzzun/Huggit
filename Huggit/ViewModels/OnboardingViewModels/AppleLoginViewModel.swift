@@ -20,8 +20,7 @@ class AppleLoginViewModel: ObservableObject {
                 
                 // UserDefaults에 저장
                 UserInfo.appleId = appleId
-                print("uid 저장됨 \(appleId)")
-                
+            
                 // 인증 상태 업데이트
                 DispatchQueue.main.async {
                     self.isAuthenticated = true

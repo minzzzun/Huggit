@@ -2,6 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AppleClientID</key>
+	<string>com.minzzzun.Huggit</string>
+	<key>AppleClientSecret</key>
+	<string>eyJhbGciOiJFUzI1NiIsImtpZCI6IjI0Njc4MjdXMlAifQ.eyJpc3MiOiI1NUpXOVBaNEo5IiwiaWF0IjoxNzUxMDI0NTc3LCJleHAiOjE3NjY1NzY1NzcsImF1ZCI6Imh0dHBzOi8vYXBwbGVpZC5hcHBsZS5jb20iLCJzdWIiOiJjb20ubWluenp6dW4uSHVnZ2l0In0.aypWDq3k1GNNJBbC8A_-HWO0_kFEViL2zcSyYee5godiueN7vElo7b-4BPNWQtkRAnlXuRJEhzaUbhivblQyHQ</string>
+	<key>ApplePrivateKey</key>
+	<string>-----BEGIN PRIVATE KEY-----
+MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgKxJ/Ss/km6WnbB7D
+GJG6ofxfSHHnb12fn/mDyJuzdX6gCgYIKoZIzj0DAQehRANCAATEF6IeXFHPMqfK
++rZNYSOa8A8gWli/nTdpvFcwmLU8adtB1Rn7epkPhR+NCUozuhj/AmrsOy0e6m0Y
+CmTrZqf2
+-----END PRIVATE KEY-----</string>
+	<key>AppleTeamID</key>
+	<string>55JW9PZ4J9</string>
+	<key>AppleKeyID</key>
+	<string>2467827W2P</string>
 	<key>CFBundleLocalizations</key>
 	<array>
 		<string>ko</string>
