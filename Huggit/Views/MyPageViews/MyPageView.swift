@@ -12,7 +12,8 @@ struct MyPageView: View {
     @EnvironmentObject var router: NavigationRouter
     
     @State private var showLogoutModal = false
-    
+    @State private var showDeleteAccountModal = false
+
     var body: some View {
         ZStack {
             ScrollView(.vertical) {
@@ -40,7 +41,7 @@ struct MyPageView: View {
                         .padding(.top, 40)
                     
                     // 이용 안내
-                    UseInfoView(showLogoutModal: $showLogoutModal)
+                    UseInfoView(showLogoutModal: $showLogoutModal, showDeleteAccountModal: $showDeleteAccountModal)
                                             .padding(.top, 40)
                     
                 }
@@ -59,6 +60,21 @@ struct MyPageView: View {
                     }
                 LogoutModalView(isPresented: $showLogoutModal) {
                     myPageViewModel.logout {
+                        router.offAll("/appleLogin")
+                    }
+                }
+                .padding(.horizontal, 20)
+            }
+            
+            // 회원탈퇴 모달
+            if showDeleteAccountModal {
+                Color.black.opacity(0.8)
+                    .edgesIgnoringSafeArea(.all)
+                    .onTapGesture {
+                        showDeleteAccountModal = false
+                    }
+                DeleteAccountModalView(isPresented: $showDeleteAccountModal) {
+                    myPageViewModel.deleteAccount {
                         router.offAll("/appleLogin")
                     }
                 }
