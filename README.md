@@ -2,6 +2,7 @@
 
 > 블로그 글도 커밋으로 남기고, 잔디도 심자!  
 > Huggit은 개발자의 꾸준한 성장 습관을 도와주는 커밋 보조 앱입니다.
+<img src="https://img.shields.io/badge/Swift-F05138?style=flat-square&logo=Swift&logoColor=white"/>
 
 ---
 
