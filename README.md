@@ -24,6 +24,23 @@ GitHub 계정으로 로그인한 후, Velog 또는 Tistory 닉네임을 입력�
 
 ---
 
+## 미리보기 화면
+
+<img src= "https://github.com/user-attachments/assets/3507a3f9-3843-4f41-ae3f-784a388a4cb7" width="200" height="600" >
+<img src= "https://github.com/user-attachments/assets/2caedbe8-894b-44c6-9604-eca3cae696ef" width="200" height="600" >
+
+
+<img src= "https://github.com/user-attachments/assets/d1e82c96-9be9-4c8b-9580-7f2020a70810" width="200" height="600" >
+<img src= "https://github.com/user-attachments/assets/be8fc86f-4626-499e-ab1c-e8cb65fe16c0" width="200" height="600" >
+<img src= "https://github.com/user-attachments/assets/630f93a1-c8a3-4eb8-a4dd-770be67905cf" width="200" height="600" >
+<img src= "https://github.com/user-attachments/assets/8f041ebd-e64f-44b0-83d9-97c0b3c43cff" width="200" height="600" >
+<img src= "https://github.com/user-attachments/assets/40311499-d670-4bed-a466-913eda744d67" width="200" height="600" >
+<img src= "https://github.com/user-attachments/assets/609815c9-ae20-4c65-9a45-9e2a7e35fc19" width="200" height="600" >
+<img src= "https://github.com/user-attachments/assets/fd542a4f-c86a-4a59-a045-1e5f28901d9b" width="200" height="600" >
+<img src= "https://github.com/user-attachments/assets/61dde8f8-99ef-4c82-823e-4a04359152de" width="200" height="600" >
+
+---
+
 ## 📦 앱 다운로드  
 👉 [App Store에서 Huggit 다운로드](https://apps.apple.com/kr/app/huggit/id6742536511)
 
